@@ -44,7 +44,8 @@ public class JsonSchema implements Scheme {
         try {
             byte[] ser = byteBuffer.array();
             if (ser != null) {
-                Map map = mapper.readValue(ser, Map.class);
+                //Map map = mapper.readValue(ser, Map.class);
+                Map map = mapper.reader().forType(Map.class).readValue(ser);
                 return Arrays.asList(map.hashCode(), map);
             } else {
                 if (LOG.isDebugEnabled()) {
