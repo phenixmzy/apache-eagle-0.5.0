@@ -29,6 +29,9 @@ public class KafkaStreamSourceConfig implements StreamSourceConfig {
     private String brokerZkBasePath;
     private String transactionZkServers;
 
+    private String keyDeSerializerClass;
+    private String valueDeSerializerClass;
+
     private int fetchSize = 1048576;
     private String transactionZKRoot = DEFAULT_TRANSACTION_ZK_ROOT;
     private String consumerGroupId = DEFAULT_CONSUMER_GROUP_ID;
@@ -37,6 +40,22 @@ public class KafkaStreamSourceConfig implements StreamSourceConfig {
     private int startOffsetTime = -1;
     private boolean forceFromStart = false;
     private Class<? extends org.apache.storm.spout.Scheme> schemaClass = DEFAULT_KAFKA_SCHEMA;
+
+    public String getKeyDeSerializerClass() {
+        return keyDeSerializerClass;
+    }
+
+    public void setKeyDeSerializerClass(String keyDeSerializerClass) {
+        this.keyDeSerializerClass = keyDeSerializerClass;
+    }
+
+    public String getValueDeSerializerClass() {
+        return valueDeSerializerClass;
+    }
+
+    public void setValueDeSerializerClass(String valueDeSerializerClass) {
+        this.valueDeSerializerClass = valueDeSerializerClass;
+    }
 
     public String getBrokerZkQuorum() {
         return brokerZkQuorum;

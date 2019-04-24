@@ -136,6 +136,14 @@ public class KafkaStreamProvider implements StreamProvider<KafkaStreamSink, Kafk
         if (hasNonBlankConfigPath(config, "dataSourceConfig.forceFromStart")) {
             sourceConfig.setForceFromStart(config.getBoolean("dataSourceConfig.forceFromStart"));
         }
+
+        sourceConfig.setKeyDeSerializerClass(hasNonBlankConfigPath(config, "dataSourceConfig.keyDeSerializerClass")
+                ? config.getString("dataSourceConfig.keyDeSerializerClass") :
+                "org.apache.kafka.common.serialization.StringDeserializer");
+        sourceConfig.setValueDeSerializerClass(hasNonBlankConfigPath(config, "dataSourceConfig.valueDeSerializerClass")
+                ? config.getString("dataSourceConfig.valueDeSerializerClass") :
+                "org.apache.kafka.common.serialization.StringDeserializer");
+
         String schemeCls = getSourceSchemeCls(streamId, config);
         if (schemeCls != null && StringUtils.isNotBlank(schemeCls)) {
             try {
