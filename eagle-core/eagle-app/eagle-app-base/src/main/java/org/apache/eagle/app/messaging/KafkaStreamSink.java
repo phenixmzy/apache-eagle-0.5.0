@@ -53,8 +53,8 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         properties.put("serializer.class", config.getSerializerClass());
         //properties.put("key.serializer.class", config.getKeySerializerClass());
 
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, config.getKeySerializerClass());
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, config.getValueSerializerClass());
+        /*properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, config.getKeySerializerClass());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, config.getValueSerializerClass());*/
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, config.getBrokerList());
 
         // new added properties for async producer
