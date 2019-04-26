@@ -36,6 +36,10 @@
         </dependency>
         <dependency>
             <groupId>org.apache.storm</groupId>
+            <artifactId>storm-kafka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
         </dependency>
         <dependency>
