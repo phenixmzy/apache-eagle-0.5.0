@@ -72,16 +72,19 @@ public class KafkaStreamProvider implements StreamProvider<KafkaStreamSink, Kafk
         KafkaStreamSinkConfig sinkConfig = new KafkaStreamSinkConfig();
         sinkConfig.setTopicId(getSinkTopicName(streamId,config));
         sinkConfig.setBrokerList(config.getString("dataSinkConfig.brokerList"));
-        /*kafka.serializer.StringEncoder*/
+        /*
+        * kafka.serializer.StringEncoder
+        * org.apache.kafka.common.serialization.StringSerializer
+        * */
         sinkConfig.setSerializerClass(hasNonBlankConfigPath(config, "dataSinkConfig.serializerClass")
             ? config.getString("dataSinkConfig.serializerClass") :
-                "org.apache.kafka.common.serialization.StringSerializer");
+                "kafka.serializer.StringEncoder");
         sinkConfig.setKeySerializerClass(hasNonBlankConfigPath(config, "dataSinkConfig.keySerializerClass")
             ? config.getString("dataSinkConfig.keySerializerClass") :
-                "org.apache.kafka.common.serialization.StringSerializer");
+                "kafka.serializer.StringEncoder");
         sinkConfig.setValueSerializerClass(hasNonBlankConfigPath(config, "dataSinkConfig.valueSerializerClass")
                 ? config.getString("dataSinkConfig.valueSerializerClass") :
-                "org.apache.kafka.common.serialization.StringSerializer");
+                "kafka.serializer.StringEncoder");
 
         // new added properties for async producer
         sinkConfig.setNumBatchMessages(hasNonBlankConfigPath(config, "dataSinkConfig.numBatchMessages")
