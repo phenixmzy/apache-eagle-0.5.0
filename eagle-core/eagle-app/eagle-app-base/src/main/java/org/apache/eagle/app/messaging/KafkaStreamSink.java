@@ -17,12 +17,12 @@
 package org.apache.eagle.app.messaging;
 
 import kafka.producer.KeyedMessage;
-import kafka.producer.Producer;
+//import kafka.producer.Producer;
 import kafka.producer.ProducerConfig;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import kafka.javaapi.producer.Producer;
+import kafka.javaapi.producer.Producer;
 //import kafka.producer.KeyedMessage;
 //import kafka.producer.ProducerConfig;
 //import org.apache.kafka.clients.producer.ProducerConfig;
@@ -79,7 +79,7 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         try {
             String output = new ObjectMapper().writeValueAsString(event);
             // partition key may cause data skew
-            producer.send((Seq<KeyedMessage>) new KeyedMessage(this.topicId, key, output));
+            producer.send(new KeyedMessage(this.topicId, key, output));
             LOG.info("test topicId={} msg={}",this.topicId, output);
             // org.apache.kafka.clients.producer api
             //producer.send(new ProducerRecord(this.topicId, output));
