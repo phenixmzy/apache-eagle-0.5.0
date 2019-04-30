@@ -1,19 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apache.eagle.app.messaging;
 
 import org.apache.storm.spout.Scheme;
@@ -39,7 +23,6 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
 
     @Override
     public void init(String streamId, KafkaStreamSourceConfig config) {
-        /*this.spout = createKafkaSpout(config);*/
         this.spout = createKafkaSpout(config);
     }
 
@@ -91,7 +74,8 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
     // ----------------
     //  Helper Methods
     // ----------------
-    private static org.apache.storm.kafka.KafkaSpout createKafkaSpout(KafkaStreamSourceConfig config) {
+
+    private static KafkaSpout createKafkaSpout(KafkaStreamSourceConfig config) {
 
         // the following is for fetching data from one topic
         // Kafka topic
@@ -123,9 +107,9 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
         }
 
         SpoutConfig spoutConfig = new SpoutConfig(hosts,
-            topic,
-            zkRoot + "/" + topic,
-            groupId);
+                topic,
+                zkRoot + "/" + topic,
+                groupId);
 
         // transaction zkServers to store kafka consumer offset. Default to use storm zookeeper
         if (StringUtils.isNotBlank(config.getTransactionZkServers())) {
@@ -158,6 +142,6 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
             LOG.error("Error instantiating scheme object");
             throw new IllegalStateException(ex);
         }
-        return new org.apache.storm.kafka.KafkaSpout(spoutConfig);
+        return new KafkaSpout(spoutConfig);
     }
 }
