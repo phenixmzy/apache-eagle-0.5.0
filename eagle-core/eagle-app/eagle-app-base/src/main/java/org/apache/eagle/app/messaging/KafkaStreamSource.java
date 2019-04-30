@@ -16,6 +16,7 @@
  */
 package org.apache.eagle.app.messaging;
 
+import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.storm.spout.Scheme;
 import org.apache.storm.spout.SchemeAsMultiScheme;
 import org.apache.storm.spout.SpoutOutputCollector;
@@ -27,6 +28,8 @@ import org.apache.eagle.alert.engine.spout.SchemeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.storm.kafka.*;
+import org.apache.storm.kafka.spout.KafkaSpoutConfig;
+import org.apache.storm.kafka.spout.KafkaSpout;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +42,8 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
 
     @Override
     public void init(String streamId, KafkaStreamSourceConfig config) {
-        this.spout = createKafkaSpout(config);
+        /*this.spout = createKafkaSpout(config);*/
+        this.spout = createStormKafkaClientSpout(config);
     }
 
     @Override
@@ -90,8 +94,26 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
     // ----------------
     //  Helper Methods
     // ----------------
+    private static org.apache.storm.kafka.spout.KafkaSpout createStormKafkaClientSpout(KafkaStreamSourceConfig config) {
+        KafkaSpoutConfig spoutConfig = null;
+        try {
+            Class keyDe = Class.forName(config.getKeyDeSerializerClass());
+            Class valueDe = Class.forName(config.getValueDeSerializerClass());
+            KafkaSpoutConfig.Builder builder = new KafkaSpoutConfig.Builder(config.getBrokerServer(), keyDe, valueDe, config.getTopicId());
+            if (config.getKeyDeSerializerClass() != null & config.getKeyDeSerializerClass().trim().length() > 0) {
+                builder.setKey(keyDe);
+            }
+            if (config.getValueDeSerializerClass() != null & config.getValueDeSerializerClass().trim().length() > 0) {
+                builder.setValue(valueDe);
+            }
+            spoutConfig = KafkaSpoutConfig.builder(config.getBrokerServer(),config.getTopicId()).build();
+        } catch (ClassNotFoundException e) {
+            LOG.error(e.getMessage());
+        }
+        return new org.apache.storm.kafka.spout.KafkaSpout(spoutConfig);
+    }
 
-    private static KafkaSpout createKafkaSpout(KafkaStreamSourceConfig config) {
+    private static org.apache.storm.kafka.KafkaSpout createKafkaSpout(KafkaStreamSourceConfig config) {
 
         // the following is for fetching data from one topic
         // Kafka topic
@@ -158,6 +180,6 @@ public class KafkaStreamSource extends StormStreamSource<KafkaStreamSourceConfig
             LOG.error("Error instantiating scheme object");
             throw new IllegalStateException(ex);
         }
-        return new KafkaSpout(spoutConfig);
+        return new org.apache.storm.kafka.KafkaSpout(spoutConfig);
     }
 }
