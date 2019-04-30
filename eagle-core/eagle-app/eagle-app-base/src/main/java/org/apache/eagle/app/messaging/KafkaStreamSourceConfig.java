@@ -28,7 +28,7 @@ public class KafkaStreamSourceConfig implements StreamSourceConfig {
     private String brokerZkQuorum;
     private String brokerZkBasePath;
     private String transactionZkServers;
-
+    private String brokerServer;
     private String keyDeSerializerClass;
     private String valueDeSerializerClass;
 
@@ -40,6 +40,14 @@ public class KafkaStreamSourceConfig implements StreamSourceConfig {
     private int startOffsetTime = -1;
     private boolean forceFromStart = false;
     private Class<? extends org.apache.storm.spout.Scheme> schemaClass = DEFAULT_KAFKA_SCHEMA;
+
+    public String getBrokerServer() {
+        return brokerServer;
+    }
+
+    public void setBrokerServer(String brokerServer) {
+        this.brokerServer = brokerServer;
+    }
 
     public String getKeyDeSerializerClass() {
         return keyDeSerializerClass;
