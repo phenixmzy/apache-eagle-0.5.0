@@ -21,10 +21,17 @@ import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+// org.apache.kafka.clients.producer api
+import kafka.javaapi.producer.Producer;
+import kafka.producer.KeyedMessage;
+import kafka.producer.ProducerConfig;
+
+/*
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+*/
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,9 +59,12 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         properties.put("serializer.class", config.getSerializerClass());
         properties.put("key.serializer.class", config.getKeySerializerClass());
 
+        // org.apache.kafka.clients.producer api
+        /*
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, config.getKeySerializerClass());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, config.getValueSerializerClass());
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, config.getBrokerList());
+        */
 
 
         // new added properties for async producer
@@ -62,8 +72,11 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         properties.put("batch.num.messages", config.getNumBatchMessages());
         properties.put("request.required.acks", config.getRequestRequiredAcks());
         properties.put("queue.buffering.max.ms", config.getMaxQueueBufferMs());
+        ProducerConfig producerConfig = new ProducerConfig(properties);
+        producer = new Producer(producerConfig);
+
         // org.apache.kafka.clients.producer api
-        producer = new KafkaProducer(properties);
+        // producer = new KafkaProducer(properties);
     }
 
     @Override
@@ -72,7 +85,11 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
             String output = new ObjectMapper().writeValueAsString(event);
             // partition key may cause data skew
             LOG.info("test topicId={} msg={}",this.topicId, output);
-            producer.send(new ProducerRecord(this.topicId, output));
+
+            producer.send(new KeyedMessage(this.topicId, output));
+
+            // org.apache.kafka.clients.producer api
+            //producer.send(new ProducerRecord(this.topicId, output));
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
             throw ex;
