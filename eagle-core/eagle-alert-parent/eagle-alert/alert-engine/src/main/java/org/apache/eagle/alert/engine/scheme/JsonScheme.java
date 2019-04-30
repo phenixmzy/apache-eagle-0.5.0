@@ -52,7 +52,6 @@ public class JsonScheme implements Scheme {
         try {
             byte[] ser = byteBuffer.array();
             if (ser != null) {
-                mapper.disable(SerializationFeature.INDENT_OUTPUT);
                 Map map = mapper.readValue(ser, Map.class);
                 return Arrays.asList(topic, map);
             } else {
