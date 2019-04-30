@@ -19,6 +19,7 @@
 
 package org.apache.eagle.alert.engine.scheme;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.storm.spout.Scheme;
 import org.apache.storm.tuple.Fields;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +52,7 @@ public class JsonScheme implements Scheme {
         try {
             byte[] ser = byteBuffer.array();
             if (ser != null) {
+                mapper.disable(SerializationFeature.INDENT_OUTPUT);
                 Map map = mapper.readValue(ser, Map.class);
                 return Arrays.asList(topic, map);
             } else {
