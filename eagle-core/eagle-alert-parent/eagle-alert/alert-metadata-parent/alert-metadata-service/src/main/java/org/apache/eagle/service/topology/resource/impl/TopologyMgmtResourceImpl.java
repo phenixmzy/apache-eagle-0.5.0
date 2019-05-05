@@ -42,7 +42,7 @@ public class TopologyMgmtResourceImpl {
     @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(TopologyMgmtResourceImpl.class);
 
-    private static final String DEFAULT_NIMBUS_HOST = "sandbox.hortonworks.com";
+    private static final List<String> DEFAULT_NIMBUS_SEEDS = Arrays.asList("sandbox.hortonworks.com");
     private static final Integer DEFAULT_NIMBUS_THRIFT_PORT = 6627;
     private static final String STORM_JAR_PATH = "topology.stormJarPath";
 
@@ -51,7 +51,7 @@ public class TopologyMgmtResourceImpl {
     private Map getStormConf(List<StreamingCluster> clusters, String clusterId) throws Exception {
         Map<String, Object> stormConf = Utils.readStormConfig();
         if (clusterId == null) {
-            stormConf.put(Config.NIMBUS_HOST, DEFAULT_NIMBUS_HOST);
+            stormConf.put(Config.NIMBUS_SEEDS, DEFAULT_NIMBUS_SEEDS);
             stormConf.put(Config.NIMBUS_THRIFT_PORT, DEFAULT_NIMBUS_THRIFT_PORT);
         } else {
             if (clusters == null) {
@@ -64,20 +64,9 @@ public class TopologyMgmtResourceImpl {
             } else {
                 throw new Exception("Fail to find cluster: " + clusterId);
             }
-            //stormConf.put(Config.NIMBUS_HOST, cluster.getDeployments().getOrDefault(StreamingCluster.NIMBUS_HOST, DEFAULT_NIMBUS_HOST) );
-
-            String nimbusSeed = cluster.getDeployments().getOrDefault(StreamingCluster.NIMBUS_SEED, DEFAULT_NIMBUS_HOST);
-            List<String> seeds = new LinkedList<String>();
-            StringTokenizer token = new StringTokenizer(nimbusSeed,",");
-            while (token.hasMoreTokens()) {
-                seeds.add(token.nextToken());
-            }
-            stormConf.put(Config.NIMBUS_SEEDS,seeds);
-            stormConf.put(Config.NIMBUS_THRIFT_PORT, Integer.valueOf(cluster.getDeployments().get(StreamingCluster.NIMBUS_THRIFT_PORT)));
+            stormConf.put(Config.NIMBUS_SEEDS, cluster.getDeployments().getOrDefault(StreamingCluster.NIMBUS_SEEDS, DEFAULT_NIMBUS_SEEDS));
+            stormConf.put(Config.NIMBUS_THRIFT_PORT, Integer.valueOf(String.valueOf(cluster.getDeployments().get(StreamingCluster.NIMBUS_THRIFT_PORT))));
         }
-        stormConf.put(Config.STORM_NIMBUS_RETRY_INTERVAL, 2000);
-        stormConf.put(Config.STORM_NIMBUS_RETRY_INTERVAL_CEILING,60000);
-        stormConf.put(Config.STORM_NIMBUS_RETRY_TIMES,5);
         return stormConf;
     }
 
@@ -162,5 +151,4 @@ public class TopologyMgmtResourceImpl {
         }
         return topologies;
     }
-
 }

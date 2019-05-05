@@ -39,6 +39,7 @@ public class TopologyMgmtService {
 
         public String clusterId;
         public String nimbusHost;
+        public List<String> nimbusSeeds;
         public String nimbusPort;
 
     }
@@ -46,6 +47,7 @@ public class TopologyMgmtService {
     public static class StormClusterMeta {
         public String clusterId;
         public String nimbusHost;
+        public List<String> nimbusSeeds;
         public String nimbusPort;
         public String stormVersion;
     }

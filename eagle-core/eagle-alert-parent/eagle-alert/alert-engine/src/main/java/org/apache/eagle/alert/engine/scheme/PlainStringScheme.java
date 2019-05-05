@@ -22,6 +22,7 @@ package org.apache.eagle.alert.engine.scheme;
 import org.apache.storm.spout.Scheme;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Values;
+import org.apache.storm.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,10 +54,19 @@ public class PlainStringScheme implements Scheme {
         return new String(buff, UTF8_CHARSET);
     }
 
+    public static String deserializeString(ByteBuffer buffer) {
+        if (buffer.hasArray()) {
+            int base = buffer.arrayOffset();
+            return new String(buffer.array(), base + buffer.position(), buffer.remaining());
+        } else {
+            return new String(Utils.toByteArray(buffer), StandardCharsets.UTF_8);
+        }
+    }
+
     @Override
     public List<Object> deserialize(ByteBuffer byteBuffer) {
         Map m = new HashMap<>();
-        m.put("value", deserializeString(byteBuffer.array()));
+        m.put("value", deserializeString(byteBuffer));
         m.put("timestamp", System.currentTimeMillis());
         return new Values(topic, m);
     }

@@ -22,7 +22,9 @@ package org.apache.eagle.alert.engine.scheme;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.storm.spout.Scheme;
 import org.apache.storm.tuple.Fields;
+import org.apache.storm.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -45,14 +47,22 @@ public class JsonScheme implements Scheme {
     public JsonScheme(String topic, Map conf) {
         this.topic = topic;
     }
+    public static String deserializeString(ByteBuffer buffer) {
+        if (buffer.hasArray()) {
+            int base = buffer.arrayOffset();
+            return new String(buffer.array(), base + buffer.position(), buffer.remaining());
+        } else {
+            return new String(Utils.toByteArray(buffer), StandardCharsets.UTF_8);
+        }
+    }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public List<Object> deserialize(ByteBuffer byteBuffer) {
+    public List<Object> deserialize(ByteBuffer ser) {
         try {
-            byte[] ser = byteBuffer.array();
             if (ser != null) {
-                Map map = mapper.readValue(ser, Map.class);
+//                Map map = mapper.readValue(ser, Map.class);
+                Map map = mapper.readValue(deserializeString(ser), Map.class);
                 return Arrays.asList(topic, map);
             } else {
                 if (LOG.isDebugEnabled()) {
@@ -61,7 +71,7 @@ public class JsonScheme implements Scheme {
             }
         } catch (IOException e) {
             try {
-                LOG.error("Failed to deserialize as JSON: {}", new String(byteBuffer.array(), "UTF-8"), e);
+                LOG.error("Failed to deserialize as JSON: {}", new String(ser.array(), "UTF-8"), e);
             } catch (Exception ex) {
                 LOG.error(ex.getMessage(), ex);
             }

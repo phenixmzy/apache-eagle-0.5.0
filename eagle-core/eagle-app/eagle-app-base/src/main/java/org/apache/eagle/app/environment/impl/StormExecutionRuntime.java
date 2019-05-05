@@ -32,7 +32,6 @@ import org.apache.eagle.app.environment.ExecutionRuntimeProvider;
 import org.apache.eagle.app.utils.DynamicJarPathFinder;
 import org.apache.eagle.metadata.model.ApplicationEntity;
 //import org.apache.thrift7.TException;
-import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Int;
@@ -73,12 +72,12 @@ public class StormExecutionRuntime implements ExecutionRuntime<StormEnvironment,
     private static final String TOPOLOGY_MESSAGE_TIMEOUT_SECS = "topology.message.timeout.secs";
 
     private static final String STORM_NIMBUS_HOST_CONF_PATH = "application.storm.nimbusHost";
-    private static final String STORM_NIMBUS_SEED_CONF_PATH = "application.storm.nimbusSeed";
+    private static final String STORM_NIMBUS_SEEDS_CONF_PATH = "application.storm.nimbusSeeds";
     private static final String STORM_NIMBUS_THRIFT_CONF_PATH = "application.storm.nimbusThriftPort";
-
     private static final String APP_STORM_CONF_PATH_DEFAULT = "application.storm";
 
-    private static final String STORM_NIMBUS_HOST_DEFAULT = "localhost";
+//    private static final String STORM_NIMBUS_HOST_DEFAULT = "localhost";
+    private static final List<String> STORM_NIMBUS_HOST_DEFAULT = Arrays.asList("localhost");
     private static final Integer STORM_NIMBUS_THRIFT_DEFAULT = 6627;
 
     private org.apache.storm.Config getStormConfig(com.typesafe.config.Config config) {
@@ -91,24 +90,17 @@ public class StormExecutionRuntime implements ExecutionRuntime<StormEnvironment,
         conf.put(org.apache.storm.Config.TOPOLOGY_EXECUTOR_RECEIVE_BUFFER_SIZE, Int.box(16384));
         conf.put(org.apache.storm.Config.TOPOLOGY_EXECUTOR_SEND_BUFFER_SIZE, Int.box(16384));
         conf.put(org.apache.storm.Config.NIMBUS_THRIFT_MAX_BUFFER_SIZE, Int.box(20480000));
-        conf.put(Config.STORM_NIMBUS_RETRY_INTERVAL,Int.box(2000));
-        conf.put(Config.STORM_NIMBUS_RETRY_INTERVAL_CEILING,Int.box(60000));
-        conf.put(Config.STORM_NIMBUS_RETRY_TIMES,Int.box(5));
-        String nimbusHost = STORM_NIMBUS_HOST_DEFAULT;
-        if (environment.config().hasPath(STORM_NIMBUS_HOST_CONF_PATH)) {
-            nimbusHost = environment.config().getString(STORM_NIMBUS_HOST_CONF_PATH);
-            conf.put(org.apache.storm.Config.NIMBUS_HOST, nimbusHost);
-            LOG.info("Overriding {} = {}",STORM_NIMBUS_HOST_CONF_PATH, nimbusHost);
-        } else if (environment.config().hasPath(STORM_NIMBUS_SEED_CONF_PATH)) {
-            String nimbusSeed = environment.config().getString(STORM_NIMBUS_SEED_CONF_PATH);
-            List<String> seeds = new LinkedList<String>();
-            StringTokenizer token = new StringTokenizer(nimbusSeed,",");
-            while (token.hasMoreTokens()) {
-                seeds.add(token.nextToken());
-            }
-            conf.put(Config.NIMBUS_SEEDS, seeds);
+
+        conf.put(org.apache.storm.Config.STORM_NIMBUS_RETRY_TIMES, 5);
+        conf.put(org.apache.storm.Config.STORM_NIMBUS_RETRY_INTERVAL, 4000);
+        conf.put(org.apache.storm.Config.STORM_NIMBUS_RETRY_INTERVAL_CEILING, 60000);
+        List<String> nimbusSeeds = STORM_NIMBUS_HOST_DEFAULT;
+
+        if (environment.config().hasPath(STORM_NIMBUS_SEEDS_CONF_PATH)) {
+            nimbusSeeds = environment.config().getStringList(STORM_NIMBUS_SEEDS_CONF_PATH);
+            conf.put(Config.NIMBUS_SEEDS, nimbusSeeds);
         } else {
-            LOG.info("Using default {} = {}",STORM_NIMBUS_HOST_CONF_PATH, STORM_NIMBUS_HOST_DEFAULT);
+            LOG.info("Using default {} = {}",STORM_NIMBUS_SEEDS_CONF_PATH, STORM_NIMBUS_HOST_DEFAULT);
         }
         Integer nimbusThriftPort =  STORM_NIMBUS_THRIFT_DEFAULT;
         if (environment.config().hasPath(STORM_NIMBUS_THRIFT_CONF_PATH)) {
