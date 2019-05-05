@@ -19,10 +19,12 @@ package org.apache.eagle.app.messaging;
 import org.apache.storm.spout.Scheme;
 import org.apache.storm.tuple.Fields;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.storm.utils.Utils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -38,13 +40,22 @@ public class JsonSchema implements Scheme {
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(JsonSchema.class);
     private static final ObjectMapper mapper = new ObjectMapper();
 
+    public static String deserializeString(ByteBuffer buffer) {
+        if (buffer.hasArray()) {
+            int base = buffer.arrayOffset();
+            return new String(buffer.array(), base + buffer.position(), buffer.remaining());
+        } else {
+            return new String(Utils.toByteArray(buffer), StandardCharsets.UTF_8);
+        }
+    }
+
     @SuppressWarnings("rawtypes")
     @Override
     public List<Object> deserialize(ByteBuffer byteBuffer) {
         try {
             byte[] ser = byteBuffer.array();
             if (ser != null) {
-                Map map = mapper.readValue(ser, Map.class);
+                Map map = mapper.readValue(deserializeString(byteBuffer), Map.class);
                 return Arrays.asList(map.hashCode(), map);
             } else {
                 if (LOG.isDebugEnabled()) {
