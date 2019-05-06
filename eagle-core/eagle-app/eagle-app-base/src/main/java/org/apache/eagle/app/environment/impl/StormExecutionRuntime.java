@@ -76,7 +76,7 @@ public class StormExecutionRuntime implements ExecutionRuntime<StormEnvironment,
     private static final String STORM_NIMBUS_THRIFT_CONF_PATH = "application.storm.nimbusThriftPort";
     private static final String APP_STORM_CONF_PATH_DEFAULT = "application.storm";
 
-//    private static final String STORM_NIMBUS_HOST_DEFAULT = "localhost";
+    // private static final String STORM_NIMBUS_HOST_DEFAULT = "localhost";
     private static final List<String> STORM_NIMBUS_HOST_DEFAULT = Arrays.asList("localhost");
     private static final Integer STORM_NIMBUS_THRIFT_DEFAULT = 6627;
 

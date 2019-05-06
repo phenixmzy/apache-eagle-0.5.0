@@ -47,6 +47,7 @@ public class JsonScheme implements Scheme {
     public JsonScheme(String topic, Map conf) {
         this.topic = topic;
     }
+
     public static String deserializeString(ByteBuffer buffer) {
         if (buffer.hasArray()) {
             int base = buffer.arrayOffset();
@@ -61,7 +62,6 @@ public class JsonScheme implements Scheme {
     public List<Object> deserialize(ByteBuffer ser) {
         try {
             if (ser != null) {
-//                Map map = mapper.readValue(ser, Map.class);
                 Map map = mapper.readValue(deserializeString(ser), Map.class);
                 return Arrays.asList(topic, map);
             } else {
