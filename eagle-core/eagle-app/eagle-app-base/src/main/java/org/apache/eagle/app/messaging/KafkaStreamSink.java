@@ -79,7 +79,7 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         */
 
         // org.apache.kafka.clients.producer api
-         producer = new KafkaProducer(properties);
+        producer = new KafkaProducer(properties);
     }
 
     @Override
