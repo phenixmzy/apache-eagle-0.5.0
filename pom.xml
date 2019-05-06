@@ -181,7 +181,7 @@
         <thrift.version>0.9.2</thrift.version>
         <hadoop.version>2.7.4</hadoop.version>
         <hadoop.2.7.version>2.7.7</hadoop.2.7.version>
-        <hbase.version>1.1.2</hbase.version>
+        <hbase.version>1.4.9</hbase.version>
         <hive.version>1.2.1</hive.version>
 
         <mapr-hive.version>1.2.0-mapr-1510</mapr-hive.version>
