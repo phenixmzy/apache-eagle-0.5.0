@@ -22,6 +22,8 @@ import org.apache.eagle.alert.engine.model.StreamEvent;
 import org.apache.eagle.alert.engine.serialization.SerializationMetadataProvider;
 import org.apache.eagle.alert.engine.serialization.Serializer;
 import org.apache.eagle.alert.engine.serialization.Serializers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -34,6 +36,7 @@ import java.util.BitSet;
  * @see StreamEvent
  */
 public class StreamEventSerializer implements Serializer<StreamEvent> {
+    private static final Logger LOG = LoggerFactory.getLogger(StreamEventSerializer.class);
     private final SerializationMetadataProvider serializationMetadataProvider;
 
     public StreamEventSerializer(SerializationMetadataProvider serializationMetadataProvider) {
@@ -94,7 +97,7 @@ public class StreamEventSerializer implements Serializer<StreamEvent> {
         if (metaVersion.equals("null")) {
             metaVersion = null;
         }
-
+        LOG.info("metaVersionStreamId:{}, streamId:{}, metaVersion:{}", metaVersionStreamId, streamId, metaVersion);
         event.setStreamId(streamId);
         event.setMetaVersion(metaVersion);
 
