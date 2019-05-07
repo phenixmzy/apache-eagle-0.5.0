@@ -31,10 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -118,6 +115,8 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
             return;
         }
         Map<String, StreamDefinition> sds = getStreams(state.getStreamSnapshots());
+        LOG.info("version:{}", version);
+        printMapStreamDefinition(sds);
         switch (type) {
             case ALERT_BOLT:
                 // we might query metadata service query get metadata snapshot and StreamDefinition
@@ -195,4 +194,11 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
         return result;
     }
 
+    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
+        Iterator<Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = it.next();
+            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
+        }
+    }
 }
