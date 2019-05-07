@@ -96,6 +96,7 @@ public class StreamRouterBolt extends AbstractStreamBolt implements StreamRouter
     @SuppressWarnings("unchecked")
     @Override
     public synchronized void onStreamRouteBoltSpecChange(RouterSpec spec, Map<String, StreamDefinition> sds) {
+        LOG.info("Start StreamRouterBlot#onStreamRouteBoltSpecChange");
         sanityCheck(spec);
 
         printMapStreamDefinition(sds);
