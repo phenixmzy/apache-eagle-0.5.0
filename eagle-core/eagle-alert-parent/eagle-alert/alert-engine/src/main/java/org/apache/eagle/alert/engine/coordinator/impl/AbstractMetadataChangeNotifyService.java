@@ -59,6 +59,7 @@ public abstract class AbstractMetadataChangeNotifyService implements IMetadataCh
 
     @Override
     public void registerListener(AlertPublishSpecListener listener) {
+        LOG.info("registerListener AlertPublishSpecListener");
         synchronized (alertBoltSpecListeners) {
             Preconditions.checkNotNull(alertPublishSpecListeners, "Not initialized yet");
             LOG.info("Register {}", listener);
@@ -68,6 +69,7 @@ public abstract class AbstractMetadataChangeNotifyService implements IMetadataCh
 
     @Override
     public void registerListener(StreamRouterBoltSpecListener listener) {
+        LOG.info("registerListener StreamRouterBoltSpecListener");
         synchronized (streamRouterBoltSpecListeners) {
             streamRouterBoltSpecListeners.add(listener);
         }
@@ -75,6 +77,7 @@ public abstract class AbstractMetadataChangeNotifyService implements IMetadataCh
 
     @Override
     public void registerListener(AlertBoltSpecListener listener) {
+        LOG.info("registerListener AlertBoltSpecListener");
         synchronized (alertBoltSpecListeners) {
             alertBoltSpecListeners.add(listener);
         }
@@ -82,28 +85,34 @@ public abstract class AbstractMetadataChangeNotifyService implements IMetadataCh
 
     @Override
     public void registerListener(SpoutSpecListener listener) {
+        LOG.info("registerListener SpoutSpecListener");
         synchronized (spoutSpecListeners) {
             spoutSpecListeners.add(listener);
         }
     }
 
     protected void notifySpout(SpoutSpec spoutSpec, Map<String, StreamDefinition> sds) {
+        LOG.info("notifySpout SDS.size:{}", sds.size());
         spoutSpecListeners.forEach(s -> s.onSpoutSpecChange(spoutSpec, sds));
     }
 
     protected void notifyStreamRouterBolt(RouterSpec routerSpec, Map<String, StreamDefinition> sds) {
+        LOG.info("notifyStreamRouterBolt SDS.size:{}", sds.size());
         streamRouterBoltSpecListeners.forEach(s -> s.onStreamRouteBoltSpecChange(routerSpec, sds));
     }
 
     protected void notifyAlertBolt(AlertBoltSpec alertBoltSpec, Map<String, StreamDefinition> sds) {
+        LOG.info("notifyAlertBolt SDS.size:{}", sds.size());
         alertBoltSpecListeners.forEach(s -> s.onAlertBoltSpecChange(alertBoltSpec, sds));
     }
 
     protected void notifyAlertPublishBolt(PublishSpec alertPublishSpec, Map<String, StreamDefinition> sds) {
+        LOG.info("notifyAlertPublishBolt SDS.size:{}", sds.size());
         alertPublishSpecListeners.forEach(s -> s.onAlertPublishSpecChange(alertPublishSpec, sds));
     }
 
     protected void notifyAlertPublishBolt(Map<String, PolicyDefinition> pds, Map<String, StreamDefinition> sds) {
+        LOG.info("notifyAlertPublishBolt SDS.size:{}", sds.size());
         alertPublishSpecListeners.forEach(s -> s.onAlertPolicyChange(pds, sds));
     }
 
