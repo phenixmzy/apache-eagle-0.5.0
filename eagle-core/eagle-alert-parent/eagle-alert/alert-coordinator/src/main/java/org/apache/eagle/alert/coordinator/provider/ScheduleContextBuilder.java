@@ -213,6 +213,7 @@ public class ScheduleContextBuilder {
         Map<String, StreamWorkSlotQueue> queueMap = new HashMap<String, StreamWorkSlotQueue>();
         for (MonitoredStream ms : state.getMonitoredStreams()) {
             for (StreamWorkSlotQueue q : ms.getQueues()) {
+                LOG.info("add queueId:{} to queue!",q.getQueueId());
                 queueMap.put(q.getQueueId(), q);
             }
         }
@@ -223,14 +224,15 @@ public class ScheduleContextBuilder {
             PolicyAssignment assignment = paIt.next();
 
             if (!policies.containsKey(assignment.getPolicyName())) {
-                LOG.info("Policy assignment {} 's policy not found, this assignment will be removed!", assignment);
+                LOG.info("Policy assignment {} 's policy not found, this assignment will be removed!", assignment.toString());
                 paIt.remove();
             } else {
                 StreamWorkSlotQueue queue = queueMap.get(assignment.getQueueId());
                 if (queue == null
                     || policies.get(assignment.getPolicyName()).getParallelismHint() != queue.getQueueSize()) {
                     // queue not found or policy has hint not equal to queue (possible a poilcy update)
-                    LOG.info("Policy assignment {} 's policy doesnt match queue: {}!", assignment, queue);
+                    LOG.info("Policy assignment {} 's policy doesnt match queue: {}! queueSize:{}", assignment, queue, queue.getQueueSize());
+                    LOG.info("remove PolicyAssignment:",assignment.toString());
                     paIt.remove();
                 }
             }

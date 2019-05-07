@@ -180,8 +180,10 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
     private Map<String, StreamDefinition> getStreams(List<VersionedStreamDefinition> streamSnapshots) {
         Map<String, StreamDefinition> result = new HashMap<String, StreamDefinition>();
         for (VersionedStreamDefinition vsd : streamSnapshots) {
+            LOG.info("streamId:{}, {}",vsd.getDefinition().getStreamId(), vsd.getDefinition().toString());
             result.put(vsd.getDefinition().getStreamId(), vsd.getDefinition());
         }
+        LOG.info("getStreams Size:{}", result.size());
         return result;
     }
 
