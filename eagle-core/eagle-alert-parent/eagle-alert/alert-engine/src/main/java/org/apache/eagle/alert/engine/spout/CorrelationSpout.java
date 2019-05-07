@@ -250,7 +250,7 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         Collection<String> newTopics = CollectionUtils.subtract(topics, cachedTopcies);
         Collection<String> removeTopics = CollectionUtils.subtract(cachedTopcies, topics);
         Collection<String> updateTopics = CollectionUtils.intersection(topics, cachedTopcies);
-
+        printMapStreamDefinition(sds);
         LOG.info("Topics were added={}, removed={}, modified={}", newTopics, removeTopics, updateTopics);
 
         // build lookup table for scheme
