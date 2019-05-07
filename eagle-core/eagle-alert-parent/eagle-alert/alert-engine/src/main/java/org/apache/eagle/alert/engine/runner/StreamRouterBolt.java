@@ -16,13 +16,7 @@
  */
 package org.apache.eagle.alert.engine.runner;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.eagle.alert.coordination.model.PolicyWorkerQueue;
@@ -103,6 +97,9 @@ public class StreamRouterBolt extends AbstractStreamBolt implements StreamRouter
     @Override
     public synchronized void onStreamRouteBoltSpecChange(RouterSpec spec, Map<String, StreamDefinition> sds) {
         sanityCheck(spec);
+
+        printMapStreamDefinition(sds);
+        LOG.info("specVersion:{}",spec.getVersion());
 
         // figure out added, removed, modified StreamSortSpec
         Map<StreamPartition, StreamSortSpec> newSSS = spec.makeSSS();
@@ -191,4 +188,11 @@ public class StreamRouterBolt extends AbstractStreamBolt implements StreamRouter
         return router;
     }
 
+    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
+        Iterator<Map.Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = it.next();
+            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
+        }
+    }
 }
