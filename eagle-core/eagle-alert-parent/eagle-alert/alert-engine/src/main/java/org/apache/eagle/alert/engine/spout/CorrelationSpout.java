@@ -55,7 +55,6 @@ import org.apache.eagle.alert.utils.AlertConstants;
 import org.apache.eagle.alert.utils.StreamIdConversion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.storm.kafka.*;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -316,6 +315,14 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         this.sds = sds;
 
         LOG.info("after CorrelationSpout reloads, {} kafkaSpouts are generated for {} topics", kafkaSpoutList.size(), topics.size());
+    }
+
+    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
+        Iterator<Map.Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = it.next();
+            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
+        }
     }
 
     private void printConfig(String title, Config configure) {
