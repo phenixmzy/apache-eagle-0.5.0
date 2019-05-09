@@ -39,13 +39,13 @@ public class OpenFalconSender implements Runnable {
         JSONArray array = new JSONArray();
 
         try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpPost post = new HttpPost(this.context.getOpenFalconServerUrl());
             post.addHeader("Content-Type", "application/json");
             array.add(createSendMessage());
 
             StringEntity entity = new StringEntity(array.toString(), "utf-8");
             post.setEntity(entity);
+            CloseableHttpClient httpclient = HttpClients.createDefault();
             response  = httpclient.execute(post);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -59,7 +59,7 @@ public class OpenFalconSender implements Runnable {
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
         } finally {
-            if(response != null) {
+            if (response != null) {
                 response.close();
             }
         }
