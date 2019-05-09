@@ -67,8 +67,9 @@ public class OpenFalconSender implements Runnable {
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
         } finally {
-            if(response !=null)
+            if(response !=null) {
                 response.close();
+            }
         }
     }
 }
