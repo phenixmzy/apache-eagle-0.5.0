@@ -106,3 +106,6 @@ Apache Storm 1.1.3
 Apache HBase 1.4.9 (1.x later)
 
 Apache Kafak 1.0.0(1.x later)
+
+## 初始化系统 
+1 导入metadata-ddl.sql,初始化mysql元数据表
