@@ -1,6 +1,7 @@
 package org.apache.eagle.alert.engine.publisher.external.openfalcon;
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValue;
 import org.apache.eagle.alert.engine.coordinator.Publishment;
 import org.apache.eagle.alert.engine.coordinator.PublishmentType;
 import org.apache.eagle.alert.engine.model.AlertStreamEvent;
@@ -10,6 +11,7 @@ import org.apache.eagle.alert.engine.publisher.impl.PublishStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -38,6 +40,7 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
         if (publishment.getProperties() != null) {
             this.generator = createOpenFalconGenerator();
         }
+        printConfig("AlertOpenFalconPublisher-init", config);
     }
 
     @Override
@@ -105,4 +108,11 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
         return generator;
     }
 
+    private void printConfig(String title, Config configure) {
+        Iterator<Map.Entry<String, ConfigValue>> it = configure.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = it.next();
+            LOG.info("{}, {}={}", title, entry.getKey(), entry.getValue());
+        }
+    }
 }

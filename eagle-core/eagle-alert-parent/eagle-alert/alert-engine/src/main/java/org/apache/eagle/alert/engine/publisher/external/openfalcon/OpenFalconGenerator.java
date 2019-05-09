@@ -14,9 +14,9 @@ public class OpenFalconGenerator {
 
     private ThreadPoolExecutor executorPool;
 
-    private String serverURL = "localhost";
+    private String serverURL;
 
-    private String endpoint = "localhost";
+    private String endpoint;
 
     public boolean sendAlertOpenFalcon(AlertStreamEvent event) {
 
