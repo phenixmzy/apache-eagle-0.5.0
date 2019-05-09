@@ -41,9 +41,9 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
 
         executorPool = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_CORE_SIZE, DEFAULT_THREAD_POOL_MAX_SIZE, DEFAULT_THREAD_POOL_SHRINK_TIME, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         this.serverUrl = openFalconConfig.hasPath(OpenFalconContant.OPEN_FALCON_SERVER_URL)
-                ? config.getString(OpenFalconContant.OPEN_FALCON_SERVER_URL) : "localhost";
+                ? openFalconConfig.getString(OpenFalconContant.OPEN_FALCON_SERVER_URL) : "localhost";
         this.endpoint = openFalconConfig.hasPath(OpenFalconContant.OPEN_FALCON_ENDPOINT)
-                ? config.getString(OpenFalconContant.OPEN_FALCON_ENDPOINT) : "localhost";
+                ? openFalconConfig.getString(OpenFalconContant.OPEN_FALCON_ENDPOINT) : "localhost";
         LOG.info("Creating Open-Falcon Generator... ");
         if (publishment.getProperties() != null) {
             this.generator = createOpenFalconGenerator();
