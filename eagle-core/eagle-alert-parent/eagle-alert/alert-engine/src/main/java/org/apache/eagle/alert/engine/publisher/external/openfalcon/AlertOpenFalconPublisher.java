@@ -31,10 +31,18 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
     @Override
     public void init(Config config, Publishment publishment, Map conf) throws Exception {
         super.init(config, publishment, conf);
+
+        Config openFalconConfig;
+        if (config.hasPath(OpenFalconContant.OPEN_FALCONF_CONFIG_ROOT)) {
+            openFalconConfig = config.getConfig(OpenFalconContant.OPEN_FALCONF_CONFIG_ROOT);
+        } else {
+            throw new Exception("must be config application.openFalcon.* in eagle.config");
+        }
+
         executorPool = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_CORE_SIZE, DEFAULT_THREAD_POOL_MAX_SIZE, DEFAULT_THREAD_POOL_SHRINK_TIME, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-        this.serverUrl = config.hasPath(OpenFalconContant.OPEN_FALCON_SERVER_URL)
+        this.serverUrl = openFalconConfig.hasPath(OpenFalconContant.OPEN_FALCON_SERVER_URL)
                 ? config.getString(OpenFalconContant.OPEN_FALCON_SERVER_URL) : "localhost";
-        this.endpoint = config.hasPath(OpenFalconContant.OPEN_FALCON_ENDPOINT)
+        this.endpoint = openFalconConfig.hasPath(OpenFalconContant.OPEN_FALCON_ENDPOINT)
                 ? config.getString(OpenFalconContant.OPEN_FALCON_ENDPOINT) : "localhost";
         LOG.info("Creating Open-Falcon Generator... ");
         if (publishment.getProperties() != null) {

@@ -1,6 +1,7 @@
 package org.apache.eagle.alert.engine.publisher.external.openfalcon;
 
 public class OpenFalconContant {
+    public static final String OPEN_FALCONF_CONFIG_ROOT = "application";
     public static final String OPEN_FALCON_SERVER_URL = "openFalcon.serverUrl";
     public static final String OPEN_FALCON_ENDPOINT = "openFalcon.endpoint";
 
