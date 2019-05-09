@@ -225,7 +225,7 @@
         <commons-collections.version>3.2.1</commons-collections.version>
         <commons-io.version>2.4</commons-io.version>
         <guice.version>3.0</guice.version>
-        <httpclient.version>4.5.2</httpclient.version>
+        <httpclient.version>4.4.11</httpclient.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
 
 
