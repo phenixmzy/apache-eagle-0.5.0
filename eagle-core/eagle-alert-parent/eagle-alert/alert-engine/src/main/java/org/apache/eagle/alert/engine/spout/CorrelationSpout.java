@@ -165,7 +165,6 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         context.registerMetric("kafkaSpout", kafkaSpoutMetric, 60);
 
         this.serializer = Serializers.newPartitionedEventSerializer(this);
-        printConfigMap("open", this.conf);
     }
 
     @Override
@@ -250,7 +249,6 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         Collection<String> newTopics = CollectionUtils.subtract(topics, cachedTopcies);
         Collection<String> removeTopics = CollectionUtils.subtract(cachedTopcies, topics);
         Collection<String> updateTopics = CollectionUtils.intersection(topics, cachedTopcies);
-        printMapStreamDefinition(sds);
         LOG.info("Topics were added={}, removed={}, modified={}", newTopics, removeTopics, updateTopics);
 
         // build lookup table for scheme
@@ -271,13 +269,12 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
                 continue;
             }
             try {
-                /*Config parseMapConfig = (com.typesafe.config.Config)ConfigFactory.parseMap(dataSourceProperties.get(topic));
+                /*
+                Config parseMapConfig = (com.typesafe.config.Config)ConfigFactory.parseMap(dataSourceProperties.get(topic));
                 Config fallBackConfig = parseMapConfig.withFallback(this.config);
-                printConfig("onReload-parseMapConfig",parseMapConfig);
-                printConfig("onReload-fallBackConfig",fallBackConfig);*/
+                */
 
                 Config configure = this.config.withFallback(ConfigFactory.parseMap(dataSourceProperties.get(topic)));
-                printConfig("onReload-withFallBackConfig-" + topic,configure);
                 KafkaSpoutWrapper newWrapper = createKafkaSpout(configure, conf, context, collector, topic,
                         newSchemaName.get(topic), newMeta, sds);
                 /*KafkaSpoutWrapper newWrapper = createKafkaSpout(ConfigFactory.parseMap(dataSourceProperties.get(topic)).withFallback(this.config),
@@ -315,30 +312,6 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         this.sds = sds;
 
         LOG.info("after CorrelationSpout reloads, {} kafkaSpouts are generated for {} topics", kafkaSpoutList.size(), topics.size());
-    }
-
-    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
-        Iterator<Map.Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
-        }
-    }
-
-    private void printConfig(String title, Config configure) {
-        Iterator<Map.Entry<String, ConfigValue>> it = configure.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{} {}={}",title, entry.getKey(), entry.getValue());
-        }
-    }
-
-    private void printConfigMap(String title, Map configure) {
-        Iterator<Map.Entry<String, ConfigValue>> it = configure.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{} {}={}",title, entry.getKey(), entry.getValue());
-        }
     }
 
     /**
@@ -404,8 +377,7 @@ public class CorrelationSpout extends BaseRichSpout implements SpoutSpecListener
         if (configure.hasPath("spout.stormKafkaStartOffsetTime")) {
             spoutConfig.startOffsetTime = configure.getInt("spout.stormKafkaStartOffsetTime");
         }
-        printConfig("createKafkaSpout-printConfig",configure);
-        printConfigMap("createKafkaSpout-printConfiMap",conf);
+
         LOG.info("brokerZkPath={},brokerZkStr={}",((ZkHosts) hosts).brokerZkPath,((ZkHosts) hosts).brokerZkStr);
         spoutConfig.scheme = createMultiScheme(conf, topic, schemeClsName);
         KafkaSpoutWrapper wrapper = new KafkaSpoutWrapper(spoutConfig, kafkaSpoutMetric);

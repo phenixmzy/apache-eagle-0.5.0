@@ -143,7 +143,6 @@ public abstract class AbstractStreamBolt extends BaseRichBolt implements Seriali
     @Override
     public StreamDefinition getStreamDefinition(String streamId) throws StreamNotDefinedException {
         LOG.info("Get By StreamId: {}", streamId);
-        printMapStreamDefinition("Show StreamDefinition", sdf);
         if (sdf.containsKey(streamId)) {
             return sdf.get(streamId);
         } else {
@@ -155,13 +154,4 @@ public abstract class AbstractStreamBolt extends BaseRichBolt implements Seriali
         return boltId;
     }
 
-
-    private void printMapStreamDefinition(String title, Map<String, StreamDefinition> sds) {
-        LOG.info("printMapStreamDefinition Show Title: {}! sds.size:{}", title, sds.size());
-        Iterator<Map.Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
-        }
-    }
 }

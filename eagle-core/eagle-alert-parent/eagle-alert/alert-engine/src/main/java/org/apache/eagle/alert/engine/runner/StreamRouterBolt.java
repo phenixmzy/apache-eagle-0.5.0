@@ -98,8 +98,6 @@ public class StreamRouterBolt extends AbstractStreamBolt implements StreamRouter
     public synchronized void onStreamRouteBoltSpecChange(RouterSpec spec, Map<String, StreamDefinition> sds) {
         LOG.info("Start StreamRouterBlot#onStreamRouteBoltSpecChange");
         sanityCheck(spec);
-
-        printMapStreamDefinition(sds);
         LOG.info("specVersion:{}",spec.getVersion());
 
         // figure out added, removed, modified StreamSortSpec
@@ -187,13 +185,5 @@ public class StreamRouterBolt extends AbstractStreamBolt implements StreamRouter
 
     public StreamRouter getStreamRouter() {
         return router;
-    }
-
-    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
-        Iterator<Map.Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
-        }
     }
 }

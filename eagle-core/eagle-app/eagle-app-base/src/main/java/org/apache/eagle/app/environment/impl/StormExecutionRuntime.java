@@ -139,7 +139,6 @@ public class StormExecutionRuntime implements ExecutionRuntime<StormEnvironment,
 
     @Override
     public void start(Application<StormEnvironment, StormTopology> executor, com.typesafe.config.Config config) {
-        //printConfig("start-start", config);
         String topologyName = config.getString("appId");
         Preconditions.checkNotNull(topologyName,"[appId] is required by null for " + executor.getClass().getCanonicalName());
         StormTopology topology = executor.execute(config, environment);
@@ -168,7 +167,6 @@ public class StormExecutionRuntime implements ExecutionRuntime<StormEnvironment,
             LOG.info("Submitted");
         }
         LOG.info("Started {} ({})",topologyName,executor.getClass().getCanonicalName());
-        //printConfig("start-end", config);
     }
 
     @Override
