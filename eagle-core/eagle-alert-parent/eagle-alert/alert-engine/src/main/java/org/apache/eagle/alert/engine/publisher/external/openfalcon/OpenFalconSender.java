@@ -42,15 +42,7 @@ public class OpenFalconSender implements Runnable {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpPost post = new HttpPost(this.context.getOpenFalconServerUrl());
             post.addHeader("Content-Type", "application/json");
-            JSONObject json = new JSONObject();
-            json.put("metric", this.context.getOpenFalconMetric());
-            json.put("endpoint", this.context.getOpenFalconEndpoint());
-            json.put("timestamp", this.context.getOpenFalconTimestamp());
-            json.put("step", this.context.getOpenFalconStep());
-            json.put("value",this.context.getOpenFalconValue());
-            json.put("counterType", this.context.getOpenFalconCounterType());
-            json.put("tag", this.context.getOpenFalconTag());
-            array.add(json);
+            array.add(createSendMessage());
 
             StringEntity entity = new StringEntity(array.toString(), "utf-8");
             post.setEntity(entity);
@@ -67,9 +59,21 @@ public class OpenFalconSender implements Runnable {
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
         } finally {
-            if(response !=null) {
+            if(response != null) {
                 response.close();
             }
         }
+    }
+
+    private JSONObject createSendMessage() {
+        JSONObject json = new JSONObject();
+        json.put("metric", this.context.getOpenFalconMetric());
+        json.put("endpoint", this.context.getOpenFalconEndpoint());
+        json.put("timestamp", this.context.getOpenFalconTimestamp());
+        json.put("step", this.context.getOpenFalconStep());
+        json.put("value",this.context.getOpenFalconValue());
+        json.put("counterType", this.context.getOpenFalconCounterType());
+        json.put("tag", this.context.getOpenFalconTag());
+        return json;
     }
 }
