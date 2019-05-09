@@ -108,4 +108,6 @@ Apache HBase 1.4.9 (1.x later)
 Apache Kafak 1.0.0(1.x later)
 
 ## 初始化系统 
-1 导入metadata-ddl.sql,初始化mysql元数据表
+1 导入metadata-ddl.sql和init.sql,初始化mysql元数据表
+${eagle_home}/eagle-assembly/src/main/doc/metadata-ddl.sql
+${eagle_home}/eagle-core/eagle-alert-parent/alert-metadata-parent/alert-metadata/src/test/source/init.sql
