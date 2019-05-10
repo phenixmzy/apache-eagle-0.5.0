@@ -73,6 +73,11 @@ public class OpenFalconGenerator {
     }
 
     private OpenFalconContext buildAlertContext(AlertStreamEvent event) {
+        LOG.info("siteId:{}, subject:{}, timestamp:{}, data:{}, dataMap:{}, endpoint:{}, serverUrl:{}",
+                event.getSiteId(), event.getSubject(), event.getTimestamp(),
+                event.getData().toString(), event.getDataMap().toString(),
+                this.endpoint,this.serverURL
+        );
         OpenFalconContext context = new OpenFalconContext();
         String metric = event.getSiteId() + "-" + event.getSubject();
         context.setOpenFalconTag(event.getDataMap().toString());

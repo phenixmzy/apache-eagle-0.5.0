@@ -9,27 +9,26 @@ public class OpenFalconContext {
     private int openFalconValue;
     private String openFalconTag;
     private String openFalconServerUrl;
+    private String openFalconCounterType;
+
+    public OpenFalconContext() {}
 
     public String getOpenFalconCounterType() {
-        return openFalconCounterType;
+        return this.openFalconCounterType;
     }
 
     public void setOpenFalconCounterType(String openFalconCounterType) {
         this.openFalconCounterType = openFalconCounterType;
     }
 
-    private String openFalconCounterType;
-
     public String getOpenFalconMetric() {
-        return openFalconMetric;
+        return this.openFalconMetric;
     }
 
-    public void setOpenFalconMetric(String openFalconMetric) {
-        this.openFalconMetric = openFalconMetric;
-    }
+    public void setOpenFalconMetric(String openFalconMetric) { this.openFalconMetric = openFalconMetric; }
 
     public String getOpenFalconEndpoint() {
-        return openFalconEndpoint;
+        return this.openFalconEndpoint;
     }
 
     public void setOpenFalconEndpoint(String openFalconEndpoint) {
@@ -37,7 +36,7 @@ public class OpenFalconContext {
     }
 
     public long getOpenFalconTimestamp() {
-        return openFalconTimestamp;
+        return this.openFalconTimestamp;
     }
 
     public void setOpenFalconTimestamp(long openFalconTimestamp) {
@@ -45,7 +44,7 @@ public class OpenFalconContext {
     }
 
     public int getOpenFalconStep() {
-        return openFalconStep;
+        return this.openFalconStep;
     }
 
     public void setOpenFalconStep(int openFalconStep) {
@@ -53,7 +52,7 @@ public class OpenFalconContext {
     }
 
     public int getOpenFalconValue() {
-        return openFalconValue;
+        return this.openFalconValue;
     }
 
     public void setOpenFalconValue(int openFalconValue) {
@@ -61,15 +60,13 @@ public class OpenFalconContext {
     }
 
     public String getOpenFalconTag() {
-        return openFalconTag;
+        return this.openFalconTag;
     }
 
-    public void setOpenFalconTag(String openFalconTag) {
-        this.openFalconTag = openFalconTag;
-    }
+    public void setOpenFalconTag(String openFalconTag) { this.openFalconTag = openFalconTag; }
 
     public String getOpenFalconServerUrl() {
-        return openFalconServerUrl;
+        return this.openFalconServerUrl;
     }
 
     public void setOpenFalconServerUrl(String openFalconServerUrl) {
