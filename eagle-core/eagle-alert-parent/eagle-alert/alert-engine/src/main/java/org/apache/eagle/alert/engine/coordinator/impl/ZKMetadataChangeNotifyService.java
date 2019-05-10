@@ -115,8 +115,6 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
             return;
         }
         Map<String, StreamDefinition> sds = getStreams(state.getStreamSnapshots());
-        LOG.info("version:{}", version);
-        printMapStreamDefinition(sds);
         switch (type) {
             case ALERT_BOLT:
                 // we might query metadata service query get metadata snapshot and StreamDefinition
@@ -179,10 +177,9 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
     private Map<String, StreamDefinition> getStreams(List<VersionedStreamDefinition> streamSnapshots) {
         Map<String, StreamDefinition> result = new HashMap<String, StreamDefinition>();
         for (VersionedStreamDefinition vsd : streamSnapshots) {
-            LOG.info("streamId:{}, {}",vsd.getDefinition().getStreamId(), vsd.getDefinition().toString());
+            //LOG.info("streamId:{}, {}",vsd.getDefinition().getStreamId(), vsd.getDefinition().toString());
             result.put(vsd.getDefinition().getStreamId(), vsd.getDefinition());
         }
-        LOG.info("getStreams Size:{}", result.size());
         return result;
     }
 
@@ -192,13 +189,5 @@ public class ZKMetadataChangeNotifyService extends AbstractMetadataChangeNotifyS
             result.put(sd.getDefinition().getName(), sd.getDefinition());
         }
         return result;
-    }
-
-    private void printMapStreamDefinition(Map<String, StreamDefinition> sds) {
-        Iterator<Entry<String, StreamDefinition>> it = sds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{},{}", entry.getKey(), entry.getValue().toString());
-        }
     }
 }

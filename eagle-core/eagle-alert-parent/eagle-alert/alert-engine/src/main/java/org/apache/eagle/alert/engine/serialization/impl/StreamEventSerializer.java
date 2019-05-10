@@ -97,7 +97,6 @@ public class StreamEventSerializer implements Serializer<StreamEvent> {
         if (metaVersion.equals("null")) {
             metaVersion = null;
         }
-        LOG.info("metaVersionStreamId:{}, streamId:{}, metaVersion:{}", metaVersionStreamId, streamId, metaVersion);
         event.setStreamId(streamId);
         event.setMetaVersion(metaVersion);
 
