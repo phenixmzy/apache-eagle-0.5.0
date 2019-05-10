@@ -22,8 +22,8 @@ public class OpenFalconSender implements Runnable {
     public OpenFalconSender(OpenFalconContext context) {
         this.context = context;
         threadName = Thread.currentThread().getName();
-        LOG.info("Initialized {}: serverUrl is : ", this.threadName, this.context.getOpenFalconServerUrl());
-        LOG.info("Initialized {}", this.context.toString());
+        LOG.info("Initialized [threadName:{}, serverUrl:{}, context:{} ]",
+                this.threadName, this.context.getOpenFalconServerUrl(), this.context.toString());
     }
 
     @Override
@@ -43,8 +43,8 @@ public class OpenFalconSender implements Runnable {
             HttpPost post = new HttpPost(this.context.getOpenFalconServerUrl());
             post.addHeader("Content-Type", "application/json");
             array.add(createSendMessage());
-            LOG.info("send msg:", array.toJSONString());
-            StringEntity entity = new StringEntity(array.toString(), "utf-8");
+            LOG.info("Send To Open-Falcon msg:", array.toJSONString());
+            StringEntity entity = new StringEntity(array.toJSONString(), "utf-8");
             post.setEntity(entity);
             CloseableHttpClient httpclient = HttpClients.createDefault();
             response  = httpclient.execute(post);
