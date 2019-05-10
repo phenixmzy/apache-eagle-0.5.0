@@ -43,7 +43,7 @@ public class OpenFalconSender implements Runnable {
             HttpPost post = new HttpPost(this.context.getOpenFalconServerUrl());
             post.addHeader("Content-Type", "application/json");
             array.add(createSendMessage());
-
+            LOG.info("send msg:", array.toJSONString());
             StringEntity entity = new StringEntity(array.toString(), "utf-8");
             post.setEntity(entity);
             CloseableHttpClient httpclient = HttpClients.createDefault();
