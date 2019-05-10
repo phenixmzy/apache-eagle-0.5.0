@@ -65,7 +65,9 @@ public class OpenFalconContext {
         return this.openFalconTag;
     }
 
-    public void setOpenFalconTag(String openFalconTag) { this.openFalconTag = openFalconTag; }
+    public void setOpenFalconTag(String openFalconTag) {
+        this.openFalconTag = openFalconTag;
+    }
 
     public String getOpenFalconServerUrl() {
         return this.openFalconServerUrl;
