@@ -78,7 +78,7 @@ public class OpenFalconContext {
     }
 
     public String toString() {
-        return String.format("OpenFalconContext[metric:{}, endpoint:{}, timestamp:{}, step:{}, value:{}, tag:{},serverUrl:{} ]",
+        return String.format("OpenFalconContext[metric:%s, endpoint:%s, timestamp:%s, step:%s, value:%s, tag:%s,serverUrl:%s ]",
                 this.openFalconMetric, this.openFalconEndpoint, this.openFalconTimestamp,
                 this.openFalconStep, this.openFalconValue, this.openFalconTag, this.openFalconServerUrl);
     }
