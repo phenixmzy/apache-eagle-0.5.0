@@ -24,6 +24,7 @@ public class OpenFalconGenerator {
             throw new IllegalStateException("Invoking thread executor pool but it's is not set yet");
         }
         OpenFalconContext context = buildAlertContext(event);
+        LOG.info("sendAlertOpenFalcon check-OpenFalconContext {}-{}",context.getOpenFalconMetric(), context.getOpenFalconTag());
         OpenFalconSender sender = new OpenFalconSender(context);
         Future<?> future = this.executorPool.submit(sender);
         Boolean status;
@@ -90,6 +91,7 @@ public class OpenFalconGenerator {
         context.setOpenFalconCounterType(OpenFalconContant.OPEN_FALCON_COUNT_TYPE_DEFAULT_VALUE);
         LOG.info("buildAlertContext AlertStreamEvent{}",event.toString());
         LOG.info("buildAlertContext OpenFalconContext{}", context.toString());
+
         return context;
     }
 }
