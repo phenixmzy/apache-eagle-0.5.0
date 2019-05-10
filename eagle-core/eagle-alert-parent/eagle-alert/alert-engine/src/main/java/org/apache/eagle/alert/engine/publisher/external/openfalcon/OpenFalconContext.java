@@ -25,7 +25,9 @@ public class OpenFalconContext {
         return this.openFalconMetric;
     }
 
-    public void setOpenFalconMetric(String openFalconMetric) { this.openFalconMetric = openFalconMetric; }
+    public void setOpenFalconMetric(String openFalconMetric) {
+        this.openFalconMetric = openFalconMetric;
+    }
 
     public String getOpenFalconEndpoint() {
         return this.openFalconEndpoint;
