@@ -23,6 +23,7 @@ public class OpenFalconSender implements Runnable {
         this.context = context;
         threadName = Thread.currentThread().getName();
         LOG.info("Initialized " + threadName + ": serverUrl is : " + this.context.getOpenFalconServerUrl());
+        LOG.info("Initialized {}" + this.context.toString());
     }
 
     @Override

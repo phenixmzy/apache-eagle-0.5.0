@@ -73,6 +73,7 @@ public class OpenFalconGenerator {
     }
 
     private OpenFalconContext buildAlertContext(AlertStreamEvent event) {
+        LOG.info(event.toString());
         OpenFalconContext context = new OpenFalconContext();
         String metric = event.getSiteId() + "-" + event.getSubject();
         context.setOpenFalconTag(event.getDataMap().toString());
@@ -83,6 +84,7 @@ public class OpenFalconGenerator {
         context.setOpenFalconStep(OpenFalconContant.OPEN_FALCON_STEP_DEFAULT_VALUE);
         context.setOpenFalconValue(OpenFalconContant.OPEN_FALCON_VALUE_DEFAULT_VALUE);
         context.setOpenFalconCounterType(OpenFalconContant.OPEN_FALCON_COUNT_TYPE_DEFAULT_VALUE);
+        LOG.info("buildAlertContext {}", context.toString());
         return context;
     }
 }
