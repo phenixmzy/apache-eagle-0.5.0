@@ -7,21 +7,38 @@
   "input": [
     {
       "component": "namenode",
-      "host": "sandbox.hortonworks.com",
+      "host": "nn_01",
       "port": "50070",
-      "https": false
+      "https": false,
+      "kafka_topic": "nn_jmx_metric_sandbox"
+    },
+    {
+      "component": "namenode",
+      "host": "nn_02",
+      "port": "50070",
+      "https": false,
+      "kafka_topic": "nn_jmx_metric_sandbox"
     },
     {
       "component": "resourcemanager",
-      "host": "sandbox.hortonworks.com",
+      "host": "rm_01",
       "port": "19888",
-      "https": false
+      "https": false,
+      "kafka_topic": "rm_jmx_metric_sandbox"
+    },
+    {
+      "component": "resourcemanager",
+      "host": "rm_02",
+      "port": "19888",
+      "https": false,
+      "kafka_topic": "rm_jmx_metric_sandbox"
     },
     {
       "component": "datanode",
       "host": "sandbox.hortonworks.com",
       "port": "50075",
-      "https": false
+      "https": false,
+      "kafka_topic": "dn_jmx_metric_sandbox"
     }
   ],
   "filter": {
