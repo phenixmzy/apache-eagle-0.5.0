@@ -9,29 +9,25 @@
       "component": "namenode",
       "host": "nn_01",
       "port": "50070",
-      "https": false,
-      "kafka_topic": "nn_jmx_metric_sandbox"
+      "https": false
     },
     {
       "component": "namenode",
       "host": "nn_02",
       "port": "50070",
-      "https": false,
-      "kafka_topic": "nn_jmx_metric_sandbox"
+      "https": false
     },
     {
       "component": "resourcemanager",
       "host": "rm_01",
       "port": "19888",
-      "https": false,
-      "kafka_topic": "rm_jmx_metric_sandbox"
+      "https": false
     },
     {
       "component": "resourcemanager",
       "host": "rm_02",
       "port": "19888",
-      "https": false,
-      "kafka_topic": "rm_jmx_metric_sandbox"
+      "https": false
     },
     {
       "component": "datanode",
