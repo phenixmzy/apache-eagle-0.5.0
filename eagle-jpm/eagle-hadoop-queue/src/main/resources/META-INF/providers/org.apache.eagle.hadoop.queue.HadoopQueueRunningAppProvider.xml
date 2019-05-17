@@ -29,6 +29,13 @@
             <required>true</required>
         </property>
         <property>
+            <name>dataSourceConfig.scheduler</name>
+            <displayName>Resource Manager End Points</displayName>
+            <description>scheduler type:[Fair, Capacity, Fifo]</description>
+            <value>Fair</value>
+            <required>true</required>
+        </property>
+        <property>
             <name>workers</name>
             <displayName>Storm Worker Number</displayName>
             <description>the number of storm worker</description>
