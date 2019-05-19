@@ -34,20 +34,16 @@ public class FairSchedulerInfoParseListener {
         this.collector = collector;
     }
 
-    public void onMetric(FairSchedulerInfo scheduler, long currentTimestamp) throws Exception {
+    public void onMetric(FairSchedulerInfo fairScheduler, long currentTimestamp) throws Exception {
         Map<String, String> tags = buildMetricTags(null, null);
-       /*
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_CAPACITY, tags, currentTimestamp, scheduler.getCapacity());
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_USED_CAPACITY, tags, currentTimestamp, scheduler.getUsedCapacity());
-
-        for (Queue queue : scheduler.getQueues().getQueue()) {
-            createQueues(queue, currentTimestamp, scheduler, null);
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_CAPACITY, tags, currentTimestamp, 0 /*scheduler.getCapacity()*/);
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_USED_CAPACITY, tags, currentTimestamp, 0/* scheduler.getUsedCapacity()*/);
+        for (FairChildQueues childQueue : fairScheduler.getRootQueue().getChildQueues()) {
+            createQueues(childQueue, currentTimestamp, fairScheduler, null);
         }
-       */
     }
 
     public void flush() {
-        /*
         LOG.info("Flushing {} RunningQueue metrics in memory", metricEntities.size());
         HadoopQueueMessageId messageId = new HadoopQueueMessageId(HadoopClusterConstants.DataType.METRIC, HadoopClusterConstants.DataSource.SCHEDULER, System.currentTimeMillis());
         List<GenericMetricEntity> metrics = new ArrayList<>(metricEntities);
@@ -60,7 +56,7 @@ public class FairSchedulerInfoParseListener {
 
         runningQueueAPIEntities.clear();
         metricEntities.clear();
-        */
+
     }
 
     private Map<String, String> buildMetricTags(String queueName, String parentQueueName) {
@@ -84,58 +80,39 @@ public class FairSchedulerInfoParseListener {
         this.metricEntities.add(e);
     }
 
-    private List<String> createQueues(Queue queue, long currentTimestamp, SchedulerInfo scheduler, String parentQueueName) throws Exception {
-        /*
-        RunningQueueAPIEntity _entity = new RunningQueueAPIEntity();
+    private List<String> createQueues(FairChildQueues queue, long currentTimestamp, FairSchedulerInfo scheduler, String parentQueueName) throws Exception {
+
+        FairRunningQueueAPIEntity _entity = new FairRunningQueueAPIEntity();
         Map<String, String> _tags = buildMetricTags(queue.getQueueName(), parentQueueName);
         _entity.setTags(_tags);
-        _entity.setState(queue.getState());
-        _entity.setScheduler(scheduler.getType());
-        _entity.setAbsoluteCapacity(queue.getAbsoluteCapacity());
-        _entity.setAbsoluteMaxCapacity(queue.getAbsoluteMaxCapacity());
-        _entity.setAbsoluteUsedCapacity(queue.getAbsoluteUsedCapacity());
-        _entity.setMemory(queue.getResourcesUsed().getMemory());
-        _entity.setVcores(queue.getResourcesUsed().getvCores());
-        _entity.setNumActiveApplications(queue.getNumApplications());
-        _entity.setNumPendingApplications(queue.getNumPendingApplications());
-        _entity.setMaxActiveApplications(queue.getMaxActiveApplications());
-        _entity.setTimestamp(currentTimestamp);
-        _entity.setUserLimitFactor(queue.getUserLimitFactor());
 
-        List<UserWrapper> userList = new ArrayList<>();
-        if (queue.getUsers() != null && queue.getUsers().getUser() != null) {
-            for (User user : queue.getUsers().getUser()) {
-                userList.add(wrapUser(user));
-            }
-        }
-        UserWrappers users = new UserWrappers();
-        users.setUsers(userList);
-        _entity.setUsers(users);
+        _entity.setScheduler(scheduler.getType());
+        _entity.setTimestamp(currentTimestamp);
+
         runningQueueAPIEntities.add(_entity);
 
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_NUMPENDING_JOBS, _tags, currentTimestamp, queue.getNumPendingApplications());
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY, _tags, currentTimestamp, queue.getAbsoluteUsedCapacity());
-        if (queue.getAbsoluteCapacity() == 0) {
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_NUMPENDING_JOBS, _tags, currentTimestamp, queue.getNumActiveApps());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY, _tags, currentTimestamp, queue.getUsedResources().getMemory());
+        createMetric("root.allocated.containers", _tags, currentTimestamp, queue.getAllocatedContainers());
+        createMetric("root.pending.containers", _tags, currentTimestamp, queue.getPendingContainers());
+        if (queue.getUsedResources().getMemory() == 0 && queue.getUsedResources().getvCores() == 0) {
             createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, 0);
         } else {
-            createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, queue.getAbsoluteUsedCapacity() / queue.getAbsoluteCapacity());
-        }
-
-        if (queue.getUsers() != null && queue.getUsers().getUser() != null) {
-            for (User user : queue.getUsers().getUser()) {
-                Map<String, String> userTags = new HashMap<>(_tags);
-                userTags.put(HadoopClusterConstants.TAG_USER, user.getUsername());
-                createMetric(HadoopClusterConstants.MetricName.HADOOP_USER_NUMPENDING_JOBS, userTags, currentTimestamp, user.getNumPendingApplications());
-                createMetric(HadoopClusterConstants.MetricName.HADOOP_USER_USED_MEMORY, userTags, currentTimestamp, user.getResourcesUsed().getMemory());
-                createMetric(HadoopClusterConstants.MetricName.HADOOP_USER_USED_MEMORY_RATIO, userTags, currentTimestamp,
-                        ((double) user.getResourcesUsed().getMemory()) / queue.getResourcesUsed().getMemory());
+            if (queue.getSchedulingPolicy().toLowerCase().equals("fair")) {
+                createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, queue.getUsedResources().getMemory() / queue.getClusterResources().getMemory());
+            } else if (queue.getSchedulingPolicy().toLowerCase().equals("drf")) {
+                double resourceRatio = Math.max(
+                        (queue.getUsedResources().getMemory() / queue.getClusterResources().getMemory()),
+                        queue.getUsedResources().getvCores() / queue.getClusterResources().getvCores());
+                createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, resourceRatio);
             }
         }
 
         List<String> subQueues = new ArrayList<>();
         List<String> allSubQueues = new ArrayList<>();
-        if (queue.getQueues() != null && queue.getQueues().getQueue() != null) {
-            for (Queue subQueue : queue.getQueues().getQueue()) {
+
+        if (queue.getChildQueues() != null) {
+            for (FairChildQueues subQueue : queue.getChildQueues()) {
                 subQueues.add(subQueue.getQueueName());
                 allSubQueues.add(subQueue.getQueueName());
                 List<String> queues = createQueues(subQueue, currentTimestamp, scheduler, queue.getQueueName());
@@ -148,9 +125,6 @@ public class FairSchedulerInfoParseListener {
         queueStructureAPIEntity.setAllSubQueues(allSubQueues);
         queueStructureAPIEntity.setLastUpdateTime(currentTimestamp);
         runningQueueAPIEntities.add(queueStructureAPIEntity);
-
         return allSubQueues;
-        */
-        return null;
     }
 }
