@@ -18,6 +18,7 @@
 
 package org.apache.eagle.hadoop.queue.storm;
 
+import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairSchedulerInfoCrawler;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
 import org.apache.eagle.hadoop.queue.crawler.ClusterMetricsCrawler;
@@ -43,6 +44,7 @@ public class HadoopQueueRunningExtractor {
 
     private String site;
     private String urlBases;
+    private String scheduler;
 
     private HAURLSelector urlSelector;
     private ExecutorService executorService;
@@ -51,6 +53,7 @@ public class HadoopQueueRunningExtractor {
     public HadoopQueueRunningExtractor(HadoopQueueRunningAppConfig eagleConf, SpoutOutputCollector collector) {
         site = eagleConf.eagleProps.site;
         urlBases = eagleConf.dataSourceConfig.rMEndPoints;
+        scheduler = eagleConf.dataSourceConfig.scheduler;
         if (urlBases == null) {
             throw new IllegalArgumentException(site + ".baseUrl is null");
         }
@@ -71,7 +74,12 @@ public class HadoopQueueRunningExtractor {
         futures.add(executorService.submit(new ClusterMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
         // move RunningAppCrawler into MRRunningJobApp
         //futures.add(executorService.submit(new RunningAppsCrawler(site, selectedUrl, collector)));
-        futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
+        /*futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));*/
+        if (scheduler.equals("Capacity")) {
+            futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
+        } else if (scheduler.equals("Fair")) {
+            futures.add(executorService.submit(new FairSchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), scheduler, collector)));
+        }
         futures.forEach(future -> {
             try {
                 future.get(MAX_WAIT_TIME * 1000, TimeUnit.MILLISECONDS);
