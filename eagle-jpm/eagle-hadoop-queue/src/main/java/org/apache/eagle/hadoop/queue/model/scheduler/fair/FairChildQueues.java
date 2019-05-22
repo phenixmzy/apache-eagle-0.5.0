@@ -1,6 +1,7 @@
 package org.apache.eagle.hadoop.queue.model.scheduler.fair;
 
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

@@ -76,7 +76,7 @@ public class FairSchedulerInfoParseListener {
         e.setPrefix(metricName);
         e.setTimestamp(timestamp);
         e.setTags(tags);
-        e.setValue(new double[] {value});
+        e.setValue(new double[]{value});
         this.metricEntities.add(e);
     }
 

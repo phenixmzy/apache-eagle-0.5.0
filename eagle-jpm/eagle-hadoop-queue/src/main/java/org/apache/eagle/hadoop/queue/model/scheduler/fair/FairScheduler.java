@@ -9,8 +9,10 @@ public class FairScheduler {
     public FairSchedulerInfo getSchedulerInfo() {
         return schedulerInfo;
     }
+
     public void setSchedulerInfo(FairSchedulerInfo schedulerInfo) {
         this.schedulerInfo = schedulerInfo;
     }
+
     private FairSchedulerInfo schedulerInfo;
 }
