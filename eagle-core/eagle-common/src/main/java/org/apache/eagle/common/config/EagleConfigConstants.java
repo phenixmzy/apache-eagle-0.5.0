@@ -35,7 +35,7 @@ public final class EagleConfigConstants {
     public static final String AUTO_CREATE_TABLE = "storage.hbase.autoCreateTable";
 
     public static final String EAGLE_TIME_ZONE = "service.timezone";
-    public static final String DEFAULT_EAGLE_TIME_ZONE = "UTC";
+    public static final String DEFAULT_EAGLE_TIME_ZONE = "Asia/Chongqing";
 
     public static final int DEFAULT_THREAD_POOL_CORE_SIZE = 10;
     public static final int DEFAULT_THREAD_POOL_MAX_SIZE = 20;
