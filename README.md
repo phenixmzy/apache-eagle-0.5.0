@@ -111,3 +111,14 @@ Apache Kafak 1.0.0(1.x later)
 1 导入metadata-ddl.sql和init.sql,初始化mysql元数据表
 ${eagle_home}/eagle-assembly/src/main/doc/metadata-ddl.sql
 ${eagle_home}/eagle-core/eagle-alert-parent/alert-metadata-parent/alert-metadata/src/test/source/init.sql
+
+## OS系统参数监控功能需安装以下工具
+yum -y install sysstat
+yum -y install smartmontools
+
+cd $eagle_home/lib/scripts/hadoop_jmx_collector
+定时执行
+python hadoop_jmx_kafka.py hadoop_jmx_config.json
+python system_metric_collector.py system_metric_config.json
+
+把hadoop,os 监控参数push 到kafka 对应的topic
