@@ -99,7 +99,8 @@ public class FairSchedulerInfoParseListener {
             createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, 0);
         } else {
             if (queue.getSchedulingPolicy().toLowerCase().equals("fair")) {
-                createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, queue.getUsedResources().getMemory() / queue.getClusterResources().getMemory());
+                createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp,
+                        queue.getUsedResources().getMemory() / queue.getClusterResources().getMemory());
             } else if (queue.getSchedulingPolicy().toLowerCase().equals("drf")) {
                 double resourceRatio = Math.max(
                         (queue.getUsedResources().getMemory() / queue.getClusterResources().getMemory()),
