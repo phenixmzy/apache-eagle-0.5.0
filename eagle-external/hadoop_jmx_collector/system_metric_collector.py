@@ -38,8 +38,8 @@ class SystemMetricCollector(MetricCollector):
             self.collect_loadavg_metric,
             self.collect_cpu_temp_metric,
             self.collect_nic_metric,
-            self.collect_smartdisk_metric,
-            self.collect_diskstat_metric
+            self.collect_smartdisk_metric
+            #self.collect_diskstat_metric
         )
 
     def try_exec_func(self, *funcs):
