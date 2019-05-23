@@ -122,3 +122,7 @@ python hadoop_jmx_kafka.py hadoop_jmx_config.json
 python system_metric_collector.py system_metric_config.json
 
 把hadoop,os 监控参数push 到kafka 对应的topic
+
+## 关于WEB UI 时区问题
+timeSrv.js#Server.getPromise().then(function () 函数中,只是识别UTC和GMT,因此,如果要自动显示中国、亚洲时间,
+需要在conf/eagle.conf 文件里面设置service.timezone = "GMT+8"
