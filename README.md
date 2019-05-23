@@ -110,7 +110,7 @@ Apache Kafak 1.0.0(1.x later)
 ## 初始化系统 
 1 导入metadata-ddl.sql和init.sql,初始化mysql元数据表
 ${eagle_home}/eagle-assembly/src/main/doc/metadata-ddl.sql
-${eagle_home}/eagle-core/eagle-alert-parent/alert-metadata-parent/alert-metadata/src/test/source/init.sql
+${eagle_home}/eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/source/init.sql
 
 ## OS系统参数监控功能需安装以下工具
 yum -y install sysstat
