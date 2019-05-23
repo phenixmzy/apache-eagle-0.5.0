@@ -30,7 +30,7 @@
         </property>
         <property>
             <name>dataSourceConfig.scheduler</name>
-            <displayName>Resource Manager End Points</displayName>
+            <displayName>Yarn Scheduler</displayName>
             <description>scheduler type:[Fair, Capacity, Fifo]</description>
             <value>Fair</value>
             <required>true</required>
