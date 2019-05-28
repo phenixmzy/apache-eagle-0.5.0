@@ -75,11 +75,8 @@ public class HadoopQueueRunningExtractor {
         // move RunningAppCrawler into MRRunningJobApp
         //futures.add(executorService.submit(new RunningAppsCrawler(site, selectedUrl, collector)));
         /*futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));*/
-        if (scheduler.equals("Capacity")) {
-            futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
-        } else if (scheduler.equals("Fair")) {
-            futures.add(executorService.submit(new FairSchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), scheduler, collector)));
-        }
+        futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
+
         futures.forEach(future -> {
             try {
                 future.get(MAX_WAIT_TIME * 1000, TimeUnit.MILLISECONDS);
