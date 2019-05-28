@@ -36,9 +36,18 @@ public class FairSchedulerInfoParseListener {
 
     public void onMetric(FairSchedulerInfo fairScheduler, long currentTimestamp) throws Exception {
         Map<String, String> tags = buildMetricTags(null, null);
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_CAPACITY, tags, currentTimestamp, 0 /*scheduler.getCapacity()*/);
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_USED_CAPACITY, tags, currentTimestamp, 0/* scheduler.getUsedCapacity()*/);
-        for (FairChildQueues childQueue : fairScheduler.getRootQueue().getChildQueues()) {
+        FairChildQueues queues = fairScheduler.getRootQueue();
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_FAIR_ALLOCATED_CONTAINERS, tags, currentTimestamp, queues.getAllocatedContainers());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_FAIR_PENDING_CONTAINERS, tags, currentTimestamp, queues.getPendingContainers());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_FAIR_RESERVED_CONTAINERS, tags, currentTimestamp, queues.getReservedContainers());
+
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_QUEUE_CLUSTER_RESOURCE_MEM, tags, currentTimestamp, queues.getClusterResources().getMemory());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_QUEUE_CLUSTER_RESOURCE_VCORE, tags, currentTimestamp, queues.getClusterResources().getvCores());
+
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_QUEUE_USED_RESOURCE_MEM, tags, currentTimestamp, queues.getUsedResources().getMemory());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_CLUSTER_QUEUE_USED_RESOURCE_VCORE, tags, currentTimestamp, queues.getUsedResources().getvCores());
+
+        for (FairChildQueue childQueue : fairScheduler.getRootQueue().getChildQueues()) {
             createQueues(childQueue, currentTimestamp, fairScheduler, null);
         }
     }
@@ -56,7 +65,6 @@ public class FairSchedulerInfoParseListener {
 
         runningQueueAPIEntities.clear();
         metricEntities.clear();
-
     }
 
     private Map<String, String> buildMetricTags(String queueName, String parentQueueName) {
@@ -80,21 +88,47 @@ public class FairSchedulerInfoParseListener {
         this.metricEntities.add(e);
     }
 
-    private List<String> createQueues(FairChildQueues queue, long currentTimestamp, FairSchedulerInfo scheduler, String parentQueueName) throws Exception {
+    private List<String> createQueues(FairChildQueue queue, long currentTimestamp, FairSchedulerInfo scheduler, String parentQueueName) throws Exception {
 
         FairRunningQueueAPIEntity _entity = new FairRunningQueueAPIEntity();
         Map<String, String> _tags = buildMetricTags(queue.getQueueName(), parentQueueName);
         _entity.setTags(_tags);
-
+        _entity.setMaxApps(queue.getMaxApps());
+        _entity.setNumActiveApps(queue.getNumActiveApps());
+        _entity.setNumPendingApps(queue.getNumPendingApps());
         _entity.setScheduler(scheduler.getType());
+        _entity.setClusterMemory(queue.getClusterResources().getMemory());
+        _entity.setClusterVcores(queue.getClusterResources().getvCores());
+        _entity.setUsedMemory(queue.getUsedResources().getMemory());
+        _entity.setUsedVcores(queue.getUsedResources().getvCores());
+        _entity.setMaxMemory(queue.getMaxResources().getMemory());
+        _entity.setMaxVcores(queue.getMaxResources().getvCores());
+        _entity.setMinMemory(queue.getMinResources().getMemory());
+        _entity.setMinVcores(queue.getMinResources().getvCores());
+
+        _entity.setAllocatedContainers(queue.getAllocatedContainers());
+        _entity.setPendingContainers(queue.getPendingContainers());
+        _entity.setReservedContainers(queue.getReservedContainers());
+
         _entity.setTimestamp(currentTimestamp);
-
         runningQueueAPIEntities.add(_entity);
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_MAX_APPS, _tags, currentTimestamp, queue.getMaxApps());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_NUM_ACTIVE_APPS, _tags, currentTimestamp, queue.getNumActiveApps());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_NUM_PENDING_APPS, _tags, currentTimestamp, queue.getNumPendingApps());
 
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_NUMPENDING_JOBS, _tags, currentTimestamp, queue.getNumActiveApps());
-        createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY, _tags, currentTimestamp, queue.getUsedResources().getMemory());
-        createMetric("root.allocated.containers", _tags, currentTimestamp, queue.getAllocatedContainers());
-        createMetric("root.pending.containers", _tags, currentTimestamp, queue.getPendingContainers());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_ALLOCATED_CONTAINERS, _tags, currentTimestamp, queue.getAllocatedContainers());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_PENDING_CONTAINERS, _tags, currentTimestamp, queue.getPendingContainers());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_RESERVED_CONTAINERS, _tags, currentTimestamp, queue.getReservedContainers());
+
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_USED_RESOURCE_MEM, _tags, currentTimestamp, queue.getUsedResources().getMemory());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_USED_ESOURCE_VCORE, _tags, currentTimestamp, queue.getUsedResources().getvCores());
+
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_MIN_RESOURCE_MEM, _tags, currentTimestamp, queue.getMinResources().getMemory());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_MIN_RESOURCE_VCORE, _tags, currentTimestamp, queue.getMinResources().getvCores());
+
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_MAX_RESOURCE_MEM, _tags, currentTimestamp, queue.getMaxResources().getMemory());
+        createMetric(HadoopClusterConstants.MetricName.HADOOP_FAIR_QUEUE_MAX_RESOURCE_VCORE, _tags, currentTimestamp, queue.getMaxResources().getvCores());
+
         if (queue.getUsedResources().getMemory() == 0 && queue.getUsedResources().getvCores() == 0) {
             createMetric(HadoopClusterConstants.MetricName.HADOOP_QUEUE_USED_CAPACITY_RATIO, _tags, currentTimestamp, 0);
         } else {
@@ -112,8 +146,8 @@ public class FairSchedulerInfoParseListener {
         List<String> subQueues = new ArrayList<>();
         List<String> allSubQueues = new ArrayList<>();
 
-        if (queue.getChildQueues() != null) {
-            for (FairChildQueues subQueue : queue.getChildQueues()) {
+        if (queue.getChildQueues() != null && queue.getChildQueues().getChildQueues() != null) {
+            for (FairChildQueue subQueue : queue.getChildQueues().getChildQueues()) {
                 subQueues.add(subQueue.getQueueName());
                 allSubQueues.add(subQueue.getQueueName());
                 List<String> queues = createQueues(subQueue, currentTimestamp, scheduler, queue.getQueueName());

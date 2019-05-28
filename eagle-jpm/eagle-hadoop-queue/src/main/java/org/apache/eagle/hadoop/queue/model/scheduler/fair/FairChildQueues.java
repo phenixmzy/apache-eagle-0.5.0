@@ -23,7 +23,7 @@ public class FairChildQueues {
     private boolean preemptable;
     private int numActiveApps;
     private int numPendingApps;
-    private List<FairChildQueues> childQueues;
+    private List<FairChildQueue> childQueues;
 
     public int getMaxApps() {
         return maxApps;
@@ -41,11 +41,11 @@ public class FairChildQueues {
         this.numPendingApps = numPendingApps;
     }
 
-    public List<FairChildQueues> getChildQueues() {
+    public List<FairChildQueue> getChildQueues() {
         return childQueues;
     }
 
-    public void setChildQueues(List<FairChildQueues> childQueues) {
+    public void setChildQueues(List<FairChildQueue> childQueues) {
         this.childQueues = childQueues;
     }
 

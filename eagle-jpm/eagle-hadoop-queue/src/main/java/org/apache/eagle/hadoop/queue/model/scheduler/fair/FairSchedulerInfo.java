@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class FairSchedulerInfo {
     private String type;
 
-    private FairQueues rootQueue;
+    private FairChildQueues rootQueue;
 
-    public FairQueues getRootQueue() {
+    public FairChildQueues getRootQueue() {
         return rootQueue;
     }
 
-    public void setRootQueue(FairQueues rootQueue) {
+    public void setRootQueue(FairChildQueues rootQueue) {
         this.rootQueue = rootQueue;
     }
 
