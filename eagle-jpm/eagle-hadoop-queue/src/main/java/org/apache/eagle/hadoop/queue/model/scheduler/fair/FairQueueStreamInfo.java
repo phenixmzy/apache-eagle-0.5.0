@@ -60,9 +60,9 @@ public class FairQueueStreamInfo {
 
     private static double calculatequeueUsedCapacity(boolean isDRF, long usedMem, long usedVcores, long clusterMem, long clusterVcores) {
         if (isDRF) {
-            return Math.max(usedMem/clusterMem, usedVcores/clusterVcores);
+            return Math.max(usedMem / clusterMem, usedVcores / clusterVcores);
         } else {
-            return usedMem/clusterMem;
+            return usedMem / clusterMem;
         }
     }
 }
