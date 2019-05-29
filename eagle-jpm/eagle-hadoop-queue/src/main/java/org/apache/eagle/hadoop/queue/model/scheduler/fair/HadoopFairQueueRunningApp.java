@@ -21,7 +21,6 @@ import org.apache.eagle.app.StormApplication;
 import org.apache.eagle.app.environment.impl.StormEnvironment;
 import org.apache.eagle.app.messaging.StormStreamSink;
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
-import org.apache.eagle.hadoop.queue.storm.HadoopQueueMetricPersistBolt;
 import org.apache.storm.generated.StormTopology;
 import org.apache.storm.topology.IRichSpout;
 import org.apache.storm.topology.TopologyBuilder;
@@ -30,8 +29,8 @@ public class HadoopFairQueueRunningApp extends StormApplication {
     public StormTopology execute(Config config, StormEnvironment environment) {
         HadoopQueueRunningAppConfig appConfig = new HadoopQueueRunningAppConfig(config);
 
-        String spoutName = "runningQueueSpout";
-        String persistBoltName = "persistBolt";
+        String spoutName = "runningFairQueueSpout";
+        String persistBoltName = "persistFairQueueBolt";
 
         IRichSpout spout = new HadoopFairQueueRunningSpout(appConfig);
 
@@ -44,7 +43,7 @@ public class HadoopFairQueueRunningApp extends StormApplication {
         int numOfSinkTasks = appConfig.topology.numSinkTasks;
         int numOfSpoutTasks = 1;
 
-        HadoopQueueMetricPersistBolt bolt = new HadoopQueueMetricPersistBolt(appConfig);
+        HadoopFairQueueMetricPersistBolt bolt = new HadoopFairQueueMetricPersistBolt(appConfig);
         TopologyBuilder builder = new TopologyBuilder();
 
         builder.setSpout(spoutName, spout, numOfSpoutTasks).setNumTasks(numOfSpoutTasks);
