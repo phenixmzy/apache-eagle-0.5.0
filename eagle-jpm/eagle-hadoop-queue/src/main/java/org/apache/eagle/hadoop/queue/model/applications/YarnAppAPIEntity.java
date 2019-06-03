@@ -23,7 +23,6 @@ import org.apache.eagle.log.entity.meta.*;
 
 import static org.apache.eagle.jpm.util.Constants.ACCEPTED_APP_SERVICE_NAME;
 
-@Deprecated
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @Table("yarn_app")
 @ColumnFamily("f")
@@ -47,6 +46,72 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     private double queueUsagePercentage;
     @Column("g")
     private double clusterUsagePercentage;
+    @Column("h")
+    private String applicationType;
+    @Column("i")
+    private int allocatedMB;
+    @Column("j")
+    private int allocatedVCores;
+    @Column("k")
+    private int runningContainers;
+    @Column("l")
+    private double progress;
+    @Column("m")
+    private String queue;
+
+    public String getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(String applicationType) {
+        this.applicationType = applicationType;
+        valueChanged("applicationType");
+    }
+
+    public int getAllocatedMB() {
+        return allocatedMB;
+    }
+
+    public void setAllocatedMB(int allocatedMB) {
+        this.allocatedMB = allocatedMB;
+        valueChanged("allocatedMB");
+    }
+
+    public int getAllocatedVCores() {
+        return allocatedVCores;
+    }
+
+    public void setAllocatedVCores(int allocatedVCores) {
+        this.allocatedVCores = allocatedVCores;
+        valueChanged("allocatedVCores");
+    }
+
+    public int getRunningContainers() {
+        return runningContainers;
+    }
+
+    public void setRunningContainers(int runningContainers) {
+        this.runningContainers = runningContainers;
+        valueChanged("runningContainers");
+    }
+
+    public double getProgress() {
+        return progress;
+    }
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+        valueChanged("progress");
+    }
+
+    public String getQueue() {
+        return queue;
+    }
+
+    public void setQueue(String queue) {
+        this.queue = queue;
+        valueChanged("queue");
+    }
 
     public String getAppName() {
         return appName;

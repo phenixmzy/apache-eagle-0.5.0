@@ -20,7 +20,6 @@ package org.apache.eagle.hadoop.queue.model.applications;
 import java.util.HashMap;
 import java.util.Map;
 
-@Deprecated
 public class AppStreamInfo {
     public static final String SITE = "site";
     public static final String ID = "id";
@@ -33,6 +32,11 @@ public class AppStreamInfo {
     private static final String QUEUE_USAGE_PERCENTAGE = "queueUsagePercentage";
     private static final String CLUSTER_USAGE_PERCENTAGE = "clusterUsagePercentage";
     private static final String TRACKING_URL = "trackingUrl";
+    private static final String PROGRESS = "progress";
+    private static final String APPLICATION_TYPE = "applicationType";
+    private static final String ALLOCATED_MB = "allocatedMB";
+    private static final String ALLOCATED_VCORES = "allocatedVCores";
+    private static final String RUNNING_CONTAINERS = "runningContainers";
 
     public static Map<String, Object> convertAppToStream(YarnAppAPIEntity appAPIEntity) {
         Map<String, Object> queueStreamInfo = new HashMap<>();
@@ -47,6 +51,11 @@ public class AppStreamInfo {
         queueStreamInfo.put(QUEUE_USAGE_PERCENTAGE, appAPIEntity.getQueueUsagePercentage());
         queueStreamInfo.put(CLUSTER_USAGE_PERCENTAGE, appAPIEntity.getClusterUsagePercentage());
         queueStreamInfo.put(TRACKING_URL, appAPIEntity.getTrackingUrl());
+        queueStreamInfo.put(PROGRESS, appAPIEntity.getProgress());
+        queueStreamInfo.put(APPLICATION_TYPE, appAPIEntity.getApplicationType());
+        queueStreamInfo.put(ALLOCATED_MB, appAPIEntity.getAllocatedMB());
+        queueStreamInfo.put(ALLOCATED_VCORES, appAPIEntity.getAllocatedVCores());
+        queueStreamInfo.put(RUNNING_CONTAINERS, appAPIEntity.getRunningContainers());
 
         return queueStreamInfo;
     }
