@@ -15,3 +15,4 @@
 
 org.apache.eagle.hadoop.queue.HadoopQueueRunningAppProvider
 org.apache.eagle.hadoop.queue.model.scheduler.fair.HadoopFairQueueRunningAppProvider
+org.apache.eagle.hadoop.queue.model.applications.HadoopRunningApplicationProvider

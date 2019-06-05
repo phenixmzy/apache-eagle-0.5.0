@@ -60,6 +60,17 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     private String queue;
     @Column("n")
     private long runningTimeLenSecond;
+    @Column("o")
+    private String appId;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+        valueChanged("appId");
+    }
 
     public long getRunningTimeLenSecond() {
         return runningTimeLenSecond;

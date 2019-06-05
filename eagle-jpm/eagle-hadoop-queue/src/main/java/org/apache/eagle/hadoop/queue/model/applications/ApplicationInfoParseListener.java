@@ -33,6 +33,7 @@ public class ApplicationInfoParseListener {
 
     private void createAPIEntity(App app) {
         YarnAppAPIEntity entity = new YarnAppAPIEntity();
+        entity.setAppId(app.getId());
         this.runningAppAPIEntities.add(entity);
     }
 
