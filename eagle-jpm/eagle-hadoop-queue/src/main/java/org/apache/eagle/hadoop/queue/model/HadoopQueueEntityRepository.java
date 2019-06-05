@@ -17,6 +17,7 @@
  */
 package org.apache.eagle.hadoop.queue.model;
 
+import org.apache.eagle.hadoop.queue.model.applications.YarnAppAPIEntity;
 import org.apache.eagle.hadoop.queue.model.scheduler.QueueStructureAPIEntity;
 import org.apache.eagle.hadoop.queue.model.scheduler.RunningQueueAPIEntity;
 import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairRunningQueueAPIEntity;
@@ -27,6 +28,6 @@ public class HadoopQueueEntityRepository extends EntityRepository {
         this.registerEntity(RunningQueueAPIEntity.class);
         this.registerEntity(QueueStructureAPIEntity.class);
         this.registerEntity(FairRunningQueueAPIEntity.class);
-        //this.registerEntity(YarnAppAPIEntity.class);
+        this.registerEntity(YarnAppAPIEntity.class);
     }
 }

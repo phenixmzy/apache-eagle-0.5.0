@@ -56,6 +56,16 @@ public class App {
     private double queueUsagePercentage;
     private double clusterUsagePercentage;
 
+    private long runningTimeLenSecond;
+
+    public long getRunningTimeLenSecond() {
+        return runningTimeLenSecond;
+    }
+
+    public void setRunningTimeLenSecond(long runningTimeLenSecond) {
+        this.runningTimeLenSecond = runningTimeLenSecond;
+    }
+
     public String getId() {
         return id;
     }

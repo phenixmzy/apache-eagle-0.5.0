@@ -37,6 +37,7 @@ public class AppStreamInfo {
     private static final String ALLOCATED_MB = "allocatedMB";
     private static final String ALLOCATED_VCORES = "allocatedVCores";
     private static final String RUNNING_CONTAINERS = "runningContainers";
+    private static final String RUNNING_TIMELEN_SECOND = "runningTimeLenSecond";
 
     public static Map<String, Object> convertAppToStream(YarnAppAPIEntity appAPIEntity) {
         Map<String, Object> queueStreamInfo = new HashMap<>();
@@ -56,6 +57,7 @@ public class AppStreamInfo {
         queueStreamInfo.put(ALLOCATED_MB, appAPIEntity.getAllocatedMB());
         queueStreamInfo.put(ALLOCATED_VCORES, appAPIEntity.getAllocatedVCores());
         queueStreamInfo.put(RUNNING_CONTAINERS, appAPIEntity.getRunningContainers());
+        queueStreamInfo.put(RUNNING_TIMELEN_SECOND, appAPIEntity.getRunningTimeLenSecond());
 
         return queueStreamInfo;
     }

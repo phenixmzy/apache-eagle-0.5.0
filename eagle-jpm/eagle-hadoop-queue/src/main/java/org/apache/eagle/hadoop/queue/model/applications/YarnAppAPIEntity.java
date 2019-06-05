@@ -58,6 +58,17 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     private double progress;
     @Column("m")
     private String queue;
+    @Column("n")
+    private long runningTimeLenSecond;
+
+    public long getRunningTimeLenSecond() {
+        return runningTimeLenSecond;
+    }
+
+    public void setRunningTimeLenSecond(long runningTimeLenSecond) {
+        this.runningTimeLenSecond = runningTimeLenSecond;
+        valueChanged("runningTimeLenSecond");
+    }
 
     public String getApplicationType() {
         return applicationType;

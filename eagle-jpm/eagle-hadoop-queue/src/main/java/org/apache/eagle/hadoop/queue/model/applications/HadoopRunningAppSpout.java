@@ -1,26 +1,7 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */
-
-package org.apache.eagle.hadoop.queue.model.scheduler.fair;
+package org.apache.eagle.hadoop.queue.model.applications;
 
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants;
-import org.apache.eagle.hadoop.queue.storm.HadoopQueueRunningExtractor;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
@@ -31,17 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class HadoopFairQueueRunningSpout extends BaseRichSpout {
-
-    private static final Logger LOG = LoggerFactory.getLogger(HadoopFairQueueRunningSpout.class);
-
+public class HadoopRunningAppSpout extends BaseRichSpout {
+    private static final Logger LOG = LoggerFactory.getLogger(HadoopRunningAppSpout.class);
+    private HadoopRunningAppExtractor extractor;
+    private HadoopQueueRunningAppConfig config;
     private long fetchIntervalSec;
     private long lastFetchTime = 0;
 
-    private HadoopFairQueueRunningExtractor extractor;
-    private HadoopQueueRunningAppConfig config;
-
-    public HadoopFairQueueRunningSpout(HadoopQueueRunningAppConfig config) {
+    public HadoopRunningAppSpout(HadoopQueueRunningAppConfig config) {
         this.config = config;
         this.fetchIntervalSec = Long.parseLong(config.dataSourceConfig.fetchIntervalSec);
     }
@@ -55,7 +33,7 @@ public class HadoopFairQueueRunningSpout extends BaseRichSpout {
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
-        extractor = new HadoopFairQueueRunningExtractor(config, collector);
+        extractor = new HadoopRunningAppExtractor(config, collector);
     }
 
     @Override
