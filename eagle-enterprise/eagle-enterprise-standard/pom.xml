@@ -48,6 +48,12 @@
             <artifactId>eagle-app-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.eagle</groupId>
+            <artifactId>eagle-security-common</artifactId>
+            <version>0.5.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <resources>
