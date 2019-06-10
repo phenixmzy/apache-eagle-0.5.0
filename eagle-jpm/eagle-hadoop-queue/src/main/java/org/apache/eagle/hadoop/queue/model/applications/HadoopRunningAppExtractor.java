@@ -1,9 +1,6 @@
 package org.apache.eagle.hadoop.queue.model.applications;
 
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
-import org.apache.eagle.hadoop.queue.crawler.ClusterMetricsCrawler;
-import org.apache.eagle.hadoop.queue.crawler.RunningAppsCrawler;
-import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairSchedulerInfoCrawler;
 import org.apache.eagle.jpm.util.Constants;
 import org.apache.eagle.jpm.util.resourcefetch.ha.HAURLSelector;
 import org.apache.eagle.jpm.util.resourcefetch.ha.HAURLSelectorImpl;
@@ -23,7 +20,6 @@ public class HadoopRunningAppExtractor {
 
     private String site;
     private String urlBases;
-    private String scheduler;
 
     private HAURLSelector urlSelector;
     private ExecutorService executorService;
@@ -32,7 +28,6 @@ public class HadoopRunningAppExtractor {
     public HadoopRunningAppExtractor(HadoopQueueRunningAppConfig eagleConf, SpoutOutputCollector collector) {
         site = eagleConf.eagleProps.site;
         urlBases = eagleConf.dataSourceConfig.rMEndPoints;
-        scheduler = eagleConf.dataSourceConfig.scheduler;
         if (urlBases == null) {
             throw new IllegalArgumentException(site + ".baseUrl is null");
         }
