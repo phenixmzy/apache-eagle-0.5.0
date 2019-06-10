@@ -17,7 +17,7 @@
   -->
 
 <application>
-    <type>HADOOP_YARN_RUNNING_APPLICATION</type>
+    <type>HADOOP_YARN_RUNNING_APP</type>
     <name>Hadoop Yarn Running Application Monitor</name>
     <configuration>
         <!-- org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig -->
@@ -55,7 +55,7 @@
 
         <!-- sink to kafka -->
         <property>
-            <name>dataSinkConfig.HADOOP_YARN_RUNNING_APPLICATION_STREAM.topic</name>
+            <name>dataSinkConfig.HADOOP_YARN_RUNNING_APP_STREAM.topic</name>
             <displayName>Destination(Kafka Topic) Of Fair Queue Stream Data</displayName>
             <value>yarn_app_${siteId}</value>
             <description>topic for kafka data sink</description>
@@ -112,7 +112,7 @@
     </configuration>
     <streams>
         <stream>
-            <streamId>HADOOP_YARN_RUNNING_APPLICATION_STREAM</streamId>
+            <streamId>HADOOP_YARN_RUNNING_APP_STREAM</streamId>
             <description>Hadoop Leaf Fair Queue Info Stream</description>
             <validate>true</validate>
             <columns>
