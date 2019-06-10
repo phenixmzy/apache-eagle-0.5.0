@@ -56,7 +56,6 @@ public class HadoopRunningAppPersistBolt extends BaseRichBolt {
         for (TaggedLogAPIEntity entity : entities) {
             if (entity instanceof YarnAppAPIEntity) {
                 YarnAppAPIEntity app = (YarnAppAPIEntity) entity;
-                LOG.info(app.toString());
                 if (app.getState().equals("RUNNING")) {
                     writeEntities(entities, dataType, dataSource);
                     collector.emit(new Values(app.getQueue(), AppStreamInfo.convertAppToStream(app)));
