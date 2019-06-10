@@ -2,8 +2,6 @@ package org.apache.eagle.hadoop.queue.model.applications;
 
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants;
-import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairQueueStreamInfo;
-import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairRunningQueueAPIEntity;
 import org.apache.eagle.log.base.taggedlog.TaggedLogAPIEntity;
 import org.apache.eagle.log.entity.GenericServiceAPIResponseEntity;
 import org.apache.eagle.service.client.IEagleServiceClient;
