@@ -34,12 +34,12 @@ public class ApplicationInfoParseListener {
     }
 
     private void createAPIEntity(App app) {
-        YarnAppAPIEntity entity = new YarnAppAPIEntity();
         Map<String, String> tags = new HashMap<String,String>();
         tags.put(AppStreamInfo.ID, app.getId());
         tags.put(AppStreamInfo.QUEUE, app.getQueue());
         tags.put(AppStreamInfo.SITE, site);
         tags.put(AppStreamInfo.USER, app.getUser());
+        YarnAppAPIEntity entity = new YarnAppAPIEntity();
         entity.setTags(tags);
         entity.setAppName(app.getName());
         entity.setState(app.getState());
