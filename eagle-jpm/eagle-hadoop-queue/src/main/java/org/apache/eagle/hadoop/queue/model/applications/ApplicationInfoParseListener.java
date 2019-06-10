@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ApplicationInfoParseListener {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationInfoParseListener.class);
@@ -33,6 +35,12 @@ public class ApplicationInfoParseListener {
 
     private void createAPIEntity(App app) {
         YarnAppAPIEntity entity = new YarnAppAPIEntity();
+        Map<String, String> tags = new HashMap<String,String>();
+        tags.put(AppStreamInfo.ID, app.getId());
+        tags.put(AppStreamInfo.QUEUE, app.getQueue());
+        tags.put(AppStreamInfo.SITE, app.getState());
+        tags.put(AppStreamInfo.USER, app.getUser());
+        entity.setTags(tags);
         entity.setAppName(app.getName());
         entity.setState(app.getState());
         entity.setStartedTime(app.getStartedTime());
