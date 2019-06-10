@@ -29,8 +29,8 @@ import static org.apache.eagle.jpm.util.Constants.ACCEPTED_APP_SERVICE_NAME;
 @Prefix("accepted")
 @Service(ACCEPTED_APP_SERVICE_NAME)
 @TimeSeries(true)
-@Partition( {"site"})
-@Tags({"site","id","user","queue"})
+@Partition({"site"})
+@Tags({"site", "id", "user", "queue"})
 public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     @Column("a")
     private String appName;
@@ -196,5 +196,14 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     public void setClusterUsagePercentage(double clusterUsagePercentage) {
         this.clusterUsagePercentage = clusterUsagePercentage;
         valueChanged("clusterUsagePercentage");
+    }
+
+    public String toString() {
+        return String.format("YarnAppAPIEntity[appName=%s, state=%s, startedTime=%s, elapsedTime=%s, trackingUrl=%s, " +
+                "queueUsagePercentage=%s, clusterUsagePercentage=%s, applicationType=%s, allocatedMB=%s," +
+                " allocatedVCores=%s, runningContainers=%s, progress=%s, queue=%s, runningTimeLenSecond=%s, appId=%s]",
+                appName, state, startedTime, elapsedTime, trackingUrl,
+                queueUsagePercentage, clusterUsagePercentage, applicationType, allocatedMB,
+                allocatedVCores, runningContainers, progress, queue, runningTimeLenSecond, appId);
     }
 }
