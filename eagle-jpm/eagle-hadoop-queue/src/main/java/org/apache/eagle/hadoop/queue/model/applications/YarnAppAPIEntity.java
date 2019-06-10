@@ -199,9 +199,9 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     }
 
     public String toString() {
-        return String.format("YarnAppAPIEntity[appName=%s, state=%s, startedTime=%s, elapsedTime=%s, trackingUrl=%s, " +
-                "queueUsagePercentage=%s, clusterUsagePercentage=%s, applicationType=%s, allocatedMB=%s," +
-                " allocatedVCores=%s, runningContainers=%s, progress=%s, queue=%s, runningTimeLenSecond=%s, appId=%s]",
+        return String.format("YarnAppAPIEntity[appName=%s, state=%s, startedTime=%s, elapsedTime=%s, trackingUrl=%s, "
+                        + "queueUsagePercentage=%s, clusterUsagePercentage=%s, applicationType=%s, allocatedMB=%s, "
+                        + "allocatedVCores=%s, runningContainers=%s, progress=%s, queue=%s, runningTimeLenSecond=%s, appId=%s]",
                 appName, state, startedTime, elapsedTime, trackingUrl,
                 queueUsagePercentage, clusterUsagePercentage, applicationType, allocatedMB,
                 allocatedVCores, runningContainers, progress, queue, runningTimeLenSecond, appId);
