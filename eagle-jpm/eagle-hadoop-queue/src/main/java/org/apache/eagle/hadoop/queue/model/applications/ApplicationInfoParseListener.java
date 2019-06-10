@@ -38,7 +38,7 @@ public class ApplicationInfoParseListener {
         Map<String, String> tags = new HashMap<String,String>();
         tags.put(AppStreamInfo.ID, app.getId());
         tags.put(AppStreamInfo.QUEUE, app.getQueue());
-        tags.put(AppStreamInfo.SITE, app.getState());
+        tags.put(AppStreamInfo.SITE, site);
         tags.put(AppStreamInfo.USER, app.getUser());
         entity.setTags(tags);
         entity.setAppName(app.getName());
