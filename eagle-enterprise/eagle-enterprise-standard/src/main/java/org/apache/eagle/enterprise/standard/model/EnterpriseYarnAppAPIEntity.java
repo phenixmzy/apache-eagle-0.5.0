@@ -12,8 +12,8 @@ import static org.apache.eagle.jpm.util.Constants.ACCEPTED_APP_SERVICE_NAME;
 @Prefix("accepted")
 @Service(ACCEPTED_APP_SERVICE_NAME)
 @TimeSeries(true)
-@Partition( {"site"})
-@Tags({"site","id","user","queue"})
+@Partition({"site"})
+@Tags({"site", "id", "user", "queue"})
 public class EnterpriseYarnAppAPIEntity extends TaggedLogAPIEntity {
     @Column("a")
     private String appName;
