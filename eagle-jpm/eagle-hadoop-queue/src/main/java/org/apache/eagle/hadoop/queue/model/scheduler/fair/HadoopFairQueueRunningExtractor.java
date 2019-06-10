@@ -22,7 +22,6 @@ public class HadoopFairQueueRunningExtractor {
 
     private String site;
     private String urlBases;
-    private String scheduler;
 
     private HAURLSelector urlSelector;
     private ExecutorService executorService;
@@ -31,7 +30,6 @@ public class HadoopFairQueueRunningExtractor {
     public HadoopFairQueueRunningExtractor(HadoopQueueRunningAppConfig eagleConf, SpoutOutputCollector collector) {
         site = eagleConf.eagleProps.site;
         urlBases = eagleConf.dataSourceConfig.rMEndPoints;
-        scheduler = eagleConf.dataSourceConfig.scheduler;
         if (urlBases == null) {
             throw new IllegalArgumentException(site + ".baseUrl is null");
         }
@@ -52,7 +50,7 @@ public class HadoopFairQueueRunningExtractor {
         futures.add(executorService.submit(new ClusterMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
         // move RunningAppCrawler into MRRunningJobApp
         //futures.add(executorService.submit(new RunningAppsCrawler(site, selectedUrl, collector)));
-        futures.add(executorService.submit(new FairSchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), scheduler, collector)));
+        futures.add(executorService.submit(new FairSchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
 
         futures.forEach(future -> {
             try {

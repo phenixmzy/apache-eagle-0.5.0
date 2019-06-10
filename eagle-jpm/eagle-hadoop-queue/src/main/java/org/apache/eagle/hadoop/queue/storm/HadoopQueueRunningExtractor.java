@@ -44,7 +44,6 @@ public class HadoopQueueRunningExtractor {
 
     private String site;
     private String urlBases;
-    private String scheduler;
 
     private HAURLSelector urlSelector;
     private ExecutorService executorService;
@@ -53,7 +52,6 @@ public class HadoopQueueRunningExtractor {
     public HadoopQueueRunningExtractor(HadoopQueueRunningAppConfig eagleConf, SpoutOutputCollector collector) {
         site = eagleConf.eagleProps.site;
         urlBases = eagleConf.dataSourceConfig.rMEndPoints;
-        scheduler = eagleConf.dataSourceConfig.scheduler;
         if (urlBases == null) {
             throw new IllegalArgumentException(site + ".baseUrl is null");
         }

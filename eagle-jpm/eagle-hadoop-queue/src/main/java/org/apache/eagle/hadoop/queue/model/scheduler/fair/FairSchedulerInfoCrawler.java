@@ -13,11 +13,9 @@ public class FairSchedulerInfoCrawler implements Runnable {
 
     private FairSchedulerInfoParseListener listener;
     private String urlString;
-    private String scheduler;
 
-    public FairSchedulerInfoCrawler(String site, String baseUrl, String scheduler, SpoutOutputCollector collector) {
+    public FairSchedulerInfoCrawler(String site, String baseUrl, SpoutOutputCollector collector) {
         this.urlString = YarnClusterResourceURLBuilder.buildSchedulerInfoURL(baseUrl);
-        this.scheduler = scheduler;
         this.listener = new FairSchedulerInfoParseListener(site, collector);
     }
 
@@ -25,7 +23,7 @@ public class FairSchedulerInfoCrawler implements Runnable {
     public void run() {
         try {
             //https://some.server.address:50030/ws/v1/cluster/scheduler?anonymous=true
-            logger.info("Start to crawl cluster scheduler[schedulerType:{}] queues from {}" ,this.scheduler, this.urlString);
+            logger.info("Start to crawl cluster ] queues from {}" , this.urlString);
             FairSchedulerWrapper schedulerWrapper = (FairSchedulerWrapper) HadoopYarnResourceUtils.getObjectFromUrlStream(urlString, FairSchedulerWrapper.class);
             if (schedulerWrapper == null || schedulerWrapper.getScheduler() == null) {
                 logger.error("Failed to crawl scheduler info with url = " + this.urlString);

@@ -74,7 +74,6 @@ public class HadoopQueueRunningAppConfig implements Serializable {
 
         this.dataSourceConfig.rMEndPoints = config.getString("dataSourceConfig.rMEndPoints");
         this.dataSourceConfig.fetchIntervalSec = config.getString("dataSourceConfig.fetchIntervalSec");
-        this.dataSourceConfig.scheduler = config.getString("dataSourceConfig.scheduler");
 
         this.eagleProps.site = config.getString("siteId");
         this.eagleProps.eagleService.host = config.getString("service.host");
