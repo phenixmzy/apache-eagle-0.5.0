@@ -33,7 +33,22 @@ public class ApplicationInfoParseListener {
 
     private void createAPIEntity(App app) {
         YarnAppAPIEntity entity = new YarnAppAPIEntity();
+        entity.setAppName(app.getName());
+        entity.setState(app.getState());
+        entity.setStartedTime(app.getStartedTime());
+        entity.setElapsedTime(app.getElapsedTime());
+        entity.setTrackingUrl(app.getTrackingUrl());
+        entity.setQueueUsagePercentage(app.getQueueUsagePercentage());
+        entity.setClusterUsagePercentage(app.getClusterUsagePercentage());
+        entity.setApplicationType(app.getApplicationType());
+        entity.setAllocatedMB(app.getAllocatedMB());
+        entity.setAllocatedVCores(app.getAllocatedVCores());
+        entity.setRunningContainers(app.getRunningContainers());
+        entity.setProgress(app.getProgress());
+        entity.setQueue(app.getQueue());
+        entity.setRunningTimeLenSecond(app.getRunningTimeLenSecond());
         entity.setAppId(app.getId());
+
         this.runningAppAPIEntities.add(entity);
     }
 
