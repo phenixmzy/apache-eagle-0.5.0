@@ -34,7 +34,7 @@ public class HadoopRunningApp extends StormApplication {
         builder.setSpout(spoutName, spout, numOfSpoutTasks).setNumTasks(numOfSpoutTasks);
         builder.setBolt(persistBoltName, bolt, numOfPersistTasks).setNumTasks(numOfPersistTasks).shuffleGrouping(spoutName);
 
-        StormStreamSink queueSinkBolt = environment.getStreamSink("HADOOP_RUNNING_APP_STREAM", config);
+        StormStreamSink queueSinkBolt = environment.getStreamSink("HADOOP_YARN_RUNNING_APPLICATION_STREAM", config);
         builder.setBolt("appKafkaSink", queueSinkBolt, numOfSinkTasks)
                 .setNumTasks(numOfSinkTasks).shuffleGrouping(persistBoltName);
 

@@ -55,7 +55,7 @@
 
         <!-- sink to kafka -->
         <property>
-            <name>dataSinkConfig.HADOOP_YARN_APPLICATION_STREAM.topic</name>
+            <name>dataSinkConfig.HADOOP_YARN_RUNNING_APPLICATION_STREAM.topic</name>
             <displayName>Destination(Kafka Topic) Of Fair Queue Stream Data</displayName>
             <value>yarn_app_${siteId}</value>
             <description>topic for kafka data sink</description>
