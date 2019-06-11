@@ -31,7 +31,7 @@ import org.apache.eagle.hadoop.queue.common.YarnClusterResourceURLBuilder;
 import org.apache.eagle.hadoop.queue.model.applications.App;
 import org.apache.eagle.hadoop.queue.model.applications.AppStreamInfo;
 import org.apache.eagle.hadoop.queue.model.applications.Apps;
-import org.apache.eagle.hadoop.queue.model.applications.YarnAppAPIEntity;
+import org.apache.eagle.hadoop.queue.model.applications.YarnApplicationAPIEntity;
 import org.apache.eagle.hadoop.queue.storm.HadoopQueueMessageId;
 import org.apache.eagle.log.entity.GenericMetricEntity;
 import org.apache.storm.spout.SpoutOutputCollector;
@@ -63,7 +63,7 @@ public class RunningAppParseListener {
     private String rmUrl;
     private SpoutOutputCollector collector;
     private Map<String, GenericMetricEntity> appMetricEntities = new HashMap<>();
-    private List<YarnAppAPIEntity> acceptedApps = new ArrayList<>();
+    private List<YarnApplicationAPIEntity> acceptedApps = new ArrayList<>();
 
     public RunningAppParseListener(String site, SpoutOutputCollector collector, String rmUrl) {
         this.site = site;
@@ -79,7 +79,7 @@ public class RunningAppParseListener {
 
         logger.info("crawled {} accepted apps", acceptedApps.size());
         messageId = new HadoopQueueMessageId(DataType.ENTITY, DataSource.RUNNING_APPS, System.currentTimeMillis());
-        List<YarnAppAPIEntity> entities = new ArrayList<>(acceptedApps);
+        List<YarnApplicationAPIEntity> entities = new ArrayList<>(acceptedApps);
         collector.emit(new ValuesArray(DataSource.RUNNING_APPS, DataType.ENTITY, entities), messageId);
 
         acceptedApps.clear();
@@ -114,7 +114,7 @@ public class RunningAppParseListener {
         timestamp = timestamp / AGGREGATE_INTERVAL * AGGREGATE_INTERVAL;
         for (App app : apps.getApp()) {
             if (app.getState().equalsIgnoreCase(HadoopClusterConstants.AppState.ACCEPTED.toString())) {
-                YarnAppAPIEntity appAPIEntity = new YarnAppAPIEntity();
+                YarnApplicationAPIEntity appAPIEntity = new YarnApplicationAPIEntity();
                 appAPIEntity.setTags(buildAppTags(app));
                 appAPIEntity.setTrackingUrl(YarnClusterResourceURLBuilder.buildAcceptedAppTrackingURL(rmUrl, app.getId()));
                 appAPIEntity.setAppName(app.getName());
