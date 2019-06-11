@@ -29,8 +29,7 @@ import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants.DataSource;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants.DataType;
-import org.apache.eagle.hadoop.queue.model.applications.AppStreamInfo;
-import org.apache.eagle.hadoop.queue.model.applications.YarnAppAPIEntity;
+
 import org.apache.eagle.hadoop.queue.model.scheduler.QueueStreamInfo;
 import org.apache.eagle.hadoop.queue.model.scheduler.RunningQueueAPIEntity;
 import org.apache.eagle.log.base.taggedlog.TaggedLogAPIEntity;
