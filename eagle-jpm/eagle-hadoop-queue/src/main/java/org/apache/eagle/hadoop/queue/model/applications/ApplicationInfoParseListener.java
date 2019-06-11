@@ -4,7 +4,6 @@ import org.apache.eagle.dataproc.impl.storm.ValuesArray;
 import org.apache.eagle.hadoop.queue.common.HadoopClusterConstants;
 import org.apache.eagle.hadoop.queue.storm.HadoopQueueMessageId;
 import org.apache.eagle.log.base.taggedlog.TaggedLogAPIEntity;
-import org.apache.eagle.log.entity.GenericMetricEntity;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ public class ApplicationInfoParseListener {
         tags.put(AppStreamInfo.QUEUE, app.getQueue());
         tags.put(AppStreamInfo.SITE, site);
         tags.put(AppStreamInfo.USER, app.getUser());
-        YarnAppAPIEntity entity = new YarnAppAPIEntity();
+        YarnApplicationAPIEntity entity = new YarnApplicationAPIEntity();
         entity.setTags(tags);
         entity.setAppName(app.getName());
         entity.setState(app.getState());

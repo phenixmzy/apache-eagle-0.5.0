@@ -39,7 +39,7 @@ public class AppStreamInfo {
     private static final String RUNNING_CONTAINERS = "runningContainers";
     private static final String RUNNING_TIMELEN_SECOND = "runningTimeLenSecond";
 
-    public static Map<String, Object> convertAppToStream(YarnAppAPIEntity appAPIEntity) {
+    public static Map<String, Object> convertAppToStream(YarnApplicationAPIEntity appAPIEntity) {
         Map<String, Object> queueStreamInfo = new HashMap<>();
         queueStreamInfo.put(SITE, appAPIEntity.getTags().get(SITE));
         queueStreamInfo.put(ID, appAPIEntity.getTags().get(ID));

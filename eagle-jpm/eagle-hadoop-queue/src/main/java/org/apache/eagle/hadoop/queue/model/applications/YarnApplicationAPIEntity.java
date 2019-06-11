@@ -24,14 +24,14 @@ import org.apache.eagle.log.entity.meta.*;
 import static org.apache.eagle.jpm.util.Constants.ACCEPTED_APP_SERVICE_NAME;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@Table("yarn_app")
+@Table("yarn_application")
 @ColumnFamily("f")
 @Prefix("accepted")
 @Service(ACCEPTED_APP_SERVICE_NAME)
 @TimeSeries(true)
 @Partition({"site"})
 @Tags({"site", "id", "user", "queue"})
-public class YarnAppAPIEntity extends TaggedLogAPIEntity {
+public class YarnApplicationAPIEntity extends TaggedLogAPIEntity {
     @Column("a")
     private String appName;
     @Column("b")
@@ -199,7 +199,7 @@ public class YarnAppAPIEntity extends TaggedLogAPIEntity {
     }
 
     public String toString() {
-        return String.format("YarnAppAPIEntity[appName=%s, state=%s, startedTime=%s, elapsedTime=%s, trackingUrl=%s, "
+        return String.format("YarnApplicationAPIEntity[appName=%s, state=%s, startedTime=%s, elapsedTime=%s, trackingUrl=%s, "
                         + "queueUsagePercentage=%s, clusterUsagePercentage=%s, applicationType=%s, allocatedMB=%s, "
                         + "allocatedVCores=%s, runningContainers=%s, progress=%s, queue=%s, runningTimeLenSecond=%s, appId=%s]",
                 appName, state, startedTime, elapsedTime, trackingUrl,
