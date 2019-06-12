@@ -56,8 +56,6 @@ public class ApplicationInfoParseListener {
         entity.setRunningTimeLenSecond(app.getRunningTimeLenSecond());
         entity.setAppId(app.getId());
         entity.setUser(app.getUser());
-        entity.setSite(site);
-
         this.runningAppAPIEntities.add(entity);
     }
 
