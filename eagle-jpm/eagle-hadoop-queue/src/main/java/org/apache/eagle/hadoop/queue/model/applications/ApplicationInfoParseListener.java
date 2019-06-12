@@ -32,12 +32,25 @@ public class ApplicationInfoParseListener {
         }
     }
 
+    private Map<String, String> buildTags(String id, String queueName, String user) {
+        Map<String, String> tags = new HashMap<>();
+        tags.put(AppStreamInfo.SITE, this.site);
+
+        if (id != null) {
+            tags.put(AppStreamInfo.ID, id);
+        }
+
+        if (queueName != null) {
+            tags.put(AppStreamInfo.QUEUE, queueName);
+        }
+        if (user != null) {
+            tags.put(AppStreamInfo.USER, user);
+        }
+        return tags;
+    }
+
     private void createAPIEntity(App app) {
-        Map<String, String> tags = new HashMap<String,String>();
-        tags.put(AppStreamInfo.ID, app.getId());
-        tags.put(AppStreamInfo.QUEUE, app.getQueue());
-        tags.put(AppStreamInfo.SITE, site);
-        tags.put(AppStreamInfo.USER, app.getUser());
+        Map<String, String> tags = buildTags(app.getId(),app.getQueue(),app.getUser());
         YarnApplicationAPIEntity entity = new YarnApplicationAPIEntity();
         entity.setTags(tags);
         entity.setAppName(app.getName());
