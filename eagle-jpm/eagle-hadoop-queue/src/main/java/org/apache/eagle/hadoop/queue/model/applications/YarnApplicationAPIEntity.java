@@ -62,17 +62,7 @@ public class YarnApplicationAPIEntity extends TaggedLogAPIEntity {
     @Column("o")
     private String appId;
     @Column("p")
-    private String site;
-    @Column("q")
     private String user;
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
 
     public String getUser() {
         return user;
