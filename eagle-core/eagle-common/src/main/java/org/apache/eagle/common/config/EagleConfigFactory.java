@@ -170,7 +170,8 @@ public class EagleConfigFactory implements EagleConfig {
             Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
             String configKey = entity.getKey().replace("-", ".");
             ConfigValue value = entity.getValue();
-            switch (value.valueType()) {
+            ConfigValueType vt = value.valueType();
+            switch (vt) {
                 case NUMBER:
                     this.hbaseConf.setInt(configKey, Integer.valueOf(value.toString()));
                 case STRING:
