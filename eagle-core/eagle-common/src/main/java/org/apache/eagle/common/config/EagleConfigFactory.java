@@ -172,13 +172,9 @@ public class EagleConfigFactory implements EagleConfig {
             ConfigValue value = entity.getValue();
             switch (value.valueType()) {
                 case NUMBER:
-                    this.hbaseConf.setInt(configKey, Integer.valueOf(value.toString()));
-                    break;
                 case STRING:
-                    this.hbaseConf.set(configKey, value.toString());
-                    break;
                 case BOOLEAN:
-                    this.hbaseConf.setBoolean(configKey, Boolean.valueOf(value.toString()));
+                    this.hbaseConf.set(configKey, value.toString());
                     break;
                 default:
                     break;
