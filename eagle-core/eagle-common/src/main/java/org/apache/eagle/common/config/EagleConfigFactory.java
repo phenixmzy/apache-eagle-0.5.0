@@ -127,12 +127,10 @@ public class EagleConfigFactory implements EagleConfig {
         LOG.warn("Start Load HBase client config...");
         if (config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT)) {
             LOG.warn("Load HBase client config has path", EagleConfigConstants.SERVICE_HBASE_CLIENT);
-            Config hbaseClientConfig = config.atPath(EagleConfigConstants.SERVICE_HBASE_CLIENT);
-            Config atHBaseClientConfig = config.atKey(EagleConfigConstants.SERVICE_HBASE_CLIENT);
-            Config c = config.getConfig(EagleConfigConstants.SERVICE_HBASE_CLIENT);
+            Config hbaseClientConfig = config.getConfig(EagleConfigConstants.SERVICE_HBASE_CLIENT);
             if (hbaseClientConfig != null) {
                 LOG.warn("Load HBase client config != null");
-                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = c.entrySet().iterator();
+                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
                 while (hbaseConfigItems.hasNext()) {
                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
                     String configKey = entity.getKey().replace("-",".");
