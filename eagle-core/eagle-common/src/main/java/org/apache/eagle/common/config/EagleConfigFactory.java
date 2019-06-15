@@ -19,6 +19,7 @@ package org.apache.eagle.common.config;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigValue;
+import com.typesafe.config.ConfigValueType;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTableInterface;
@@ -134,7 +135,14 @@ public class EagleConfigFactory implements EagleConfig {
                 while (hbaseConfigItems.hasNext()) {
                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
                     String configKey = entity.getKey().replace("-",".");
-                    this.hbaseConf.set(configKey, entity.getValue().toString());
+                    ConfigValue value = entity.getValue();
+                    switch (value.valueType()) {
+                        case NUMBER:
+                            this.hbaseConf.setInt(configKey, Integer.valueOf(value.toString()));
+                        case STRING:
+                            this.hbaseConf.set(configKey, value.toString());
+                            default:
+                    }
                     LOG.warn("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
                 }
             }
