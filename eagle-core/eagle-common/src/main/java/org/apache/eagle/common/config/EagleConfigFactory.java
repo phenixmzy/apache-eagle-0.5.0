@@ -124,10 +124,11 @@ public class EagleConfigFactory implements EagleConfig {
         } else {
             this.hbaseConf.set("zookeeper.znode.parent", EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT);
         }
-
+        LOG.info("Start Load HBase client config...");
         if (config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT)) {
             Config hbaseClientConfig = config.atPath(EagleConfigConstants.SERVICE_HBASE_CLIENT);
             if (hbaseClientConfig != null) {
+                LOG.info("Load HBase client config != null");
                 Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
                 while (hbaseConfigItems.hasNext()) {
                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
@@ -136,6 +137,7 @@ public class EagleConfigFactory implements EagleConfig {
                 }
             }
         }
+        LOG.info("End Load HBase client config...");
 
 
         this.eagleServiceHost = config.hasPath(EagleConfigConstants.SERVICE_HOST) ? config.getString(EagleConfigConstants.SERVICE_HOST) : EagleConfigConstants.DEFAULT_SERVICE_HOST;
