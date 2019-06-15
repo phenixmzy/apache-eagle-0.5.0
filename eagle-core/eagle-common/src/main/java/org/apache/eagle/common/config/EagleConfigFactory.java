@@ -132,7 +132,7 @@ public class EagleConfigFactory implements EagleConfig {
             Config c = config.getConfig(EagleConfigConstants.SERVICE_HBASE_CLIENT);
             if (hbaseClientConfig != null) {
                 LOG.warn("Load HBase client config != null");
-                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
+                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = c.entrySet().iterator();
                 while (hbaseConfigItems.hasNext()) {
                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
                     String configKey = entity.getKey().replace("-",".");
