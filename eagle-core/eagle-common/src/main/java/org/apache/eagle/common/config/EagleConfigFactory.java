@@ -18,6 +18,7 @@ package org.apache.eagle.common.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigValue;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTableInterface;
@@ -25,6 +26,8 @@ import org.apache.hadoop.hbase.client.HTablePool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -104,6 +107,7 @@ public class EagleConfigFactory implements EagleConfig {
             ? config.getString(EagleConfigConstants.SERVICE_ZOOKEEPER_ZNODE_PARENT) : EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT;
         String clientIPCPoolSize = getString(config, EagleConfigConstants.SERVICE_HBASE_CLIENT_IPC_POOL_SIZE, "10");
         this.autoCreateTable = !config.hasPath(EagleConfigConstants.AUTO_CREATE_TABLE) || config.getBoolean(EagleConfigConstants.AUTO_CREATE_TABLE);
+
         this.hbaseConf = HBaseConfiguration.create();
         this.hbaseConf.set("hbase.client.ipc.pool.size", clientIPCPoolSize);
 
@@ -119,6 +123,18 @@ public class EagleConfigFactory implements EagleConfig {
             this.hbaseConf.set("zookeeper.znode.parent", zkZnodeParent);
         } else {
             this.hbaseConf.set("zookeeper.znode.parent", EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT);
+        }
+
+        if (config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT)) {
+            Config hbaseClientConfig = config.atPath(EagleConfigConstants.SERVICE_HBASE_CLIENT);
+            if (hbaseClientConfig != null) {
+                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
+                while (hbaseConfigItems.hasNext()) {
+                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
+                    this.hbaseConf.set(entity.getKey(), entity.getValue().toString());
+                    LOG.info("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
+                }
+            }
         }
 
 
