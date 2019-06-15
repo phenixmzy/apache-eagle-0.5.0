@@ -130,7 +130,7 @@ public class EagleConfigFactory implements EagleConfig {
             if (hbaseClientConfig != null) {
                 Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
                 while (hbaseConfigItems.hasNext()) {
-                     Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
+                    Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
                     this.hbaseConf.set(entity.getKey(), entity.getValue().toString());
                     LOG.info("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
                 }
