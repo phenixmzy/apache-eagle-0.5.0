@@ -98,14 +98,14 @@ public class EagleConfigFactory implements EagleConfig {
     private void init() {
         this.config = ConfigFactory.load();
         this.timeZone = TimeZone.getTimeZone((config.hasPath(EagleConfigConstants.EAGLE_TIME_ZONE)
-            ? config.getString(EagleConfigConstants.EAGLE_TIME_ZONE) : EagleConfigConstants.DEFAULT_EAGLE_TIME_ZONE));
+                ? config.getString(EagleConfigConstants.EAGLE_TIME_ZONE) : EagleConfigConstants.DEFAULT_EAGLE_TIME_ZONE));
         this.env = config.hasPath(EagleConfigConstants.SERVICE_ENV) ? config.getString(EagleConfigConstants.SERVICE_ENV) : "dev";
         this.zkQuorum = config.hasPath(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_QUORUM)
-            ? config.getString(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_QUORUM) : null;
+                ? config.getString(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_QUORUM) : null;
         this.zkPort = config.hasPath(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT)
-            ? config.getString(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT) : null;
+                ? config.getString(EagleConfigConstants.SERVICE_HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT) : null;
         final String zkZnodeParent = config.hasPath(EagleConfigConstants.SERVICE_ZOOKEEPER_ZNODE_PARENT)
-            ? config.getString(EagleConfigConstants.SERVICE_ZOOKEEPER_ZNODE_PARENT) : EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT;
+                ? config.getString(EagleConfigConstants.SERVICE_ZOOKEEPER_ZNODE_PARENT) : EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT;
         String clientIPCPoolSize = getString(config, EagleConfigConstants.SERVICE_HBASE_CLIENT_IPC_POOL_SIZE, "10");
         this.autoCreateTable = !config.hasPath(EagleConfigConstants.AUTO_CREATE_TABLE) || config.getBoolean(EagleConfigConstants.AUTO_CREATE_TABLE);
 
@@ -125,46 +125,29 @@ public class EagleConfigFactory implements EagleConfig {
         } else {
             this.hbaseConf.set("zookeeper.znode.parent", EagleConfigConstants.DEFAULT_ZOOKEEPER_ZNODE_PARENT);
         }
-        LOG.warn("Start Load HBase client config...");
+
         if (config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT)) {
-            LOG.warn("Load HBase client config has path", EagleConfigConstants.SERVICE_HBASE_CLIENT);
             Config hbaseClientConfig = config.getConfig(EagleConfigConstants.SERVICE_HBASE_CLIENT);
             if (hbaseClientConfig != null) {
-                LOG.warn("Load HBase client config != null");
-                Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
-                while (hbaseConfigItems.hasNext()) {
-                    Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
-                    String configKey = entity.getKey().replace("-",".");
-                    ConfigValue value = entity.getValue();
-                    switch (value.valueType()) {
-                        case NUMBER:
-                            this.hbaseConf.setInt(configKey, Integer.valueOf(value.toString()));
-                        case STRING:
-                            this.hbaseConf.set(configKey, value.toString());
-                            default:
-                    }
-                    LOG.warn("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
-                }
+                loadHBaseConfig(hbaseClientConfig);
             }
         }
-        LOG.warn("End Load HBase client config...");
-
 
         this.eagleServiceHost = config.hasPath(EagleConfigConstants.SERVICE_HOST) ? config.getString(EagleConfigConstants.SERVICE_HOST) : EagleConfigConstants.DEFAULT_SERVICE_HOST;
         this.storageType = config.hasPath(EagleConfigConstants.SERVICE_STORAGE_TYPE) ? config.getString(EagleConfigConstants.SERVICE_STORAGE_TYPE) : EagleConfigConstants.DEFAULT_STORAGE_TYPE;
         this.isCoprocessorEnabled = config.hasPath(EagleConfigConstants.SERVICE_COPROCESSOR_ENABLED) && config.getBoolean(EagleConfigConstants.SERVICE_COPROCESSOR_ENABLED);
         this.eagleServicePort = config.hasPath(EagleConfigConstants.SERVICE_PORT) ? config.getInt(EagleConfigConstants.SERVICE_PORT) : EagleConfigConstants.DEFAULT_SERVICE_PORT;
         this.tableNamePrefixedWithEnv = config.hasPath(EagleConfigConstants.SERVICE_TABLE_NAME_PREFIXED_WITH_ENVIRONMENT) && config.getBoolean(EagleConfigConstants
-            .SERVICE_TABLE_NAME_PREFIXED_WITH_ENVIRONMENT);
+                .SERVICE_TABLE_NAME_PREFIXED_WITH_ENVIRONMENT);
         this.hbaseClientScanCacheSize = config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT_SCAN_CACHE_SIZE) ? config.getInt(EagleConfigConstants.SERVICE_HBASE_CLIENT_SCAN_CACHE_SIZE) :
-            hbaseClientScanCacheSize;
+                hbaseClientScanCacheSize;
         // initilize eagle service thread pool for parallel execution of hbase scan etc.
         int threadPoolCoreSize = config.hasPath(EagleConfigConstants.SERVICE_THREADPOOL_CORE_SIZE) ? config.getInt(EagleConfigConstants.SERVICE_THREADPOOL_CORE_SIZE) : EagleConfigConstants
-            .DEFAULT_THREAD_POOL_CORE_SIZE;
+                .DEFAULT_THREAD_POOL_CORE_SIZE;
         int threadPoolMaxSize = config.hasPath(EagleConfigConstants.SERVICE_THREADPOOL_MAX_SIZE) ? config.getInt(EagleConfigConstants.SERVICE_THREADPOOL_MAX_SIZE) : EagleConfigConstants
-            .DEFAULT_THREAD_POOL_MAX_SIZE;
+                .DEFAULT_THREAD_POOL_MAX_SIZE;
         long threadPoolShrinkTime = config.hasPath(EagleConfigConstants.SERVICE_THREADPOOL_SHRINK_SIZE) ? config.getLong(EagleConfigConstants.SERVICE_THREADPOOL_SHRINK_SIZE) : EagleConfigConstants
-            .DEFAULT_THREAD_POOL_SHRINK_TIME;
+                .DEFAULT_THREAD_POOL_SHRINK_TIME;
         this.isServiceAuditingEnabled = config.hasPath(EagleConfigConstants.SERVICE_AUDITING_ENABLED) && config.getBoolean(EagleConfigConstants.SERVICE_AUDITING_ENABLED);
 
         this.executor = new ThreadPoolExecutor(threadPoolCoreSize, threadPoolMaxSize, threadPoolShrinkTime, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
@@ -178,6 +161,28 @@ public class EagleConfigFactory implements EagleConfig {
                 LOG.debug("Eagle HBase Coprocessor is disabled");
             }
         }
+    }
+
+    private void loadHBaseConfig(Config hbaseConfig) {
+        LOG.warn("Start Load HBase client config...");
+        Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseConfig.entrySet().iterator();
+        while (hbaseConfigItems.hasNext()) {
+            Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
+            String configKey = entity.getKey().replace("-", ".");
+            ConfigValue value = entity.getValue();
+            switch (value.valueType()) {
+                case NUMBER:
+                    this.hbaseConf.setInt(configKey, Integer.valueOf(value.toString()));
+                case STRING:
+                    this.hbaseConf.set(configKey, value.toString());
+                case BOOLEAN:
+                    this.hbaseConf.setBoolean(configKey, Boolean.valueOf(value.toString()));
+                default:
+                    break;
+            }
+            LOG.warn("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
+        }
+        LOG.warn("End Load HBase client config...");
     }
 
     @Override
