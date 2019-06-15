@@ -169,12 +169,11 @@ public class EagleConfigFactory implements EagleConfig {
         while (hbaseConfigItems.hasNext()) {
             Map.Entry<String, ConfigValue> entity = hbaseConfigItems.next();
             String configKey = entity.getKey().replace("-", ".");
-            ConfigValue value = entity.getValue();
-            switch (value.valueType()) {
+            switch (entity.getValue().valueType()) {
                 case NUMBER:
                 case STRING:
                 case BOOLEAN:
-                    this.hbaseConf.set(configKey, value.toString());
+                    this.hbaseConf.set(configKey, hbaseConfig.getString(entity.getKey()));
                     break;
                 default:
                     break;
