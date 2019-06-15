@@ -126,7 +126,8 @@ public class EagleConfigFactory implements EagleConfig {
         }
         LOG.info("Start Load HBase client config...");
         if (config.hasPath(EagleConfigConstants.SERVICE_HBASE_CLIENT)) {
-            Config hbaseClientConfig = config.atPath(EagleConfigConstants.SERVICE_HBASE_CLIENT);
+            LOG.info("Load HBase client config has path", EagleConfigConstants.SERVICE_HBASE_CLIENT);
+            /*Config hbaseClientConfig = config.atPath(EagleConfigConstants.SERVICE_HBASE_CLIENT);
             if (hbaseClientConfig != null) {
                 LOG.info("Load HBase client config != null");
                 Iterator<Map.Entry<String, ConfigValue>> hbaseConfigItems = hbaseClientConfig.entrySet().iterator();
@@ -135,7 +136,7 @@ public class EagleConfigFactory implements EagleConfig {
                     this.hbaseConf.set(entity.getKey(), entity.getValue().toString());
                     LOG.info("Load HBase client config {}={}", entity.getKey(), entity.getValue().toString());
                 }
-            }
+            }*/
         }
         LOG.info("End Load HBase client config...");
 
