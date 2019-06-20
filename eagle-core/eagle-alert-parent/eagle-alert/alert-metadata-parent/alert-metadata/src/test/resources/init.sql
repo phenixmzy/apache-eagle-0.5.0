@@ -84,6 +84,7 @@ INSERT INTO publishment_type(id, content) VALUES
 ('Email', '{"name":"Email","type":"org.apache.eagle.alert.engine.publisher.impl.AlertEmailPublisher","description":null,"fields":[{"name":"subject"},{"name":"sender"}, {"name":"recipients"}]}'),
 ('Slack', '{"name":"Slack","type":"org.apache.eagle.alert.engine.publisher.impl.AlertSlackPublisher","description":null,"fields":[{"name":"token"},{"name":"channels"}, {"name":"severitys"}, {"name":"urltemplate"}]}'),
 ('Open-Falcon', '{"name":"Open-Falcon","type":"org.apache.eagle.alert.engine.publisher.external.openfalcon.AlertOpenFalconPublisher","description":null,"fields":[]}'),
+('RMS', '{"name":"RMS","type":"org.apache.eagle.alert.engine.publisher.external.rms.AlertRMSPublisher","description":null,"fields":[]}'),
 ('HBaseStorage', '{"name":"HBaseStorage","type":"org.apache.eagle.alert.app.AlertEagleStorePlugin","description":null,"fields":[]}'),
 ('JDBCStorage', '{"name":"JDBCStorage","type":"org.apache.eagle.alert.engine.publisher.impl.AlertEagleStorePlugin","description":null,"fields":[]}');
 

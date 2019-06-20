@@ -112,6 +112,17 @@ Apache Kafak 1.0.0(1.x later)
 ${eagle_home}/eagle-assembly/src/main/doc/metadata-ddl.sql
 ${eagle_home}/eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/source/init.sql
 
+注意:
+追加监控类型需在
+${eagle_home}/eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/source/init.sql 文件
+中的publishment_type表添加插入值
+如:
+INSERT INTO publishment_type(id, content) VALUES
+('Open-Falcon', '{"name":"Open-Falcon","type":"org.apache.eagle.alert.engine.publisher.external.openfalcon.AlertOpenFalconPublisher","description":null,"fields":[]}'),
+('RMS', '{"name":"RMS","type":"org.apache.eagle.alert.engine.publisher.external.rms.AlertRMSPublisher","description":null,"fields":[]}')
+
+
+
 ## OS系统参数监控功能需安装以下工具
 yum -y install sysstat
 yum -y install smartmontools
