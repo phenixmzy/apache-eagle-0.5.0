@@ -75,7 +75,7 @@ public class RMSSender implements Runnable {
         dataArray.add(item);
 
         JSONObject json = new JSONObject();
-        json.put("key", context.getToken());
+        json.put("token", context.getToken());
         json.put("data", dataArray);
         LOG.info("Send msg:{}", json.toJSONString());
         return json.toJSONString();
