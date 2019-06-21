@@ -31,7 +31,7 @@ DIR=$(dirname $0)
 source ${DIR}/eagle-env.sh
 
 DUBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9998"
-JVM_OPTS="-server -Xms1024m -Xmx1024m -XX:MaxPermSize=1024m $DUBUG_OPTS"
+JVM_OPTS="-server -Xms2048m -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=400 $DUBUG_OPTS"
 
 GC_OPTS="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:${DIR}/../log/eagle-server-gc.log"
 
