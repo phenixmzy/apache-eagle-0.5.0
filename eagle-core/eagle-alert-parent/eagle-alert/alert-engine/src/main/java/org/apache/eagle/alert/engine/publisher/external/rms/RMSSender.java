@@ -35,13 +35,11 @@ public class RMSSender implements Runnable {
 
     private void executor() throws Exception {
         CloseableHttpResponse response = null;
-        JSONArray array = new JSONArray();
-
         try {
             HttpPost post = new HttpPost(this.context.getRmsServerUrl());
             post.addHeader("Content-Type", "application/json");
-            array.add(createSendMessage());
-            StringEntity entity = new StringEntity(array.toJSONString(), "utf-8");
+            String requstData = createSendMessage();
+            StringEntity entity = new StringEntity(requstData, "utf-8");
             post.setEntity(entity);
             CloseableHttpClient httpclient = HttpClients.createDefault();
             response  = httpclient.execute(post);
@@ -52,7 +50,7 @@ public class RMSSender implements Runnable {
             while ((line = rd.readLine()) != null) {
                 responseContent.append(line);
             }
-            LOG.info("Send To RMS:Send To RMS msg[{}] and responses[{}]", responseContent.toString(), this.context.toString());
+            LOG.info("Send To RMS:Send To RMS msg[{}] and responses[{}]", responseContent.toString(), requstData);
 
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
@@ -63,7 +61,7 @@ public class RMSSender implements Runnable {
         }
     }
 
-    private JSONObject createSendMessage() {
+    private String createSendMessage() {
         JSONObject item = new JSONObject();
         item.put("point_code", context.getPointCode());
         item.put("error_code", context.getErrorCode());
@@ -80,6 +78,6 @@ public class RMSSender implements Runnable {
         json.put("key", context.getToken());
         json.put("data", dataArray);
         LOG.info("Send msg:{}", json.toJSONString());
-        return json;
+        return json.toJSONString();
     }
 }
