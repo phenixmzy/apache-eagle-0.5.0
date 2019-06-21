@@ -26,7 +26,7 @@ public class ApplicationInfoCrawler implements Runnable {
             AppsWrapper appWrapper = (AppsWrapper) HadoopYarnResourceUtils.getObjectFromUrlStream(urlString, AppsWrapper.class);
             if (appWrapper == null) {
                 logger.error("Failed to crawl scheduler info with url = " + this.urlString);
-            } else {
+            } else if (appWrapper.getApps().getApp() != null) {
                 logger.info("Crawled " + appWrapper.getApps().getApp().size() + " application.");
                 long currentTimestamp = System.currentTimeMillis();
                 for (App app : appWrapper.getApps().getApp()) {
