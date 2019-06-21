@@ -64,18 +64,21 @@ public class RMSSender implements Runnable {
     }
 
     private JSONObject createSendMessage() {
-        JSONObject data = new JSONObject();
-        data.put("point_code", context.getPointCode());
-        data.put("error_code", context.getErrorCode());
-        data.put("server_ip", context.getServerIp());
-        data.put("server_name", context.getServerName());
-        data.put("notice_time", context.getNoticeTime());
-        data.put("content",context.getContent());
-        data.put("level", context.getLevel());
+        JSONObject item = new JSONObject();
+        item.put("point_code", context.getPointCode());
+        item.put("error_code", context.getErrorCode());
+        item.put("server_ip", context.getServerIp());
+        item.put("server_name", context.getServerName());
+        item.put("notice_time", context.getNoticeTime());
+        item.put("content",context.getContent());
+        item.put("level", context.getLevel());
+
+        JSONArray dataArray = new JSONArray();
+        dataArray.add(item);
 
         JSONObject json = new JSONObject();
         json.put("key", context.getToken());
-        json.put("data", data);
+        json.put("data", dataArray);
 
         return json;
     }
