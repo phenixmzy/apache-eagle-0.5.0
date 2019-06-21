@@ -50,7 +50,7 @@ public class RMSSender implements Runnable {
             while ((line = rd.readLine()) != null) {
                 responseContent.append(line);
             }
-            LOG.info("Send To RMS:Send To RMS msg[{}] and responses[{}]", responseContent.toString(), requstData);
+            LOG.info("Send To RMS:Send To RMS, msg:[{}]. responses:[{}]", requstData, responseContent.toString());
 
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
