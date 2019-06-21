@@ -87,8 +87,6 @@ public class KafkaStreamSink extends StormStreamSink<KafkaStreamSinkConfig> {
         try {
             String output = new ObjectMapper().writeValueAsString(event);
             // partition key may cause data skew
-            //LOG.info("test topicId={} msg={}",this.topicId, output);
-
             // producer.send(new KeyedMessage(this.topicId, output));
 
             // org.apache.kafka.clients.producer api
