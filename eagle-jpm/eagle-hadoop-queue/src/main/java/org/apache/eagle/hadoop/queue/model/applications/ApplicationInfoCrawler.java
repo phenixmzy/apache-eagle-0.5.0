@@ -34,6 +34,8 @@ public class ApplicationInfoCrawler implements Runnable {
                     app.setRunningTimeLenSecond(runTimeLenSecond);
                 }
                 listener.onStored(appWrapper);
+            } else {
+                logger.info("Yarn was Not Any Running Of Application.");
             }
         } catch (IOException e) {
             logger.error("Got IO exception while connecting to " + this.urlString + " : " + e.getMessage());
