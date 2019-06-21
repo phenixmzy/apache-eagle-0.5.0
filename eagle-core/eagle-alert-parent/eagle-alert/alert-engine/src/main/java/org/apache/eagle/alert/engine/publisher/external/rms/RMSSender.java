@@ -77,4 +77,22 @@ public class RMSSender implements Runnable {
         json.put("level", context.getLevel());
         return json;
     }
+
+    public static void main(String[] args) {
+        RMSContext context = new RMSContext();
+        context.setToken("6mNoX3qpCfFnvmsZTzMn");
+        context.setPointCode("WFZ25228");
+        context.setErrorCode("100007");
+        context.setServerIp("127.0.0.1");
+        context.setServerName("apache eagle");
+        context.setRmsServerUrl("http://www.rms110.com/api-source?project_code=open-falcon-alarm");
+        context.setLevel(1);
+        context.setNoticeTime("2019-06-21 13:59:11");
+        String cont = "{\"allowed\":true,\"cmd\":\"open\",\"dst\":null,\"host\":\"10.62.36.208\",\"securityZone\":\"NA\",\"sensitivityType\":\"NA\",\"src\":\"/user/spark/history/application_1559269751135_0201_1.lz4.inprogress\",\"timestamp\":1561096751363,\"user\":\"root\"}";
+        context.setContent(cont);
+
+        RMSSender sender = new RMSSender(context);
+        Thread t = new Thread(sender);
+        t.start();
+    }
 }
