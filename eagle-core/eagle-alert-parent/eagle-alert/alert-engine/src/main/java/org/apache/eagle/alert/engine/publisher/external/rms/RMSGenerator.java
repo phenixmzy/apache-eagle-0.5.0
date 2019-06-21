@@ -14,14 +14,12 @@ public class RMSGenerator {
     private static final long MAX_TIMEOUT_MS = 60000;
 
     private ThreadPoolExecutor executorPool;
-
-    private String serverURL;
     private String token;
     private String pointCode;
     private String errorCode;
-
     private String serverIp;
     private String serverName;
+    private String serverURL;
 
     public boolean sendAlertRMS(AlertStreamEvent event) {
 
@@ -35,7 +33,7 @@ public class RMSGenerator {
         try {
             future.get(MAX_TIMEOUT_MS, TimeUnit.MILLISECONDS);
             status = true;
-            LOG.info(String.format("Successfully send to RMS Server %s content %s", context.getRmsServerUrl(), context.toString()));
+            LOG.info(String.format("Successfully send msg to RMS Server %s", context.getRmsServerUrl()));
         } catch (InterruptedException | ExecutionException e) {
             status = false;
             LOG.error(String.format("Failed to send alertInfo %s to RMS %s, due to %s", context.toString(), this.serverURL, e), e);

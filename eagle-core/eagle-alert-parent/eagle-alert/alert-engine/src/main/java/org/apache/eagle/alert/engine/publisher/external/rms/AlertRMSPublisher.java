@@ -103,20 +103,18 @@ public class AlertRMSPublisher extends AbstractPublishPlugin implements AlertPub
         }
 
         executorPool = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_CORE_SIZE, DEFAULT_THREAD_POOL_MAX_SIZE, DEFAULT_THREAD_POOL_SHRINK_TIME, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+
         this.rmsServerUrl = rmsConfig.hasPath(RMSContant.RMS_CONFIG_SERVER_URL)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_SERVER_URL) : "localhost";
 
         this.token = rmsConfig.hasPath(RMSContant.RMS_CONFIG_TOKEN)
-                ? rmsConfig.getString(RMSContant.RMS_CONFIG_SERVER_URL) : "no token";
+                ? rmsConfig.getString(RMSContant.RMS_CONFIG_TOKEN) : "no token";
 
         this.errorCode = rmsConfig.hasPath(RMSContant.RMS_CONFIG_ERROR_CODE)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_ERROR_CODE) : "no errorCode";
 
         this.pointCode = rmsConfig.hasPath(RMSContant.RMS_CONFIG_PRINT_CODE)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_PRINT_CODE) : "no pointCode";
-
-        this.serverIp = rmsConfig.hasPath(RMSContant.RMS_CONFIG_SERVER_IP)
-                ? rmsConfig.getString(RMSContant.RMS_CONFIG_SERVER_IP) : "no serverIp";
 
         this.serverIp = rmsConfig.hasPath(RMSContant.RMS_CONFIG_SERVER_IP)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_SERVER_IP) : "no serverIp";
