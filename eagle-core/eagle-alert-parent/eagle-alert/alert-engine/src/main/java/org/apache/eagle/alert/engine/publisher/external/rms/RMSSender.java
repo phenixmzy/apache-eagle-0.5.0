@@ -41,19 +41,18 @@ public class RMSSender implements Runnable {
             HttpPost post = new HttpPost(this.context.getRmsServerUrl());
             post.addHeader("Content-Type", "application/json");
             array.add(createSendMessage());
-            LOG.info("Send To RMS msg: {}", array.toJSONString());
             StringEntity entity = new StringEntity(array.toJSONString(), "utf-8");
             post.setEntity(entity);
             CloseableHttpClient httpclient = HttpClients.createDefault();
             response  = httpclient.execute(post);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer res = new StringBuffer();
+            StringBuffer responseContent = new StringBuffer();
             String line = "";
             while ((line = rd.readLine()) != null) {
-                res.append(line);
+                responseContent.append(line);
             }
-            LOG.info("Send To RMS:{}!{}", res.toString(), this.context.toString());
+            LOG.info("Send To RMS:Send To RMS msg[{}] and responses[{}]", responseContent.toString(), this.context.toString());
 
         } catch (IOException e) {
             LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
