@@ -101,7 +101,7 @@ public class RMSGenerator {
         context.setServerIp(this.serverIp);
         context.setServerName(this.serverName);
         context.setRmsServerUrl(this.serverURL);
-        context.setNoticeTime(DateTimeUtil.secondsToHumanDate(event.getTimestamp()/1000));
+        context.setNoticeTime(DateTimeUtil.secondsToHumanDate(event.getTimestamp() / 1000));
         context.setContent(event.getDataMap().toString());
         context.setLevel(RMSContext.getLevelByAlertSeverity(event.getSeverity()));
         return context;
