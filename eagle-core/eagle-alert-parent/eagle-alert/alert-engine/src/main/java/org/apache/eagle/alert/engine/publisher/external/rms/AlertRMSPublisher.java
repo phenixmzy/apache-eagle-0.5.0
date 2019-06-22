@@ -23,7 +23,7 @@ public class AlertRMSPublisher extends AbstractPublishPlugin implements AlertPub
     private static final long DEFAULT_THREAD_POOL_SHRINK_TIME = 60000L; // 1 minute
 
     private transient ThreadPoolExecutor executorPool;
-    private String token;
+    private String key;
     private String pointCode;
     private String errorCode;
     private String serverIp;
@@ -107,8 +107,8 @@ public class AlertRMSPublisher extends AbstractPublishPlugin implements AlertPub
         this.rmsServerUrl = rmsConfig.hasPath(RMSContant.RMS_CONFIG_SERVER_URL)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_SERVER_URL) : "localhost";
 
-        this.token = rmsConfig.hasPath(RMSContant.RMS_CONFIG_TOKEN)
-                ? rmsConfig.getString(RMSContant.RMS_CONFIG_TOKEN) : "no token";
+        this.key = rmsConfig.hasPath(RMSContant.RMS_CONFIG_API_KEY)
+                ? rmsConfig.getString(RMSContant.RMS_CONFIG_API_KEY) : "no key";
 
         this.errorCode = rmsConfig.hasPath(RMSContant.RMS_CONFIG_ERROR_CODE)
                 ? rmsConfig.getString(RMSContant.RMS_CONFIG_ERROR_CODE) : "no errorCode";
@@ -130,7 +130,7 @@ public class AlertRMSPublisher extends AbstractPublishPlugin implements AlertPub
     private RMSGenerator createRMSGenerator() {
         RMSGenerator generator = RMSGeneratorBuilder.newBuilder()
                 .withServerUrl(this.rmsServerUrl)
-                .withToken(this.token)
+                .withKey(this.key)
                 .withPointCode(this.pointCode)
                 .withErrorCode(this.errorCode)
                 .withServerIp(this.serverIp)

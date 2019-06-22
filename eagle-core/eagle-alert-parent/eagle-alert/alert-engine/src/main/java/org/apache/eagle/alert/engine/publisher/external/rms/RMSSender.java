@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class RMSSender implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(RMSSender.class);
@@ -74,10 +75,16 @@ public class RMSSender implements Runnable {
         JSONArray dataArray = new JSONArray();
         dataArray.add(item);
 
-        JSONObject json = new JSONObject();
-        json.put("token", context.getToken());
-        json.put("data", dataArray);
-        LOG.info("Send msg:{}", json.toJSONString());
-        return json.toJSONString();
+        StringBuilder params = new StringBuilder("token=");
+        params.append(getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()))
+                .append("&data=").append(dataArray.toJSONString());
+
+        return params.toString();
+    }
+
+    public String getTokenByKeyAndDataJson(String key, String dataJson) {
+        StringBuilder data = new StringBuilder(key);
+        data.append(dataJson);
+        return DigestUtils.md5Hex(data.toString());
     }
 }

@@ -23,8 +23,8 @@ public class RMSGeneratorBuilder {
         return this;
     }
 
-    public RMSGeneratorBuilder withToken(String token) {
-        generator.setToken(token);
+    public RMSGeneratorBuilder withKey(String key) {
+        generator.setKey(key);
         return this;
     }
 

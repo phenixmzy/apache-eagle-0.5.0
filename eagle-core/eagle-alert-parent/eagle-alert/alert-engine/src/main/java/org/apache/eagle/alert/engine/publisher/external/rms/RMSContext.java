@@ -4,7 +4,7 @@ import org.apache.eagle.alert.engine.coordinator.AlertSeverity;
 
 public class RMSContext {
     //Come Form eagle.conf
-    private String token;
+    private String key;
     private String pointCode;
     private String errorCode;
 
@@ -22,12 +22,12 @@ public class RMSContext {
     public RMSContext() {
     }
 
-    public String getToken() {
-        return token;
+    public String getKey() {
+        return key;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getPointCode() {
@@ -99,7 +99,7 @@ public class RMSContext {
     }
 
     public String toString() {
-        return String.format("RMSContext[token:%s, pointCode:%s, serverIp:%s, serverName:%s, noticeTime:%s,content:%s, level:%s, rmsServerUrl:%s ]",
-                this.token, this.pointCode, this.serverIp, this.serverName, this.noticeTime, this.content, this.level, this.rmsServerUrl);
+        return String.format("RMSContext[key:%s, pointCode:%s, serverIp:%s, serverName:%s, noticeTime:%s,content:%s, level:%s, rmsServerUrl:%s ]",
+                this.key, this.pointCode, this.serverIp, this.serverName, this.noticeTime, this.content, this.level, this.rmsServerUrl);
     }
 }

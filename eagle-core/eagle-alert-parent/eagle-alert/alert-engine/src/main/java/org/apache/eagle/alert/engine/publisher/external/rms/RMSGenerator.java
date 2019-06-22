@@ -14,7 +14,7 @@ public class RMSGenerator {
     private static final long MAX_TIMEOUT_MS = 60000;
 
     private ThreadPoolExecutor executorPool;
-    private String token;
+    private String key;
     private String pointCode;
     private String errorCode;
     private String serverIp;
@@ -71,8 +71,8 @@ public class RMSGenerator {
         this.serverURL = serverURL;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setPointCode(String pointCode) {
@@ -93,7 +93,7 @@ public class RMSGenerator {
 
     private RMSContext buildAlertContext(AlertStreamEvent event) {
         RMSContext context = new RMSContext();
-        context.setToken(this.token);
+        context.setKey(this.key);
         context.setErrorCode(this.errorCode);
         context.setPointCode(this.pointCode);
         context.setServerIp(this.serverIp);
