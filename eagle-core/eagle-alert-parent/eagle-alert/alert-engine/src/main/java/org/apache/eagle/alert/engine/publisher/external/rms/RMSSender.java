@@ -63,7 +63,6 @@ public class RMSSender implements Runnable {
     }
 
     private String createSendMessage() {
-        JSONObject dataJson = new JSONObject();
 
         JSONObject item = new JSONObject();
         item.put("point_code", context.getPointCode());
@@ -77,6 +76,7 @@ public class RMSSender implements Runnable {
         JSONArray dataArray = new JSONArray();
         dataArray.add(item);
 
+        JSONObject dataJson = new JSONObject();
         dataJson.put("token", getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()));
         dataJson.put("data", dataArray.toJSONString());
 
