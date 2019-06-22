@@ -38,7 +38,7 @@ public class RMSSender implements Runnable {
         CloseableHttpResponse response = null;
         try {
             HttpPost post = new HttpPost(this.context.getRmsServerUrl());
-            post.addHeader("Content-Type", "application/json");
+            post.addHeader("Content-Type", "application/x-www-form-urlencoded");
             String requstData = createSendMessage();
             StringEntity entity = new StringEntity(requstData, "utf-8");
             post.setEntity(entity);
@@ -51,10 +51,10 @@ public class RMSSender implements Runnable {
             while ((line = rd.readLine()) != null) {
                 responseContent.append(line);
             }
-            LOG.info("SenderThread Send msg To RMS. msg:[{}]. responses:[{}]", requstData, responseContent.toString());
+            LOG.info("SenderThread Send msg To RMS. responses:{}, msg:{}", responseContent.toString(), requstData);
 
         } catch (IOException e) {
-            LOG.error("Failed to execute http get request!Send To Open-Falcon Failed. ", e);
+            LOG.error("Failed to execute http post request!Send To RMS Failed. ", e);
         } finally {
             if (response != null) {
                 response.close();
@@ -63,33 +63,25 @@ public class RMSSender implements Runnable {
     }
 
     private String createSendMessage() {
+        JSONObject data = new JSONObject();
+        data.put("point_code", context.getPointCode());
+        data.put("error_code", context.getErrorCode());
+        data.put("server_ip", context.getServerIp());
+        data.put("server_name", context.getServerName());
+        data.put("notice_time", context.getNoticeTime());
+        data.put("content",context.getContent());
+        data.put("level", context.getLevel());
 
-        JSONObject item = new JSONObject();
-        item.put("point_code", context.getPointCode());
-        item.put("error_code", context.getErrorCode());
-        item.put("server_ip", context.getServerIp());
-        item.put("server_name", context.getServerName());
-        item.put("notice_time", context.getNoticeTime());
-        item.put("content",context.getContent());
-        item.put("level", context.getLevel());
-
-        JSONArray dataArray = new JSONArray();
-        dataArray.add(item);
-
-        JSONObject dataJson = new JSONObject();
-        dataJson.put("token", getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()));
-        dataJson.put("data", dataArray.toJSONString());
-
-        /*StringBuilder params = new StringBuilder("token=");
-        params.append(getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()))
-                .append("&data=").append(dataArray.toJSONString());*/
-
-        return dataJson.toJSONString();
+        String token = getTokenByKeyAndDataJson(context.getKey(), data.toJSONString());
+        StringBuilder params = new StringBuilder("token=");
+        params.append(token).append("&data=").append(data.toJSONString());
+        return params.toString();
     }
 
     public String getTokenByKeyAndDataJson(String key, String dataJson) {
         StringBuilder data = new StringBuilder(key);
         data.append(dataJson);
-        return DigestUtils.md5Hex(data.toString());
+        String token = DigestUtils.md5Hex(data.toString());
+        return token;
     }
 }
