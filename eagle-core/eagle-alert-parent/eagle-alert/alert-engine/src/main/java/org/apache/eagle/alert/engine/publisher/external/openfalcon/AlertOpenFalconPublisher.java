@@ -48,7 +48,6 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
         if (publishment.getProperties() != null) {
             this.generator = createOpenFalconGenerator();
         }
-        printConfig("AlertOpenFalconPublisher-init", config);
     }
 
     @Override
@@ -114,13 +113,5 @@ public class AlertOpenFalconPublisher extends AbstractPublishPlugin implements A
                 .withEndpoint(this.endpoint)
                 .withExecutorPool(executorPool).build();
         return generator;
-    }
-
-    private void printConfig(String title, Config configure) {
-        Iterator<Map.Entry<String, ConfigValue>> it = configure.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = it.next();
-            LOG.info("{}, {}={}", title, entry.getKey(), entry.getValue());
-        }
     }
 }
