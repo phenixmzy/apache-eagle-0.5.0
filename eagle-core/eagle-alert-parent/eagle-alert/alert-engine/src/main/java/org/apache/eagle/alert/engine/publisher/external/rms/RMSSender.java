@@ -63,6 +63,8 @@ public class RMSSender implements Runnable {
     }
 
     private String createSendMessage() {
+        JSONObject dataJson = new JSONObject();
+
         JSONObject item = new JSONObject();
         item.put("point_code", context.getPointCode());
         item.put("error_code", context.getErrorCode());
@@ -75,11 +77,14 @@ public class RMSSender implements Runnable {
         JSONArray dataArray = new JSONArray();
         dataArray.add(item);
 
-        StringBuilder params = new StringBuilder("token=");
-        params.append(getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()))
-                .append("&data=").append(dataArray.toJSONString());
+        dataJson.put("token", getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()));
+        dataJson.put("data", dataArray.toJSONString());
 
-        return params.toString();
+        /*StringBuilder params = new StringBuilder("token=");
+        params.append(getTokenByKeyAndDataJson(context.getKey(), dataArray.toJSONString()))
+                .append("&data=").append(dataArray.toJSONString());*/
+
+        return dataJson.toJSONString();
     }
 
     public String getTokenByKeyAndDataJson(String key, String dataJson) {
