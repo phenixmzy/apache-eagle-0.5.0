@@ -92,6 +92,8 @@ public class RMSGenerator {
     }
 
     private RMSContext buildAlertContext(AlertStreamEvent event) {
+        int level = RMSContext.getLevelByAlertSeverity(event.getSeverity());
+        String alertInfo = String.format("[%s-P%s]%s in %s.Detail Data: %s", event.getSeverity(), level, event.getSubject(), event.getSiteId(), event.getDataMap().toString());
         RMSContext context = new RMSContext();
         context.setKey(this.key);
         context.setErrorCode(this.errorCode);
@@ -100,8 +102,8 @@ public class RMSGenerator {
         context.setServerName(this.serverName);
         context.setRmsServerUrl(this.serverURL);
         context.setNoticeTime(DateTimeUtil.secondsToHumanDate(event.getTimestamp() / 1000));
-        context.setContent(event.getDataMap().toString());
-        context.setLevel(RMSContext.getLevelByAlertSeverity(event.getSeverity()));
+        context.setContent(alertInfo);
+        context.setLevel(level);
         return context;
     }
 }
