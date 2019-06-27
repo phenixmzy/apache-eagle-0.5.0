@@ -93,7 +93,7 @@ public class RMSGenerator {
 
     private RMSContext buildAlertContext(AlertStreamEvent event) {
         int level = RMSContext.getLevelByAlertSeverity(event.getSeverity());
-        String info = String.format("[%s-P%s]%s[%s] in %s.", event.getSeverity(), level, event.getSubject(), event.getSiteId(),event.getBody());
+        String info = String.format("[%s - P%s] %s [%s] in %s.", event.getSeverity(), level, event.getSubject(),event.getBody(), event.getSiteId());
         RMSContext context = new RMSContext();
         context.setKey(this.key);
         context.setErrorCode(this.errorCode);
