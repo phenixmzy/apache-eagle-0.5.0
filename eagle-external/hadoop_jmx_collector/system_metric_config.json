@@ -1,0 +1,19 @@
+{
+  "env": {
+    "site": "sandbox",
+    "cpu_stat_file": "/tmp/eagle_cpu_usage_state"
+  },
+  "filter": {
+    "bean_group_filter": ["hadoop","java.lang","java.nio"],
+    "metric_name_filter": [
+      "system.*"
+    ]
+  },
+  "output": {
+    "kafka": {
+      "debug": true,
+      "default_topic": "system_metric_sandbox",
+      "broker_list": ["yzj-client-01","yzj-client-02","yzj-client-03"]
+    }
+  }
+}
