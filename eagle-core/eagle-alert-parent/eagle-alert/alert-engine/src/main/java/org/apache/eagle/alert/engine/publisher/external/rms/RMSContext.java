@@ -105,7 +105,20 @@ public class RMSContext {
     }
 
     public static int getLevelByAlertSeverity(AlertSeverity severity) {
-        return severity.ordinal();
+        switch (severity) {
+            case FATAL:
+                return 0;
+            case CRITICAL:
+                return 1;
+            case WARNING:
+                return 2;
+            case OK:
+                return 3;
+            case UNKNOWN:
+                return 4;
+            default:
+                return 5;
+        }
     }
 
     public String toString() {
