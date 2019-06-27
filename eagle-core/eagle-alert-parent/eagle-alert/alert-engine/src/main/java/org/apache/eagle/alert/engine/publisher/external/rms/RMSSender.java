@@ -71,6 +71,7 @@ public class RMSSender implements Runnable {
         data.put("notice_time", context.getNoticeTime());
         data.put("content",context.getContent());
         data.put("level", context.getLevel());
+        data.put("info", context.getInfo());
 
         String token = getTokenByKeyAndDataJson(context.getKey(), data.toJSONString());
         StringBuilder params = new StringBuilder("token=");

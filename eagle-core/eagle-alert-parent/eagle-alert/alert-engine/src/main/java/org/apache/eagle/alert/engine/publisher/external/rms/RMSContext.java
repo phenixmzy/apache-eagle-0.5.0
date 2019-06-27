@@ -19,7 +19,17 @@ public class RMSContext {
     //Come Form Alert Policies Set
     private int level;
 
+    private String info;
+
     public RMSContext() {
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public String getKey() {
