@@ -372,7 +372,11 @@
                     <artifactId>eagle-system-web</artifactId>
                     <version>${project.version}</version>
                 </dependency>
-
+                <dependency>
+                    <groupId>org.apache.eagle</groupId>
+                    <artifactId>eagle-drelephant-web</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
             </dependencies>
         </profile>
     </profiles>
