@@ -67,8 +67,6 @@
 				method: "GET"
 			});
 		};
-
-
 		return DR;
 	});
 
