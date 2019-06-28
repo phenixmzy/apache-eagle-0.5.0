@@ -1,4 +1,4 @@
-package org.apache.eagle.metric;
+package org.apache.eagle.app.jpm;
 
 import org.apache.eagle.app.StaticApplicationProvider;
 

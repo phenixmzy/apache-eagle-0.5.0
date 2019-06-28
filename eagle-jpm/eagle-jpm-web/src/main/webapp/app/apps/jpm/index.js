@@ -62,13 +62,21 @@
 		templateUrl: "partials/queue/overview.html",
 		controller: "queueCtrl",
 		resolve: { time: true }
-	});
+	}).route("jpmQueueApplication", {
+        url: "/jpm/queue/application?queue&startTime&endTime",
+        site: true,
+        templateUrl: "partials/queue/application.html",
+        controller: "queueCtrl",
+        resolve: { time: false }
+    });
 
-	jpmApp.portal({name: "YARN Jobs", icon: "taxi", list: [
+	jpmApp.portal(
+	    {name: "YARN Jobs", icon: "taxi", list: [
 		{name: "Overview", path: "jpm/overview"},
 		{name: "Job Statistics", path: "jpm/statistics"},
 		{name: "Job List", path: "jpm/list"},
-		{name: "Queue", path: "jpm/queue"}
+		{name: "Queue Monitor", path: "jpm/queue"},
+		{name: "Queue Application Monitor", path: "jpm/queue/application"}
 	]}, true);
 
 	jpmApp.service("JPM", function ($q, $http, Time, Site, Application) {

@@ -25,6 +25,7 @@
 
     </dependencies>
     <configuration>
+        <!--
         <property>
             <name>service.host</name>
             <displayName>Eagle Service Host</displayName>
@@ -35,8 +36,9 @@
             <displayName>Eagle Service Port</displayName>
             <description>Set additional eagle service port, default: using current port</description>
         </property>
+        -->
         <property>
-            <name>drelephant.url</name>
+            <name>service.elephantUrl</name>
             <displayName>Dr.Elephant Service Url</displayName>
             <description>Set additional drelephant service url</description>
         </property>

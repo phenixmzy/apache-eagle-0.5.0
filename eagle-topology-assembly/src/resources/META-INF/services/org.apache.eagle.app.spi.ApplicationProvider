@@ -36,4 +36,4 @@ org.apache.eagle.jpm.spark.history.SparkHistoryJobAppProvider
 org.apache.eagle.metric.HdfsMetricWebApplicationProvider
 org.apache.eagle.metric.HBaseMetricWebApplicationProvider
 org.apache.eagle.metric.SystemMetricWebApplicationProvider
-org.apache.eagle.metric.DrElephantWebApplicationProvider
+org.apache.eagle.app.jpm.DrElephantWebApplicationProvider
