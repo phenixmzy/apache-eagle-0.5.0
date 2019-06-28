@@ -21,6 +21,7 @@ org.apache.eagle.security.auditlog.HdfsAuditLogAppProvider
 org.apache.eagle.security.oozie.parse.OozieAuditLogAppProvider
 
 ## JPM
+org.apache.eagle.app.jpm.DrElephantWebApplicationProvider
 org.apache.eagle.app.jpm.JPMWebApplicationProvider
 org.apache.eagle.jpm.mr.history.MRHistoryJobApplicationProvider
 org.apache.eagle.jpm.mr.running.MRRunningJobApplicationProvider
@@ -32,8 +33,8 @@ org.apache.eagle.topology.TopologyCheckAppProvider
 org.apache.eagle.metric.HadoopMetricMonitorAppProdiver
 org.apache.eagle.jpm.spark.history.SparkHistoryJobAppProvider
 
+
 ## Metric
 org.apache.eagle.metric.HdfsMetricWebApplicationProvider
 org.apache.eagle.metric.HBaseMetricWebApplicationProvider
 org.apache.eagle.metric.SystemMetricWebApplicationProvider
-org.apache.eagle.app.jpm.DrElephantWebApplicationProvider
