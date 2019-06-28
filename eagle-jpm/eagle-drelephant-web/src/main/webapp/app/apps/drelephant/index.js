@@ -25,7 +25,7 @@
 	appPerformance.route("Elephant", {
 	    url: "/appPerformance/elephant",
         site: true,
-        templateUrl: "partials/elephant.html",
+        templateUrl: "partials/overview.html",
         controller: "queueCtrl",
         resolve: { time: false }
     });
@@ -69,7 +69,7 @@
 		};
 
 
-		return JPM;
+		return DR;
 	});
 
 	appPerformance.requireCSS("style/index.css");
