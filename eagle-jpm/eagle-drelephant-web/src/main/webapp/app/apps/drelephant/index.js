@@ -71,8 +71,7 @@
 					elephantURL = elephantUrl
 				}
 			}
-			return common.template(elephantURL);
-			//return common.template(DR.ELEPHANT, {baseURL: baseURL});
+			return elephantURL;
 		};
 
 
