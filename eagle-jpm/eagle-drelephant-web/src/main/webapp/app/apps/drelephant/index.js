@@ -32,7 +32,7 @@
 
 	appPerformance.portal(
 	    {name: "Application Performance", icon: "taxi", list: [
-		{name: "Dr.Elephant", path: "appPerformance/elephant"}
+		{name: "Dr.Elephant-2", path: "appPerformance/elephant"}
 	]}, true);
 
 	appPerformance.service("Application Performance", function ($q, $http, Time, Site, Application) {
