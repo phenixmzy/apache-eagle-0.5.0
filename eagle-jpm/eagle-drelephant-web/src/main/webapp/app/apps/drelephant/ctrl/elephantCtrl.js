@@ -26,6 +26,8 @@
 		 * @param {{}} $scope.trendChart
 		 */
 		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, Entity, DR) {
-		    var elephantUrl = DR.elephant($wrapState.param.siteId)
-            DR.get(elephantUrl)
+			var elephantUrl = DR.elephant($wrapState.param.siteId)
+			DR.get(elephantUrl)
+		})
+	})
 })();

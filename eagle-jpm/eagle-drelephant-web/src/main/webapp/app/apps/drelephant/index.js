@@ -74,7 +74,6 @@
 			return elephantURL;
 		};
 
-
 		DR.get = function (url) {
 			return $http({
 				url: url,
