@@ -26,7 +26,7 @@
 	    url: "/appPerformance/elephant",
         site: true,
         templateUrl: "partials/overview.html",
-        controller: "queueCtrl",
+        controller: "elephantCtrl",
         resolve: { time: false }
     });
 
@@ -40,24 +40,39 @@
 		DR.ELEPHANT = '${baseURL}/rest/elephant';
 
 		/**
-		 * Fetch query content with current site application configuration
+		 * Fetch elephant web address content with current site application configuration
 		 * @param {string} queryName
 		 */
 		var elephant = DR.elephant = function(siteId) {
 			var baseURL;
+			var elephantURL;
 			siteId = siteId || Site.current().siteId;
 			var app = Application.find("DrElephant_WEB_APP", siteId)[0];
 			var elephantUrl = app.configuration["service.elephantUrl"];
+			var host = app.configuration["service.host"];
+			var port = app.configuration["service.port"];
 
-			if(!elephantUrl) {
+			if(!host && !port) {
 				baseURL = "";
 			} else {
-				if(elephantUrl === "localhost" || !elephantUrl) {
-					baseURL = elephantUrl
+				if(host === "localhost" || !host) {
+					host = location.hostname;
 				}
+				if(!port) {
+					port = location.port;
+				}
+				baseURL = "http://" + host + ":" + port;
 			}
 
-			return common.template(JPM["QUERY_" + queryName], {baseURL: baseURL});
+			if(!elephantUrl) {
+				elephantURL = "";
+			} else {
+				if(elephantUrl === "localhost" || !elephantUrl) {
+					elephantURL = elephantUrl
+				}
+			}
+			return common.template(elephantURL);
+			//return common.template(DR.ELEPHANT, {baseURL: baseURL});
 		};
 
 
@@ -67,9 +82,10 @@
 				method: "GET"
 			});
 		};
+
 		return DR;
 	});
 
 	appPerformance.requireCSS("style/index.css");
-
+	appPerformance.require("ctrl/elephantCtrl.js");
 })();

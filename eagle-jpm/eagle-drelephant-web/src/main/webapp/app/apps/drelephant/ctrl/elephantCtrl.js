@@ -20,12 +20,12 @@
 	/**
 	 * `register` without params will load the module which using require
 	 */
-	register(function (jpmApp) {
+	register(function (appPerformance) {
 		/**
 		 * @param {{}} $scope
 		 * @param {{}} $scope.trendChart
 		 */
-		jpmApp.controller("compareCtrl", function ($q, $wrapState, $scope, PageConfig, Time, Entity, JPM) {
+		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, Entity, JPM) {
 			$scope.site = $wrapState.param.siteId;
 			$scope.jobDefId = $wrapState.param.jobDefId;
 
