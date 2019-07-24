@@ -26,12 +26,12 @@
 		 * @param {{}} $scope.trendChart
 		 */
 		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, Entity, DR) {
+			PageConfig.title = "DR.Elephant"
+
 			var elephantUrl = DR.elephant($wrapState.param.siteId)
 			DR.get(elephantUrl)
-			$.dialog({
-				title: "提示！",
-				content: common.getValueByPath(res, ["data", elephantUrl])
-			});
+			$scope.elephantUrl = elephantUrl
+
 		})
 	})
 })();
