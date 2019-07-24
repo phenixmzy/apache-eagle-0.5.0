@@ -23,10 +23,10 @@
 	register(function (appPerformance) {
 		/**
 		 * @param {{}} $scope
-		 * @param {{}} $scope.trendChart
+		 * @param {{}} $scope.elephantUrl
 		 */
-		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, Entity, DR) {
-			PageConfig.title = "DR.Elephant"
+		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, DR) {
+			PageConfig.title = "DR.Elephant-23"
 
 			var elephantUrl = DR.elephant($wrapState.param.siteId)
 			DR.get(elephantUrl)
