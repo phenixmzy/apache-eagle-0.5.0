@@ -65,7 +65,7 @@
 			}
 
 			if(!elephantUrl) {
-				elephantURL = "";
+				elephantURL =  app.configuration["drelephant.url"];
 			} else {
 				if(elephantUrl === "localhost" || !elephantUrl) {
 					elephantURL = elephantUrl
