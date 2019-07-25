@@ -37,7 +37,7 @@
 
 	appPerformance.service("Application Performance", function ($q, $http, Time, Site, Application) {
 		var DR = window._DR = {};
-		DR.ELEPHANT = '${baseURL}/rest/elephant';
+		DR.ELEPHANT = '${baseURL}/rest/appPerformance/elephant';
 
 		/**
 		 * Fetch elephant web address content with current site application configuration
