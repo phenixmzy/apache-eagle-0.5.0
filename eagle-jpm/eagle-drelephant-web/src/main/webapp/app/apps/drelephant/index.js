@@ -71,7 +71,7 @@
 					elephantURL = elephantUrl
 				}
 			}
-			return elephantURL;
+			return baseURL;
 		};
 
 		DR.get = function (url) {
