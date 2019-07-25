@@ -32,12 +32,12 @@
 
 	appPerformance.portal(
 	    {name: "Application Performance", icon: "taxi", list: [
-		{name: "Dr.Elephant-2", path: "appPerformance/elephant"}
+		{name: "Dr.Elephant", path: "appPerformance/elephant"}
 	]}, true);
 
 	appPerformance.service("Application Performance", function ($q, $http, Time, Site, Application) {
 		var DR = window._DR = {};
-		//DR.ELEPHANT = '${baseURL}/rest/elephant';
+		DR.ELEPHANT = '${baseURL}/rest/elephant';
 
 		/**
 		 * Fetch elephant web address content with current site application configuration
@@ -83,7 +83,6 @@
 
 		return DR;
 	});
-
 	appPerformance.requireCSS("style/index.css");
 	appPerformance.require("ctrl/elephantCtrl.js");
 })();

@@ -26,7 +26,7 @@
 		 * @param {{}} $scope.elephantUrl
 		 */
 		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, DR) {
-			PageConfig.title = "DR.Elephant-23"
+			PageConfig.title = "DR.Elephant"
 
 			var elephantUrl = DR.elephant($wrapState.param.siteId)
 			DR.get(elephantUrl)
