@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("appPerformance")
 public class AppPerformanceResource {
-    private final static Logger LOG = LoggerFactory.getLogger(AppPerformanceResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AppPerformanceResource.class);
 
     @GET
     @Path("elephant")
