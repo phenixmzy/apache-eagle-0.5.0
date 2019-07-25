@@ -21,7 +21,7 @@ public class AppPerformanceResource {
             LOG.info("AppPerformanceResource hanler appPerformance/elephant siteId:{}", site);
 
         } catch (Exception e) {
-
+            LOG.error(e.getMessage(), e);
         }
         response.setDeElephantUrl("www.163.com");
         return response;
