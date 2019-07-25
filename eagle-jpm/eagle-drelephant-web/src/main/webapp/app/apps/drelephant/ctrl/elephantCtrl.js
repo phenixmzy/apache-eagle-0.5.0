@@ -29,9 +29,11 @@
 			PageConfig.title = "DR.Elephant"
 
 			var elephantUrl = DR.elephant($wrapState.param.siteId)
-			DR.get(elephantUrl)
-			$scope.elephantUrl = elephantUrl
-
-		})
-	})
+			DR.get(elephantUrl).then(function (res) {
+				$scope.elephantUrl = elephantUrl
+				return elephantUrl;
+			});
+			return elephantUrl;
+		});
+	});
 })();
