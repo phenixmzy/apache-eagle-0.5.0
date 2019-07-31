@@ -28,7 +28,7 @@ import org.apache.eagle.log.entity.meta.*;
 @Table("running_fair_queue")
 @ColumnFamily("f")
 @Prefix("rqueue")
-@Service(HadoopClusterConstants.RUNNING_QUEUE_SERVICE_NAME)
+@Service(HadoopClusterConstants.RUNNING_FAIR_QUEUE_SERVICE_NAME)
 @TimeSeries(true)
 @Partition( {"site"})
 public class FairRunningQueueAPIEntity extends TaggedLogAPIEntity {

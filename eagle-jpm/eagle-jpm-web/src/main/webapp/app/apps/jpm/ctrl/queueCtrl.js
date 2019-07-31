@@ -60,7 +60,7 @@
 				var startTime = new Time('startTime');
 				var endTime = startTime.clone().add(1, 'h');
 				JPM
-					.groups('RunningQueueService', { site: $scope.site, queue: $scope.currentQueue }, ['queue', 'parentQueue'], 'count', 60, startTime, endTime)
+					.groups('RunningCapacityQueueService', { site: $scope.site, queue: $scope.currentQueue }, ['queue', 'parentQueue'], 'count', 60, startTime, endTime)
 					._promise
 					.then(function (list) {
 						$.each(list, function (i, entity) {
@@ -95,7 +95,7 @@
 				var promiseList = [];
 				// Load sub queue trend
 				promiseList.push(JPM.aggMetricsToEntities(
-					JPM.groups('RunningQueueService', condition, ['queue', 'parentQueue'], 'avg(absoluteUsedCapacity)', intervalMin, startTime, endTime)
+					JPM.groups('RunningCapacityQueueService', condition, ['queue', 'parentQueue'], 'avg(absoluteUsedCapacity)', intervalMin, startTime, endTime)
 				)._promise.then(function (list) {
 					$scope.subQueueList = [];
 
@@ -121,7 +121,7 @@
 				if ($scope.currentQueue) {
 					// Load current queue trend
 					promiseList.push(JPM.aggMetricsToEntities(
-						JPM.groups('RunningQueueService',
+						JPM.groups('RunningCapacityQueueService',
 							{ site: $scope.site, queue: $scope.currentQueue },
 							['queue'],
 							'max(absoluteUsedCapacity), max(memory), max(absoluteCapacity), max(absoluteMaxCapacity)',

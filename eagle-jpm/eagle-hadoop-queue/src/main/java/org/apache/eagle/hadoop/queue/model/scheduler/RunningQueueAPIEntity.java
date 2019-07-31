@@ -29,7 +29,7 @@ import java.util.List;
 @Table("running_queue")
 @ColumnFamily("f")
 @Prefix("rqueue")
-@Service(HadoopClusterConstants.RUNNING_QUEUE_SERVICE_NAME)
+@Service(HadoopClusterConstants.RUNNING_CAPACITY_QUEUE_SERVICE_NAME)
 @TimeSeries(true)
 @Partition( {"site"})
 public class RunningQueueAPIEntity extends TaggedLogAPIEntity {

@@ -102,7 +102,8 @@ public class HadoopClusterConstants {
 
     }
 
-    public static final String RUNNING_QUEUE_SERVICE_NAME = "RunningQueueService";
+    public static final String RUNNING_CAPACITY_QUEUE_SERVICE_NAME = "RunningCapacityQueueService";
+    public static final String RUNNING_FAIR_QUEUE_SERVICE_NAME = "RunningFairQueueService";
     public static final String QUEUE_MAPPING_SERVICE_NAME = "QueueMappingService";
     public static final String RUNNING_APPLICATION_SERVICE_NAME = "RunningApplicationService";
 
