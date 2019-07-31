@@ -75,7 +75,7 @@
 		{name: "Overview", path: "jpm/overview"},
 		{name: "Job Statistics", path: "jpm/statistics"},
 		{name: "Job List", path: "jpm/list"},
-		{name: "Queue Monitor", path: "jpm/queue"},
+		{name: "Capacity Queue Monitor", path: "jpm/queue"},
 		{name: "Queue Application Monitor", path: "jpm/queue/application"}
 	]}, true);
 

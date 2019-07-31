@@ -18,7 +18,7 @@
 
 <application>
     <type>HADOOP_QUEUE_RUNNING_APP</type>
-    <name>Hadoop Queue Monitor</name>
+    <name>Hadoop Capacity Queue Monitor</name>
     <configuration>
         <!-- org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig -->
         <property>
