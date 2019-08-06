@@ -127,6 +127,8 @@ class SystemMetricCollector(MetricCollector):
             cpu_metric['metric'] = self.METRIC_PREFIX + "." + 'cpu.' + "usage"
             cpu_metric['device'] = items[0]
             cpu_metric['value'] = per_cpu_usage * 1.0 /per_cpu_total
+            cpu_metric['host'] = self.fqdn
+            cpu_metric['host'] = self.fqdn
             self.collect(cpu_metric)
 
         cup_stat_current = str(total_cpu_usage) + " " + str(total_cpu)
@@ -146,7 +148,7 @@ class SystemMetricCollector(MetricCollector):
         cpu_metric['metric'] = self.METRIC_PREFIX + "." + 'cpu.' + "totalusage"
         cpu_metric['device'] = "cpu"
         cpu_metric['value'] = (total_cpu_usage - pre_total_cpu_usage) * 1.0 / (total_cpu - pre_total_cpu)
-
+        cpu_metric['host'] = self.fqdn
         self.collect(cpu_metric)
 
     # ====================================
@@ -164,6 +166,7 @@ class SystemMetricCollector(MetricCollector):
                 metric["timestamp"] = int(round(time.time() * 1000))
                 metric["metric"] = self.METRIC_PREFIX + "." + 'uptime' + '.' + demension[i]
                 metric["value"] = str(round(float(items[i]) / 86400, 2))
+                metric["host"] = self.fqdn
                 self.collect(metric)
 
     # ====================================
@@ -187,6 +190,7 @@ class SystemMetricCollector(MetricCollector):
             event["metric"] = self.METRIC_NAME_EXCLUDE.sub("", self.METRIC_PREFIX + "." + metric.lower())
             event["value"] = items[1]
             event["device"] = 'memory'
+
             self.collect(event)
 
         usage = (mem_info['MemTotal'] - mem_info['MemFree'] - mem_info['Buffers'] - mem_info['Cached']) * 100.0 / \
@@ -214,6 +218,7 @@ class SystemMetricCollector(MetricCollector):
                 event["metric"] = self.METRIC_PREFIX + "." + demension[i]
                 event["value"] = items[i]
                 event["device"] = 'cpu'
+                event["host"] = self.fqdn
                 self.collect(event)
 
     # ====================================
@@ -229,6 +234,7 @@ class SystemMetricCollector(MetricCollector):
             event["metric"] = DATA_TYPE + "." + 'cpu.temp'
             event["value"] = items[2]
             event["device"] = item[1]
+            event["host"] = self.fqdn
             self.collect(event)
 
     # ====================================
@@ -253,6 +259,7 @@ class SystemMetricCollector(MetricCollector):
                 kafka_dict['metric'] = self.METRIC_PREFIX + "." + 'nic.' + demension[i]
                 kafka_dict["value"] = filtered_items[i]
                 kafka_dict["device"] = items[0]
+                kafka_dict["host"] = self.fqdn
                 self.collect(kafka_dict)
 
     # ====================================
@@ -276,6 +283,7 @@ class SystemMetricCollector(MetricCollector):
                 kafka_dict["timestamp"] = int(round(time.time() * 1000))
                 kafka_dict["value"] = lineitems[-1]
                 kafka_dict["device"] = 'smartdisk'
+                kafka_dict["host"] = self.fqdn
                 self.collect(kafka_dict)
 
     # ====================================
@@ -314,6 +322,7 @@ class SystemMetricCollector(MetricCollector):
                 kafka_dict["timestamp"] = int(round(time.time() * 1000))
                 kafka_dict["value"] = metrics[i]
                 kafka_dict["device"] = key
+                kafka_dict["host"] = self.fqdn
                 self.collect(kafka_dict)
 
     # ====================================
@@ -325,6 +334,7 @@ class SystemMetricCollector(MetricCollector):
         event["metric"] = prefix + "." + metric.lower()
         event["value"] = str(value)
         event["device"] = device
+        event["host"] = self.fqdn
         self.collect(event)
 
     def new_metric(self, group):
