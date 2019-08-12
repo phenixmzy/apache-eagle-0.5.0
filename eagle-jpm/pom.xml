@@ -43,7 +43,7 @@
         <module>eagle-jpm-web</module>
         <module>eagle-jpm-service</module>
         <module>eagle-jpm-aggregation</module>
-        <module>eagle-drelephant-web</module>
+        <module>eagle-appPerformance-web</module>
     </modules>
 
     <dependencies>
