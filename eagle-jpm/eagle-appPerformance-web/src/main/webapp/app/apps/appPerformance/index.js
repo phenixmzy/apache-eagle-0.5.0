@@ -37,7 +37,7 @@
 	appPerformance.service("Application Performance", function ($q, $http, $scope, Time, Site, Application) {
 		var DR = window._DR = {};
 		DR.ELEPHANT = '${baseURL}/rest/appPerformance/elephant';
-		$scope.elephantUrl = "www.baidu.com";
+		$scope.elephantUrl = "www.163.com";
 		/**
 		 * Fetch elephant web address content with current site application configuration
 		 */

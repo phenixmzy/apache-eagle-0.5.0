@@ -27,7 +27,7 @@
 		 */
 		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, DR) {
 			PageConfig.title = "DR.Elephant";
-			$scope.elephantUrl = "www.baidu.com";
+			$scope.elephantUrl = "www.163.com";
 		});
 	});
 })();
