@@ -26,8 +26,7 @@
 	    url: "/appPerformance/elephant",
         site: true,
         templateUrl: "partials/overview.html",
-        controller: "elephantCtrl",
-        resolve: { time: false }
+        controller: "elephantCtrl"
     });
 
 	appPerformance.portal(
@@ -74,12 +73,12 @@
 			return elephantURL;
 		};
 
-		DR.get = function (url) {
+/*		DR.get = function (url) {
 			return $http({
 				url: url,
 				method: "GET"
 			});
-		};
+		};*/
 
 		return DR;
 	});
