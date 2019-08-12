@@ -34,14 +34,14 @@
 		{name: "Dr.Elephant", path: "appPerformance/elephant"}
 	]}, true);
 
-	appPerformance.service("Application Performance", function ($q, $http, Time, Site, Application) {
+	appPerformance.service("Application Performance", function ($q, $http, $scope, Time, Site, Application) {
 		var DR = window._DR = {};
 		DR.ELEPHANT = '${baseURL}/rest/appPerformance/elephant';
-
+		$scope.elephantUrl = "www.baidu.com";
 		/**
 		 * Fetch elephant web address content with current site application configuration
-		 * @param {string} queryName
 		 */
+		/*
 		var elephant = DR.elephant = function(siteId) {
 			var baseURL;
 			var elephantURL;
@@ -73,12 +73,13 @@
 			return elephantURL;
 		};
 
-/*		DR.get = function (url) {
+		DR.get = function (url) {
 			return $http({
 				url: url,
 				method: "GET"
 			});
-		};*/
+		};
+		*/
 
 		return DR;
 	});
