@@ -19,7 +19,7 @@
 <application>
     <type>DrElephant_WEB_APP</type>
     <name>Dr.Elephant Web </name>
-    <viewPath>/apps/drelephant</viewPath>
+    <viewPath>/apps/appPerformance</viewPath>
     <description>Dr.Elephant Web</description>
     <dependencies>
 
