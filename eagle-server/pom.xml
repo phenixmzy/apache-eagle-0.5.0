@@ -374,7 +374,7 @@
                 </dependency>
                 <dependency>
                     <groupId>org.apache.eagle</groupId>
-                    <artifactId>eagle-drelephant-web</artifactId>
+                    <artifactId>eagle-appPerformance-web</artifactId>
                     <version>${project.version}</version>
                 </dependency>
             </dependencies>
