@@ -25,9 +25,11 @@
 		 * @param {{}} $scope
 		 * @param {{}} $scope.elephantUrl
 		 */
-		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, PageConfig, Time, DR) {
-			PageConfig.title = "DR.Elephant";
-			$scope.elephantUrl = "www.163.com";
+		appPerformance.controller("elephantCtrl", function ($q, $wrapState, $scope, $sec, PageConfig, Time, DR) {
+			//PageConfig.title = "DR.Elephant";
+			var url = "www.163.com";
+			$scope.elephantUrl = url;
+			alert(url);
 		});
 	});
 })();
