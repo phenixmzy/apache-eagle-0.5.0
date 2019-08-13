@@ -29,7 +29,6 @@
 			//PageConfig.title = "DR.Elephant";
 			var url = "www.163.com";
 			$scope.elephantUrl = url;
-			alert(url);
 		});
 	});
 })();
