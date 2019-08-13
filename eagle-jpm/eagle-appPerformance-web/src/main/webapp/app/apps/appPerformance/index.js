@@ -38,7 +38,6 @@
 		var DR = window._DR = {};
 		DR.ELEPHANT = '${baseURL}/rest/appPerformance/elephant';
 
-		$scope.elephantUrl = $sec.trustAsResourceUrl("www.163.com");
 		/**
 		 * Fetch elephant web address content with current site application configuration
 		 */
