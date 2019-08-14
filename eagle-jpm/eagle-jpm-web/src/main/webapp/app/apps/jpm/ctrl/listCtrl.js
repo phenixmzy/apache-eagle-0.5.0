@@ -192,7 +192,10 @@
 
 				// ==================== AllocatedMB Trend ====================
 				var allocatedMBEntities = JPM.aggMetricsToEntities(
-					JPM.aggMetrics({site: $scope.site}, "hadoop.cluster.allocatedmb", ["site"], "max(value)", intervalMin, trendStartTime, trendEndTime),
+
+					/*JPM.aggMetrics({site: $scope.site}, "hadoop.cluster.allocatedmb", ["site"], "max(value)", intervalMin, trendStartTime, trendEndTime),
+					true);*/
+					JPM.aggMetrics({site: $scope.site}, "hadoop.cluster.allocatedmemory", ["site"], "max(value)", intervalMin, trendStartTime, trendEndTime),
 					true);
 
 				var totalMemoryEntities = JPM.aggMetricsToEntities(
