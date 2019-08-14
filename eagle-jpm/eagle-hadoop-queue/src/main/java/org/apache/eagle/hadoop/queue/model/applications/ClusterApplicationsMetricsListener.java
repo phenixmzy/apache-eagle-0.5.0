@@ -64,7 +64,7 @@ public class ClusterApplicationsMetricsListener {
             entity.setTags(buildMetricTags());
             entity.setTimestamp(timestamp);
             entity.setPrefix(metricName);
-            entity.setValue(new double[] {0.0});
+            entity.setValue(new double[]{0.0});
             clusterMetricEntities.put(key, entity);
         }
         clusterMetricCounts.putIfAbsent(key, 0);
@@ -77,21 +77,10 @@ public class ClusterApplicationsMetricsListener {
         clearOldCache();
     }
 
-    private Map<String, String> buildMetricTags(String queueName, String parentQueueName) {
-        Map<String, String> tags = new HashMap<>();
-        tags.put(HadoopClusterConstants.TAG_SITE, this.site);
-        if (queueName != null) {
-            tags.put(HadoopClusterConstants.TAG_QUEUE, queueName);
-        }
-        if (parentQueueName != null) {
-            tags.put(HadoopClusterConstants.TAG_PARENT_QUEUE, parentQueueName);
-        }
-        return tags;
-    }
-
     private void clearOldCache() {
-        List<ClusterApplicationsMetricsListener.MetricKey> removedkeys = clusterMetricEntities.keySet().stream().filter(key -> key.createTime < maxTimestamp - HOLD_TIME_WINDOW).collect(Collectors.toList());
-
+        List<ClusterApplicationsMetricsListener.MetricKey> removedkeys =
+                clusterMetricEntities.keySet().stream().filter(key -> key.createTime < maxTimestamp - HOLD_TIME_WINDOW)
+                        .collect(Collectors.toList());
         for (ClusterApplicationsMetricsListener.MetricKey key : removedkeys) {
             clusterMetricEntities.remove(key);
         }
@@ -110,11 +99,11 @@ public class ClusterApplicationsMetricsListener {
         double lastValue = entity.getValue()[0];
         switch (aggFunc) {
             case MAX:
-                entity.setValue(new double[] {Math.max(lastValue, value)});
+                entity.setValue(new double[]{Math.max(lastValue, value)});
                 return;
             case AVG:
                 long avgValue = (long) ((lastValue * count + value) / (count + 1));
-                entity.setValue(new double[] {avgValue});
+                entity.setValue(new double[]{avgValue});
                 return;
             default:
                 throw new IllegalArgumentException("Illegal aggregation function: " + aggFunc);
