@@ -2,7 +2,9 @@ package org.apache.eagle.hadoop.queue.model.scheduler.fair;
 
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
 import org.apache.eagle.hadoop.queue.crawler.ClusterMetricsCrawler;
+import org.apache.eagle.hadoop.queue.crawler.RunningAppsCrawler;
 import org.apache.eagle.hadoop.queue.crawler.SchedulerInfoCrawler;
+import org.apache.eagle.hadoop.queue.model.applications.ClusterApplicationMetricsCrawler;
 import org.apache.eagle.jpm.util.Constants;
 import org.apache.eagle.jpm.util.resourcefetch.ha.HAURLSelector;
 import org.apache.eagle.jpm.util.resourcefetch.ha.HAURLSelectorImpl;
@@ -48,8 +50,7 @@ public class HadoopFairQueueRunningExtractor {
 
         List<Future<?>> futures = new ArrayList<>();
         futures.add(executorService.submit(new ClusterMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
-        // move RunningAppCrawler into MRRunningJobApp
-        //futures.add(executorService.submit(new RunningAppsCrawler(site, selectedUrl, collector)));
+        futures.add(executorService.submit(new ClusterApplicationMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
         futures.add(executorService.submit(new FairSchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
 
         futures.forEach(future -> {

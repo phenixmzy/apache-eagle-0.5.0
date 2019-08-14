@@ -45,7 +45,6 @@ public class HadoopRunningAppExtractor {
         }
 
         List<Future<?>> futures = new ArrayList<>();
-        // move RunningAppCrawler into MRRunningJobApp
         futures.add(executorService.submit(new ApplicationInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
 
         futures.forEach(future -> {

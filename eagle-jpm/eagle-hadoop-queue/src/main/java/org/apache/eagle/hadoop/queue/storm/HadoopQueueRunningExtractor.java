@@ -18,6 +18,7 @@
 
 package org.apache.eagle.hadoop.queue.storm;
 
+import org.apache.eagle.hadoop.queue.model.applications.ClusterApplicationMetricsCrawler;
 import org.apache.eagle.hadoop.queue.model.scheduler.fair.FairSchedulerInfoCrawler;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.eagle.hadoop.queue.HadoopQueueRunningAppConfig;
@@ -70,9 +71,7 @@ public class HadoopQueueRunningExtractor {
 
         List<Future<?>> futures = new ArrayList<>();
         futures.add(executorService.submit(new ClusterMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
-        // move RunningAppCrawler into MRRunningJobApp
-        //futures.add(executorService.submit(new RunningAppsCrawler(site, selectedUrl, collector)));
-        /*futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));*/
+        futures.add(executorService.submit(new ClusterApplicationMetricsCrawler(site, urlSelector.getSelectedUrl(), collector)));
         futures.add(executorService.submit(new SchedulerInfoCrawler(site, urlSelector.getSelectedUrl(), collector)));
 
         futures.forEach(future -> {
