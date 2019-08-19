@@ -41,6 +41,12 @@ public class HadoopFairQueueRunningExtractor {
         this.collector = collector;
     }
 
+    /**
+     * crawl type of the information list:
+     * 1 crawl Cluster Summary:ClusterMetricsCrawler
+     * 2 crawl Queue Summary:FairSchedulerInfoCrawler
+     * 3 crawl Running-Application Summary:ClusterApplicationMetricsCrawler
+     * */
     public void crawl() {
         try {
             urlSelector.checkUrl();
