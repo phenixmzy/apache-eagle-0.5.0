@@ -170,7 +170,7 @@
         <maven-apache-rat.version>0.11</maven-apache-rat.version>
         <maven-failsafe.version>2.6</maven-failsafe.version>
         <maven-checkstyle.version>2.17</maven-checkstyle.version>
-        <checkstyle.version>7.1</checkstyle.version>
+        <checkstyle.version>8.29</checkstyle.version>
         <cobertura-maven.version>2.7</cobertura-maven.version>
         <coveralls-maven.version>4.3.0</coveralls-maven.version>
 
