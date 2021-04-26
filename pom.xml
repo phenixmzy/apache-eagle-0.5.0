@@ -208,7 +208,7 @@
         <commons-beanutils.version>1.8.0</commons-beanutils.version>
         <commons-collections4.version>4.0</commons-collections4.version>
         <commons-collections.version>3.2.1</commons-collections.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <guice.version>3.0</guice.version>
         <httpclient.version>4.5.2</httpclient.version>-->
 
