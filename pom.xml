@@ -179,13 +179,13 @@
 
         <!-- Environment Versions-->
         <thrift.version>0.9.2</thrift.version>
-        <hadoop.version>2.7.4</hadoop.version>
-        <hadoop.2.7.version>2.7.7</hadoop.2.7.version>
+        <hadoop.version>2.10.1</hadoop.version>
+        <hadoop.2.7.version>2.10.1</hadoop.2.7.version>
         <hbase.version>1.4.9</hbase.version>
         <hive.version>1.2.1</hive.version>
 
         <mapr-hive.version>1.2.0-mapr-1510</mapr-hive.version>
-        <mapr-hadoop.version>2.7.0-mapr-1506</mapr-hadoop.version>
+        <mapr-hadoop.version>2.10.1</mapr-hadoop.version>
         <maprfs.version>5.1.0-mapr</maprfs.version>
         <mapr-hbase.version>0.98.9-mapr-1503</mapr-hbase.version>
 
