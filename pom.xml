@@ -240,7 +240,7 @@
         <jsoup.version>1.7.3</jsoup.version>
         <io.netty.version>3.6.7.Final</io.netty.version>
         <org.json.version>20131018</org.json.version>
-        <protobuf-java.version>2.5.0</protobuf-java.version>
+        <protobuf-java.version>3.16.3</protobuf-java.version>
 
         <!-- Utility -->
         <joda-time.version>2.7</joda-time.version>
